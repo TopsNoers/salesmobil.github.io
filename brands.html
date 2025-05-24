@@ -78,23 +78,24 @@
       <h2>Brands</h2>
       <button class="btn" onclick="openModal('addBrandModal')">+ Add Brand</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Brand</th>
-          <th>Image</th>
-          <th>Description</th>
-          <th>Actions</th>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Actions</th>
         </tr>
       </thead>
       <tbody id="brandsTableBody">
         <tr>
-          <td>Toyota</td>
-          <td>Toyota.png</td>
-          <td>Toyota is a Japanese car manufacturer</td>
-          <td class="actions">
-            <button onclick="openEditBrandModal('Toyota')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
+          <td data-label="Brand">Toyota</td>
+          <td data-label="Image">Toyota.png</td>
+          <td data-label="Description" style="text-wrap: wrap;">Toyota </td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditBrandModal('Toyota')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
         <!-- Add more rows as needed -->

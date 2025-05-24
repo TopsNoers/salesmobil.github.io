@@ -78,25 +78,26 @@
       <h2>Users & Permissions</h2>
       <button class="btn" onclick="openModal('addUserModal')">+ Add User</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="usersTableBody">
         <tr>
-          <td>John Doe</td>
-          <td>john.doe@example.com</td>
-          <td>Admin</td>
-          <td>Active</td>
-          <td class="actions">
-            <button onclick="openEditUserModal('John Doe', 'john.doe@example.com', 'Admin', 'Active')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
+          <td data-label="Name">John Doe</td>
+          <td data-label="Email">john.doe@example.com</td>
+          <td data-label="Role">Admin</td>
+          <td data-label="Status">Active</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditUserModal('John Doe', 'john.doe@example.com', 'Admin', 'Active')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
         <!-- Add more rows as needed -->

@@ -78,13 +78,14 @@
       <h2>Customers</h2>
       <button class="btn" onclick="openModal('addCustomerModal')">+ Add Customer</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Address</th>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
           <th>City</th>
           <th>State</th>
           <th>Zip</th>
@@ -92,17 +93,17 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="carsTableBody">
+      <tbody id="customersTableBody">
         <tr>
-          <td>John Doe</td>
-          <td>1234567890</td>
-          <td>john.doe@example.com</td>
-          <td>123 Main St</td>
-          <td>Anytown</td>
-          <td>CA</td>
-          <td>90210</td>
-          <td>USA</td>
-          <td class="actions">
+          <td data-label="Name">John Doe</td>
+          <td data-label="Phone">1234567890</td>
+          <td data-label="Email">john.doe@example.com</td>
+          <td data-label="Address">123 Main St</td>
+          <td data-label="City">Anytown</td>
+          <td data-label="State">CA</td>
+          <td data-label="Zip">90210</td>
+          <td data-label="Country">USA</td>
+          <td data-label="Actions">
             <button onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St', 'Anytown', 'CA', '90210', 'USA')">Edit</button>
             <button onclick="alert('Delete not implemented')">Delete</button>
           </td>

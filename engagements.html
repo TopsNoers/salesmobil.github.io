@@ -78,27 +78,28 @@
       <h2>Engagements</h2>
       <button class="btn" onclick="window.location.href='add_engagements.html'">+ Add Engagement</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>DateTime</th>
-          <th>Sales Person</th>
-          <th>Notes</th>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>DateTime</th>
+            <th>Sales Person</th>
+            <th>Notes</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="engagementsTableBody">
         <tr>
-          <td>John Doe</td>
-          <td>21/06/2025 10:00 AM</td>
-          <td>John Doe</td>
-          <td>Notes</td>
-          <td>New</td>
-          <td class="actions">
-            <button onclick="openEditEngagementModal('John Doe', '21/06/2025 10:00 AM', 'John Doe', 'Notes', 'New')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
+          <td data-label="Customer">John Doe</td>
+          <td data-label="DateTime">21/06/2025 10:00 AM</td>
+          <td data-label="Sales Person">John Doe</td>
+          <td data-label="Notes">Notes</td>
+          <td data-label="Status">New</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditEngagementModal('John Doe', '21/06/2025 10:00 AM', 'John Doe', 'Notes', 'New')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
         <!-- Add more rows as needed -->

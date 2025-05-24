@@ -78,34 +78,37 @@
       <h2>Cars</h2>
       <button class="btn" onclick="openModal('addCarModal')">+ Add Car</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Model</th>
-          <th>Brand</th>
-          <th>Year</th>
-          <th>Price</th>
-          <th>Status</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="carsTableBody">
-        <tr>
-          <td>Corolla</td>
-          <td>Toyota</td>
-          <td>2021</td>
-          <td>$20,000</td>
-          <td>Available</td>
-          <td>Reliable sedan</td>
-          <td class="actions">
-            <button onclick="openEditCarModal('Corolla', 'Toyota', 2021, 20000, 'Available', 'Reliable sedan')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Brand</th>
+            <th>Year</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="carsTableBody">
+          <tr>
+            <td data-label="Model">Corolla</td>
+            <td data-label="Brand">Toyota</td>
+            <td data-label="Year">2021</td>
+            <td data-label="Price">$20,000</td>
+            <td data-label="Status">Available</td>
+            <td data-label="Description">Reliable sedan</td>
+            <td data-label="Actions">
+              <button class="btn" onclick="openEditCarModal('Corolla', 'Toyota', 2021, 20000, 'Available', 'Reliable sedan')">Edit</button>
+              <br>
+              <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed, each <td> with data-label="Column Name" -->
+        </tbody>
+      </table>
+    </div>
   </main>
 </div>
 
@@ -184,13 +187,13 @@
     const tbody = document.getElementById('carsTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${model}</td>
-      <td>${brand}</td>
-      <td>${year}</td>
-      <td>$${Number(price).toLocaleString()}</td>
-      <td>${status}</td>
-      <td>${description}</td>
-      <td class="actions">
+      <td data-label="Model">${model}</td>
+      <td data-label="Brand">${brand}</td>
+      <td data-label="Year">${year}</td>
+      <td data-label="Price">$${Number(price).toLocaleString()}</td>
+      <td data-label="Status">${status}</td>
+      <td data-label="Description">${description}</td>
+      <td class="actions" data-label="Actions">
         <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
       </td>

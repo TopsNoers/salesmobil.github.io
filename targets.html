@@ -78,6 +78,7 @@
       <h2>Targets</h2>
       <button class="btn" onclick="openModal('addTargetModal')">+ Add Target</button>
     </div>
+    <div class="table-responsive">
     <table>
       <thead>
         <tr>
@@ -88,11 +89,11 @@
       </thead>
       <tbody id="targetsTableBody">
         <tr>
-          <td>100</td>
-          <td>2025-Jan-01</td>
-          <td class="actions">
-            <button onclick="openEditTargetModal('100', '2025-Jan-01')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
+          <td data-label="Target">100</td>
+          <td data-label="Date">2025-Jan-01</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditTargetModal('100', '2025-Jan-01')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
         <!-- Add more rows as needed -->
