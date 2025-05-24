@@ -75,90 +75,55 @@
       <a href="sales.html">Sales</a>
     </div>
     <div class="section-header">
-      <h2>Sales</h2>
-      <button class="btn" onclick="window.location.href='add_sales.html'">+ Add Sale</button>
+      
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>Car</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="carsTableBody">
-        <tr>
-          <td>John Doe</td>
-          <td>Toyota Corolla</td>
-          <td>21/06/2025</td>
-          <td>10000</td>
-          <td>Pending</td>
-          <td class="actions">
-            <button onclick="openEditSaleModal('John Doe', 'Toyota Corolla', '21/06/2025', '10000', 'Pending')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
+    <div class="section-content">
+        <!-- card -->
+        <div class="card">
+            <div class="card-body">
+                <div class="card-content">
+                   <div class="row">
+                     <form id="addEngagementForm" class="form form-row" onsubmit="addEngagement(event)">
+                        <div class="form-col">
+                          <div class="form-group">
+                            <label for="customer">Customer</label>
+                            <select id="customer" name="customer" required>
+                              <option value="">Select Customer</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="salesperson">Salesperson</label>
+                            <select id="salesperson" name="salesperson" required>
+                              <option value="">Select Salesperson</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required>
+                          </div>
+                        </div>
+                        <div class="form-col">
+                          <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" name="notes" required></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" required>
+                              <option value="">Select Status</option>
+                            </select>
+                          </div>
+                          <div class="form-actions" style="margin-top: 24px;">
+                            <button type="submit" class="btn">Add</button>
+                          </div>
+                        </div>
+                     </form>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </main>
-</div>
-
-<!-- Add Car Modal -->
-<div class="modal" id="addSaleModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addSaleModal')">&times;</button>
-    <h2>Add Sale</h2>
-    <form id="addSaleForm" onsubmit="addSale(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <div class="modal-actions">
-        <option value="Sold">Sold</option>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Edit Sale Modal -->
-<div class="modal" id="editSaleModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editSaleModal')">&times;</button>
-    <h2>Edit Sale</h2>
-    <form id="editSaleForm" onsubmit="editSale(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
 </div>
 
 <script>
@@ -193,20 +158,53 @@
     closeModal('addSaleModal');
     form.reset();
   }
-  function openEditSaleModal(customer, car, date, amount, status) {
-    openModal('editSaleModal');
-    const form = document.getElementById('editSaleForm');
-    form.customer.value = customer;
-    form.car.value = car;
-    form.date.value = date;
-    form.amount.value = amount;
-    form.status.value = status;
-  }
-  function editSale(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editSaleModal');
-  }
+
+
+  const customers = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Doe' },
+    { id: 3, name: 'John Smith' },
+    { id: 4, name: 'Jane Smith' },
+  ];
+
+  const cars = [
+    { id: 1, name: 'Toyota Camry' },
+    { id: 2, name: 'Honda Accord' },
+    { id: 3, name: 'Ford F-150' },
+    { id: 4, name: 'Chevrolet Camaro' },
+  ];
+
+  const statuses = [
+    { id: 1, name: 'Pending' },
+    { id: 2, name: 'Sold' },
+  ];
+
+  // add car to select
+  const carSelect = document.getElementById('car');
+  cars.forEach(car => {
+    const option = document.createElement('option');
+    option.value = car.id;
+    option.textContent = car.name;
+    carSelect.appendChild(option);
+  });
+
+  // add customer to select
+  const customerSelect = document.getElementById('customer');
+  customers.forEach(customer => {
+    const option = document.createElement('option');
+    option.value = customer.id;
+    option.textContent = customer.name;
+    customerSelect.appendChild(option);
+  });
+
+  // add status to select
+  const statusSelect = document.getElementById('status');
+  statuses.forEach(status => {
+    const option = document.createElement('option');
+    option.value = status.id;
+    option.textContent = status.name;
+    statusSelect.appendChild(option);
+  });
 </script>
 </body>
 </html> 

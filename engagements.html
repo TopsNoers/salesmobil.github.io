@@ -2,56 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cars | Car Sales Dashboard</title>
+  <title>Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <div class="container">
-   <!-- Navbar (now outside .main) -->
-   <div class="navbar">
-    <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-      <div class="profile-avatar">JD</div>
-      <span class="profile-name">John Doe</span>
-      <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-      <div class="profile-dropdown" id="profileDropdown">
-        <a href="#">Profile</a>
-        <button onclick="logout()">Logout</button>
+  <!-- Navbar (now outside .main) -->
+  <div class="navbar">
+    <div class="navbar-left">
+    </div>
+    <div class="navbar-right">
+      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
+        <div class="profile-avatar">JD</div>
+        <span class="profile-name">John Doe</span>
+        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="#">Profile</a>
+          <button onclick="logout()">Logout</button>
+        </div>
       </div>
     </div>
   </div>
   <!-- Sidebar -->
   <nav class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fa-solid fa-car"></i>
+    </div>
     <h2>Showroom Admin</h2>
     <a href="index.html" class="{{active_dashboard}}">
       <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
     </a>
-    <a href="cars.html" class="{{active_cars}}">
-      <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-    </a>
-    <a href="sales.html" class="{{active_sales}}">
-      <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-    </a>
-    <a href="users.html" class="{{active_users}}">
-      <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-    </a>
-    <a href="customers.html" class="{{active_customers}}">
-      <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-    </a>
-    <a href="targets.html" class="{{active_targets}}">
-      <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-    </a>
-    <a href="brands.html" class="{{active_brands}}">
-      <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-    </a>
-    <a href="engagements.html" class="{{active_engagements}}">
-      <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-    </a>
-    <a href="prayer_times.html" class="{{active_prayer_times}}">
-      <i class="fa-solid fa-clock"></i> <span class="link-text">Prayer Times</span>
-    </a>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Master Data</div>
+      <a href="cars.html" class="{{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+      </a>
+      <a href="brands.html" class="{{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+      </a>
+      <a href="customers.html" class="{{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+      </a>
+      <a href="users.html" class="{{active_users}}">
+        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+      </a>
+      <a href="targets.html" class="{{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+      </a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Transaction</div>
+      <a href="sales.html" class="{{active_sales}}">
+        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+      </a>
+      <a href="engagements.html" class="{{active_engagements}}">
+        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+      </a>
+    </div>
   </nav>
   <!-- Main Content -->
   <main class="main">
@@ -63,15 +76,15 @@
     </div>
     <div class="section-header">
       <h2>Engagements</h2>
-      <button class="btn" onclick="openModal('addEngagementModal')">+ Add Engagement</button>
+      <button class="btn" onclick="window.location.href='add_engagements.html'">+ Add Engagement</button>
     </div>
     <table>
       <thead>
         <tr>
           <th>Customer</th>
-          <th>Car</th>
           <th>DateTime</th>
           <th>Sales Person</th>
+          <th>Notes</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -79,12 +92,12 @@
       <tbody id="engagementsTableBody">
         <tr>
           <td>John Doe</td>
-          <td>Toyota Corolla</td>
           <td>21/06/2025 10:00 AM</td>
           <td>John Doe</td>
-          <td>Pending</td>
+          <td>Notes</td>
+          <td>New</td>
           <td class="actions">
-            <button onclick="openEditEngagementModal('John Doe', 'Toyota Corolla', '21/06/2025 10:00 AM', 'John Doe', 'Pending')">Edit</button>
+            <button onclick="openEditEngagementModal('John Doe', '21/06/2025 10:00 AM', 'John Doe', 'Notes', 'New')">Edit</button>
             <button onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
