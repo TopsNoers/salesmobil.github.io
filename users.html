@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cars | Car Sales Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="container">
+   <!-- Navbar (now outside .main) -->
+   <div class="navbar">
+    <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
+      <div class="profile-avatar">JD</div>
+      <span class="profile-name">John Doe</span>
+      <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+      <div class="profile-dropdown" id="profileDropdown">
+        <a href="#">Profile</a>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+   <!-- Sidebar -->
+   <nav class="sidebar">
+    <h2>Showroom Admin</h2>
+    <a href="dashboard.html" class="{{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> Dashboard
+    </a>
+    <a href="cars.html" class="{{active_cars}}">
+      <i class="fa-solid fa-car"></i> Cars
+    </a>
+    <a href="sales.html" class="{{active_sales}}">
+      <i class="fa-solid fa-dollar-sign"></i> Sales
+    </a>
+    <a href="users.html" class="{{active_users}}">
+      <i class="fa-solid fa-users"></i> Users & Permissions
+    </a>
+    <a href="customers.html" class="{{active_customers}}">
+      <i class="fa-solid fa-user"></i> Customers
+    </a>
+    <a href="targets.html" class="{{active_targets}}">
+      <i class="fa-solid fa-bullseye"></i> Targets
+    </a>
+    <a href="brands.html" class="{{active_brands}}">
+      <i class="fa-solid fa-flag"></i> Brands
+    </a>
+    <a href="engagements.html" class="{{active_engagements}}">
+      <i class="fa-solid fa-handshake"></i> Engagements
+    </a>
+    <a href="prayer_times.html" class="{{active_prayer_times}}">
+      <i class="fa-solid fa-clock"></i> Prayer Times
+    </a>
+  </nav>
+  <!-- Main Content -->
+  <main class="main">
+    <!-- make breadcrumb -->
+    <div class="breadcrumb">
+      <a href="dashboard.html">Dashboard</a>
+      <span>></span>
+      <a href="users.html">Users & Permissions</a>
+    </div>
+    <div class="section-header">
+      <h2>Users & Permissions</h2>
+      <button class="btn" onclick="openModal('addUserModal')">+ Add User</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="usersTableBody">
+        <tr>
+          <td>John Doe</td>
+          <td>john.doe@example.com</td>
+          <td>Admin</td>
+          <td>Active</td>
+          <td class="actions">
+            <button onclick="openEditUserModal('John Doe', 'john.doe@example.com', 'Admin', 'Active')">Edit</button>
+            <button onclick="alert('Delete not implemented')">Delete</button>
+          </td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal" id="addUserModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('addUserModal')">&times;</button>
+    <h2>Add User</h2>
+    <form id="addUserForm" onsubmit="addUser(event)">
+      <label>Name</label>
+      <input type="text" name="name" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Role</label>
+      <input type="text" name="role" required>
+      <label>Status</label>
+      <select name="status" required>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal" id="editUserModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editUserModal')">&times;</button>
+    <h2>Edit User</h2>
+    <form id="editUserForm" onsubmit="editUser(event)">
+      <label>Name</label>
+      <input type="text" name="name" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Role</label>
+      <input type="text" name="role" required>
+      <label>Status</label>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+  function addUser(event) {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const role = form.role.value;
+    const status = form.status.value;
+    const tbody = document.getElementById('usersTableBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${name}</td>
+      <td>${email}</td>
+      <td>${role}</td>
+      <td>${status}</td>
+      <td class="actions">
+        <button onclick="openEditUserModal('${name}', '${email}', '${role}', '${status}')">Edit</button>
+        <button onclick="alert('Delete not implemented')">Delete</button>
+      </td> 
+    `;
+    tbody.appendChild(row);
+    closeModal('addUserModal');
+    form.reset();
+  }
+  function openEditUserModal(name, email, role, status) {
+    openModal('editUserModal');
+    const form = document.getElementById('editUserForm');
+    form.name.value = name;
+    form.email.value = email;
+    form.role.value = role;
+    form.status.value = status;
+  }
+  function editUser(event) {
+    event.preventDefault();
+    alert('Edit functionality is a demo. Implement persistence as needed.');
+    closeModal('editUserModal');
+  }
+</script>
+</body>
+</html> 

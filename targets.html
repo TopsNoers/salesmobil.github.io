@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cars | Car Sales Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="container">
+   <!-- Navbar (now outside .main) -->
+   <div class="navbar">
+    <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
+      <div class="profile-avatar">JD</div>
+      <span class="profile-name">John Doe</span>
+      <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+      <div class="profile-dropdown" id="profileDropdown">
+        <a href="#">Profile</a>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+   <!-- Sidebar -->
+   <nav class="sidebar">
+    <h2>Showroom Admin</h2>
+    <a href="dashboard.html" class="{{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> Dashboard
+    </a>
+    <a href="cars.html" class="{{active_cars}}">
+      <i class="fa-solid fa-car"></i> Cars
+    </a>
+    <a href="sales.html" class="{{active_sales}}">
+      <i class="fa-solid fa-dollar-sign"></i> Sales
+    </a>
+    <a href="users.html" class="{{active_users}}">
+      <i class="fa-solid fa-users"></i> Users & Permissions
+    </a>
+    <a href="customers.html" class="{{active_customers}}">
+      <i class="fa-solid fa-user"></i> Customers
+    </a>
+    <a href="targets.html" class="{{active_targets}}">
+      <i class="fa-solid fa-bullseye"></i> Targets
+    </a>
+    <a href="brands.html" class="{{active_brands}}">
+      <i class="fa-solid fa-flag"></i> Brands
+    </a>
+    <a href="engagements.html" class="{{active_engagements}}">
+      <i class="fa-solid fa-handshake"></i> Engagements
+    </a>
+    <a href="prayer_times.html" class="{{active_prayer_times}}">
+      <i class="fa-solid fa-clock"></i> Prayer Times
+    </a>
+  </nav>
+  <!-- Main Content -->
+  <main class="main">
+    <!-- make breadcrumb -->
+    <div class="breadcrumb">
+      <a href="dashboard.html">Dashboard</a>
+      <span>></span>
+      <a href="targets.html">Targets</a>
+    </div>
+    <div class="section-header">
+      <h2>Targets</h2>
+      <button class="btn" onclick="openModal('addTargetModal')">+ Add Target</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Target</th>
+          <th>Sales Person</th>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Achieved</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="targetsTableBody">
+        <tr>
+          <td>100</td>
+          <td>John Doe</td>
+          <td>January</td>
+          <td>2025</td>
+          <td>100</td>
+          <td class="actions">
+            <button onclick="openEditTargetModal('John Doe', 'January', '2025', '100')">Edit</button>
+            <button onclick="alert('Delete not implemented')">Delete</button>
+          </td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Add Target Modal -->
+<div class="modal" id="addTargetModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('addTargetModal')">&times;</button>
+    <h2>Add Target</h2>
+    <form id="addTargetForm" onsubmit="addTarget(event)">
+      <label>Target</label>
+      <input type="text" name="target" required>
+      <label>Sales Person</label>
+      <input type="text" name="salesPerson" required>
+      <label>Month</label>
+      <input type="text" name="month" required>
+      <label>Year</label>
+      <input type="text" name="year" required>
+      <label>Achieved</label>
+      <input type="text" name="achieved" required>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Target Modal -->
+<div class="modal" id="editTargetModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editTargetModal')">&times;</button>
+    <h2>Edit Target</h2>
+    <form id="editTargetForm" onsubmit="editTarget(event)">
+      <label>Target</label>
+      <input type="text" name="target" required>
+      <label>Sales Person</label>
+      <input type="text" name="salesPerson" required>
+      <label>Month</label>
+      <input type="text" name="month" required>
+      <label>Year</label>
+      <input type="text" name="year" required>
+      <label>Achieved</label>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+  function addTarget(event) {
+    event.preventDefault();
+    const form = event.target;
+    const target = form.target.value;
+    const salesPerson = form.salesPerson.value;
+    const month = form.month.value;
+    const year = form.year.value;
+    const achieved = form.achieved.value;
+    const tbody = document.getElementById('targetsTableBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${target}</td>
+      <td>${salesPerson}</td>
+      <td>${month}</td>
+      <td>${year}</td>
+      <td>${achieved}</td>
+      <td class="actions">
+        <button onclick="openEditTargetModal('${target}', '${salesPerson}', '${month}', '${year}', '${achieved}')">Edit</button>
+        <button onclick="alert('Delete not implemented')">Delete</button>
+      </td> 
+    `;
+    tbody.appendChild(row);
+    closeModal('addTargetModal');
+    form.reset();
+  }
+  function openEditTargetModal(target, salesPerson, month, year, achieved) {
+    openModal('editTargetModal');
+    const form = document.getElementById('editTargetForm');
+    form.target.value = target;
+    form.salesPerson.value = salesPerson;
+    form.month.value = month;
+    form.year.value = year;
+    form.achieved.value = achieved;
+  }
+  function editTarget(event) {
+    event.preventDefault();
+    alert('Edit functionality is a demo. Implement persistence as needed.');
+    closeModal('editTargetModal');
+  }
+</script>
+</body>
+</html> 
