@@ -28,44 +28,57 @@
       </div>
     </div>
   </div>
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <i class="fa-solid fa-car"></i>
-    </div>
-    <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-    </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-car"></i>
+      </div>
+      <h2>Showroom Admin</h2>
+      <a href="index.html" class="{{active_dashboard}}">
+        <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
       </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-      </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-      </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-      </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-      </a>
-    </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="sales.html" class="{{active_sales}}">
-        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-      </a>
-      <a href="engagements.html" class="{{active_engagements}}">
-        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-      </a>
-    </div>
-  </nav>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Master Data</div>
+        <a href="cars.html" class="{{active_cars}}">
+          <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+        </a>
+        <a href="brands.html" class="{{active_brands}}">
+          <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+        </a>
+        <a href="customers.html" class="{{active_customers}}">
+          <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+        </a>
+        <a href="users.html" class="{{active_users}}">
+          <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+        </a>
+        <a href="targets.html" class="{{active_targets}}">
+          <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+        </a>
+      </div>
+  
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Transaction</div>
+        <a href="sales.html" class="{{active_sales}}">
+          <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+        </a>
+        <a href="engagements.html" class="{{active_engagements}}">
+          <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+        </a>
+        <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
+          <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
+          <i class="fa-solid fa-chevron-down dropdown-caret"></i>
+        </a>
+        <div id="reportsDropdown" class="sidebar-submenu">
+          <a href="reports_sales.html" class="{{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+          </a>
+          <a href="reports_engagement.html" class="{{active_reports_engagement}}">
+            <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <!-- End of Sidebar -->
   <!-- Main Content -->
   <main class="main">
     <!-- make breadcrumb -->
@@ -169,6 +182,40 @@
 </div>
 
 <script>
+    // Sidebar dropdown logic
+    document.addEventListener('DOMContentLoaded', function () {
+    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close all other dropdowns
+        dropdownToggles.forEach(function(other) {
+          if (other !== toggle) {
+            other.classList.remove('open');
+            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
+              other.nextElementSibling.style.display = 'none';
+            }
+          }
+        });
+        // Toggle this dropdown
+        toggle.classList.toggle('open');
+        var submenu = toggle.nextElementSibling;
+        if (submenu && submenu.classList.contains('sidebar-submenu')) {
+          if (toggle.classList.contains('open')) {
+            submenu.style.display = 'flex';
+          } else {
+            submenu.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // On page load, hide all submenus
+    var submenus = document.querySelectorAll('.sidebar-submenu');
+    submenus.forEach(function(submenu) {
+      submenu.style.display = 'none';
+    });
+  });
   function openModal(id) {
     document.getElementById(id).classList.add('active');
   }

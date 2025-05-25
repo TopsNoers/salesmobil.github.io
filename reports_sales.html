@@ -9,6 +9,38 @@
   <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    .filter-section {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .filter-section label {
+      margin-right: 10px;
+    }
+    .filter-section input {
+      margin-right: 10px;
+    }
+    .filter-section button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .filter-input {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      border: 1px solid #e4d0d0;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      color: #000000;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -85,68 +117,64 @@
     <div class="breadcrumb">
       <a href="dashboard.html">Dashboard</a>
       <span>></span>
-      <a href="targets.html">Targets</a>
+      <a href="reports_sales.html">Report Sales</a>
     </div>
     <div class="section-header">
-      <h2>Targets</h2>
-      <button class="btn" onclick="openModal('addTargetModal')">+ Add Target</button>
+      <h2>Report Sales</h2>
+    </div>
+    <!-- filter section -->
+    <div class="filter-section">
+      <!-- filter end start date -->
+       <label for="startDate">Start Date</label>
+      <input class="filter-input" type="date" id="startDate">
+      <!-- filter end end date -->
+      <label for="endDate">End Date</label>
+      <input class="filter-input" type="date" id="endDate">
+      <!-- filter end apply button -->
+      <button class="filter-button" id="applyFilter">Apply</button>
+      <!-- filter end reset button -->
+      <button class="filter-button" id="resetFilter">Reset</button>
+
+      <!-- print button -->
+      <button class="filter-button" id="printButton">Print</button>
     </div>
     <div class="table-responsive">
-    <table>
-      <thead>
-        <tr>
-          <th>Target</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="targetsTableBody">
-        <tr>
-          <td data-label="Target">100</td>
-          <td data-label="Date">2025-Jan-01</td>
-          <td data-label="Actions">
-            <button class="btn" onclick="openEditTargetModal('100', '2025-Jan-01')">Edit</button>
-            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Sales Person</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="carsTableBody">
+          <tr>
+            <td data-label="Date">2021-01-01</td>
+            <td data-label="Sales Person">John Doe</td>
+            <td data-label="Customer">John Doe</td>
+            <td data-label="Amount">$20,000</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Date">2021-01-01</td>
+            <td data-label="Sales Person">John Doe</td>
+            <td data-label="Customer">John Doe</td>
+            <td data-label="Amount">$20,000</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Date">2021-01-01</td>
+            <td data-label="Sales Person">John Doe</td>
+            <td data-label="Customer">John Doe</td>
+            <td data-label="Amount">$20,000</td>
+            <td data-label="Status">Done</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
-</div>
-
-<!-- Add Target Modal -->
-<div class="modal" id="addTargetModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addTargetModal')">&times;</button>
-    <h2>Add Target</h2>
-    <form id="addTargetForm" onsubmit="addTarget(event)">
-      <label>Target</label>
-      <input type="text" name="target" required>
-      <label>Date</label>
-      <input type="text" name="date" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Edit Target Modal -->
-<div class="modal" id="editTargetModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editTargetModal')">&times;</button>
-    <h2>Edit Target</h2>
-    <form id="editTargetForm" onsubmit="editTarget(event)">
-      <label>Target</label>
-      <input type="text" name="target" required>
-      <label>Date</label>
-      <input type="text" name="date" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
 </div>
 
 <script>
@@ -190,36 +218,48 @@
   function closeModal(id) {
     document.getElementById(id).classList.remove('active');
   }
-  function addTarget(event) {
+  function addCar(event) {
     event.preventDefault();
     const form = event.target;
-    const target = form.target.value;
-    const date = form.date.value;
-    const tbody = document.getElementById('targetsTableBody');
+    const model = form.model.value;
+    const brand = form.brand.value;
+    const year = form.year.value;
+    const price = form.price.value;
+    const status = form.status.value;
+    const description = form.description.value;
+    const tbody = document.getElementById('carsTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${target}</td>
-      <td>${date}</td>
-      <td class="actions">
-        <button onclick="openEditTargetModal('${target}', '${date}')">Edit</button>
+      <td data-label="Model">${model}</td>
+      <td data-label="Brand">${brand}</td>
+      <td data-label="Year">${year}</td>
+      <td data-label="Price">$${Number(price).toLocaleString()}</td>
+      <td data-label="Status">${status}</td>
+      <td data-label="Description">${description}</td>
+      <td class="actions" data-label="Actions">
+        <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
-      </td> 
+      </td>
     `;
     tbody.appendChild(row);
-    closeModal('addTargetModal');
+    closeModal('addCarModal');
     form.reset();
   }
-  function openEditTargetModal(target, date) {
-    openModal('editTargetModal');
-    const form = document.getElementById('editTargetForm');
-    form.target.value = target;
-    form.date.value = date;
+  function openEditCarModal(model, brand, year, price, status, description) {
+    openModal('editCarModal');
+    const form = document.getElementById('editCarForm');
+    form.model.value = model;
+    form.brand.value = brand;
+    form.year.value = year;
+    form.price.value = price;
+    form.status.value = status;
+    form.description.value = description;
   }
-  function editTarget(event) {
+  function editCar(event) {
     event.preventDefault();
     alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editTargetModal');
+    closeModal('editCarModal');
   }
 </script>
 </body>
-</html> 
+</html>

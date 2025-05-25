@@ -736,3 +736,58 @@ tr:last-child td {
     padding-top: 12px;
   }
 }
+
+.sidebar-dropdown-toggle {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown-caret {
+  margin-left: auto;
+  font-size: 0.9em;
+  transition: transform 0.2s;
+}
+
+.sidebar-submenu {
+  display: none;
+  flex-direction: column;
+  margin-left: 32px;
+  margin-top: 2px;
+  margin-bottom: 8px;
+  gap: 2px;
+}
+
+.sidebar-dropdown-toggle.open + .sidebar-submenu {
+  display: flex;
+}
+
+.sidebar-submenu a {
+  font-size: 0.97em;
+  padding: 8px 16px;
+  color: var(--primary);
+  border-radius: var(--radius);
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-submenu a.active,
+.sidebar-submenu a:hover {
+  background: var(--sidebar-active);
+  color: var(--sidebar-accent);
+}
+
+@media (max-width: 900px) {
+  .sidebar-submenu {
+    margin-left: 10px;
+    padding-left: 0;
+  }
+  .sidebar-submenu a {
+    font-size: 1.1em;
+    padding: 8px 8px;
+  }
+}

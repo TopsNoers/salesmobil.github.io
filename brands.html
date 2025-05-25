@@ -64,8 +64,21 @@
       <a href="engagements.html" class="{{active_engagements}}">
         <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
       </a>
+      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
+        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
+        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
+      </a>
+      <div id="reportsDropdown" class="sidebar-submenu">
+        <a href="reports_sales.html" class="{{active_reports_sales}}">
+        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+        </a>
+        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+        </a>
+      </div>
     </div>
   </nav>
+  <!-- End of Sidebar -->
   <!-- Main Content -->
   <main class="main">
     <!-- make breadcrumb -->
@@ -143,6 +156,40 @@
 </div>
 
 <script>
+    // Sidebar dropdown logic
+    document.addEventListener('DOMContentLoaded', function () {
+    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close all other dropdowns
+        dropdownToggles.forEach(function(other) {
+          if (other !== toggle) {
+            other.classList.remove('open');
+            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
+              other.nextElementSibling.style.display = 'none';
+            }
+          }
+        });
+        // Toggle this dropdown
+        toggle.classList.toggle('open');
+        var submenu = toggle.nextElementSibling;
+        if (submenu && submenu.classList.contains('sidebar-submenu')) {
+          if (toggle.classList.contains('open')) {
+            submenu.style.display = 'flex';
+          } else {
+            submenu.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // On page load, hide all submenus
+    var submenus = document.querySelectorAll('.sidebar-submenu');
+    submenus.forEach(function(submenu) {
+      submenu.style.display = 'none';
+    });
+  });
   function openModal(id) {
     document.getElementById(id).classList.add('active');
   }

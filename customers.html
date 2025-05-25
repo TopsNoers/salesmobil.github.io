@@ -86,11 +86,11 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Address</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Zip</th>
-          <th>Country</th>
-          <th>Actions</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Country</th>
+            <th>Actions</th>
         </tr>
       </thead>
       <tbody id="customersTableBody">
@@ -174,6 +174,40 @@
 </div>
 
 <script>
+    // Sidebar dropdown logic
+    document.addEventListener('DOMContentLoaded', function () {
+    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close all other dropdowns
+        dropdownToggles.forEach(function(other) {
+          if (other !== toggle) {
+            other.classList.remove('open');
+            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
+              other.nextElementSibling.style.display = 'none';
+            }
+          }
+        });
+        // Toggle this dropdown
+        toggle.classList.toggle('open');
+        var submenu = toggle.nextElementSibling;
+        if (submenu && submenu.classList.contains('sidebar-submenu')) {
+          if (toggle.classList.contains('open')) {
+            submenu.style.display = 'flex';
+          } else {
+            submenu.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // On page load, hide all submenus
+    var submenus = document.querySelectorAll('.sidebar-submenu');
+    submenus.forEach(function(submenu) {
+      submenu.style.display = 'none';
+    });
+  });
   function openModal(id) {
     document.getElementById(id).classList.add('active');
   }
