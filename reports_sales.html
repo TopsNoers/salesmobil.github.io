@@ -125,11 +125,34 @@
     <!-- filter section -->
     <div class="filter-section">
       <!-- filter end start date -->
-       <label for="startDate">Start Date</label>
+      <label for="startDate">Start Date</label>
       <input class="filter-input" type="date" id="startDate">
       <!-- filter end end date -->
       <label for="endDate">End Date</label>
       <input class="filter-input" type="date" id="endDate">
+      <!-- filter end apply button -->
+      <button class="filter-button" id="applyFilter">Apply</button>
+      <!-- filter end reset button -->
+      <button class="filter-button" id="resetFilter">Reset</button>
+
+      <!-- print button -->
+      <button class="filter-button" id="printButton">Print</button>
+    </div>
+    <div class="filter-section">
+      <!-- filter end start date -->
+      <label for="startDate">Sales Person</label>
+      <select class="filter-input" id="salesPerson">
+        <option value="">All</option>
+        <option value="John Doe">John Doe</option>
+        <option value="Jane Doe">Jane Doe</option>
+      </select>
+      <!-- filter target period -->
+      <label for="targetPeriod">Target Period</label>
+      <select class="filter-input" id="targetPeriod">
+        <option value="">All</option>
+        <option value="12/10/2024 - 12/10/2025">12/10/2024 - 12/10/2025</option>
+        <option value="12/10/2024 - 12/10/2025">12/10/2024 - 12/10/2025</option>
+      </select>
       <!-- filter end apply button -->
       <button class="filter-button" id="applyFilter">Apply</button>
       <!-- filter end reset button -->

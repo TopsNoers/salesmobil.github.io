@@ -98,7 +98,6 @@
           <th>Car</th>
           <th>Date</th>
           <th>Amount</th>
-          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -108,7 +107,6 @@
           <td>Toyota Corolla</td>
           <td>21/06/2025</td>
           <td>10000</td>
-          <td>Pending</td>
           <td class="actions">
             <button onclick="openEditSaleModal('John Doe', 'Toyota Corolla', '21/06/2025', '10000', 'Pending')">Edit</button>
             <button onclick="alert('Delete not implemented')">Delete</button>
@@ -134,13 +132,6 @@
       <input type="date" name="date" required>
       <label>Amount</label>
       <input type="number" name="amount" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <div class="modal-actions">
-        <option value="Sold">Sold</option>
       <div class="modal-actions">
         <button type="submit" class="btn">Add</button>
       </div>
@@ -162,11 +153,6 @@
       <input type="date" name="date" required>
       <label>Amount</label>
       <input type="number" name="amount" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-        <option value="Sold">Sold</option>
-      </select>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>

@@ -84,12 +84,7 @@
           <tr>
             <th>Name</th>
             <th>Phone</th>
-            <th>Email</th>
             <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip</th>
-            <th>Country</th>
             <th>Actions</th>
         </tr>
       </thead>
@@ -97,14 +92,9 @@
         <tr>
           <td data-label="Name">John Doe</td>
           <td data-label="Phone">1234567890</td>
-          <td data-label="Email">john.doe@example.com</td>
           <td data-label="Address">123 Main St</td>
-          <td data-label="City">Anytown</td>
-          <td data-label="State">CA</td>
-          <td data-label="Zip">90210</td>
-          <td data-label="Country">USA</td>
           <td data-label="Actions">
-            <button onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St', 'Anytown', 'CA', '90210', 'USA')">Edit</button>
+            <button onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St')">Edit</button>
             <button onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
@@ -155,17 +145,7 @@
       <input type="text" name="name" required>
       <label>Phone</label>
       <input type="text" name="phone" required>
-      <label>Email</label>
-      <input type="email" name="email" required>
       <label>Address</label>
-      <input type="text" name="address" required>
-      <label>City</label>
-      <input type="text" name="city" required>
-      <label>State</label>
-      <input type="text" name="state" required>
-      <label>Zip</label>
-      <input type="text" name="zip" required>
-      <label>Status</label>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>
@@ -219,23 +199,13 @@
     const form = event.target;
     const name = form.name.value;
     const phone = form.phone.value;
-    const email = form.email.value;
     const address = form.address.value;
-    const city = form.city.value;
-    const state = form.state.value;
-    const zip = form.zip.value;
-    const status = form.status.value;
     const tbody = document.getElementById('customersTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${name}</td>
       <td>${phone}</td>
-      <td>${email}</td>
       <td>${address}</td>
-      <td>${city}</td>
-      <td>${state}</td>
-      <td>${zip}</td>
-      <td>${country}</td>
       <td class="actions">
         <button onclick="openEditCustomerModal('${name}', '${phone}', '${email}', '${address}', '${city}', '${state}', '${zip}', '${country}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
@@ -250,12 +220,7 @@
     const form = document.getElementById('editCustomerForm');
     form.name.value = name;
     form.phone.value = phone;
-    form.email.value = email;
     form.address.value = address;
-    form.city.value = city;
-    form.state.value = state;
-    form.zip.value = zip;
-    form.country.value = country;
   }
   function editCustomer(event) {
     event.preventDefault();

@@ -96,16 +96,20 @@
       <thead>
         <tr>
           <th>Target</th>
-          <th>Date</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="targetsTableBody">
         <tr>
           <td data-label="Target">100</td>
-          <td data-label="Date">2025-Jan-01</td>
+          <td data-label="Start Date">2025-Jan-01</td>
+          <td data-label="End Date">2025-Jan-31</td>
+          <td data-label="Status">Active</td>
           <td data-label="Actions">
-            <button class="btn" onclick="openEditTargetModal('100', '2025-Jan-01')">Edit</button>
+            <button class="btn" onclick="openEditTargetModal('100', '2025-Jan-01', '2025-Jan-31')">Edit</button>
             <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
@@ -123,8 +127,10 @@
     <form id="addTargetForm" onsubmit="addTarget(event)">
       <label>Target</label>
       <input type="text" name="target" required>
-      <label>Date</label>
-      <input type="text" name="date" required>
+      <label>Start Date</label>
+      <input type="text" name="start_date" required>
+      <label>End Date</label>
+      <input type="text" name="end_date" required>
       <div class="modal-actions">
         <button type="submit" class="btn">Add</button>
       </div>
@@ -140,8 +146,10 @@
     <form id="editTargetForm" onsubmit="editTarget(event)">
       <label>Target</label>
       <input type="text" name="target" required>
-      <label>Date</label>
-      <input type="text" name="date" required>
+      <label>Start Date</label>
+      <input type="text" name="start_date" required>
+      <label>End Date</label>
+      <input type="text" name="end_date" required>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>
