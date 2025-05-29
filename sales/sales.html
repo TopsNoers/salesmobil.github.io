@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Sales Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Inter font for shadcn look (optional but recommended) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <!-- Navbar (now outside .main) -->
+  <div class="navbar">
+    <div class="navbar-left">
+    </div>
+    <div class="navbar-right">
+      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
+        <div class="profile-avatar">JD</div>
+        <span class="profile-name">John Doe</span>
+        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="#">Profile</a>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- Sidebar -->
+ <nav class="sidebar">
+  <div class="sidebar-logo">
+    <i class="fa-solid fa-car"></i>
+  </div>
+  <h2>Showroom Admin</h2>
+  <a href="dashboard_sales.html" class="{{active_dashboard}}">
+    <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+  </a>
+  <div class="sidebar-group">
+    <div class="sidebar-group-title">Transaction</div>
+    <a href="sales.html" class="{{active_sales}}">
+      <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+    </a>
+    <a href="engagements.html" class="{{active_engagements}}">
+      <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+    </a>
+  </div>
+</nav>
+<!-- End of Sidebar -->
+  <!-- Main Content -->
+  <main class="main">
+    <!-- make breadcrumb -->
+    <div class="breadcrumb">
+      <a href="dashboard_sales.html">Dashboard</a>
+      <span>></span>
+      <a href="sales.html">Sales</a>
+    </div>
+    <div class="section-header">
+      <h2>Sales</h2>
+      <button class="btn" onclick="window.location.href='add_sales.html'">+ Add Sale</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Car</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="carsTableBody">
+        <tr>
+          <td>John Doe</td>
+          <td>Toyota Corolla</td>
+          <td>21/06/2025</td>
+          <td>10000</td>
+          <td class="actions">
+            <button onclick="openEditSaleModal('John Doe', 'Toyota Corolla', '21/06/2025', '10000', 'Pending')">Edit</button>
+            <button onclick="alert('Delete not implemented')">Delete</button>
+          </td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Add Car Modal -->
+<div class="modal" id="addSaleModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('addSaleModal')">&times;</button>
+    <h2>Add Sale</h2>
+    <form id="addSaleForm" onsubmit="addSale(event)">
+      <label>Customer</label>
+      <input type="text" name="customer" required>
+      <label>Car</label>
+      <input type="text" name="car" required>
+      <label>Date</label>
+      <input type="date" name="date" required>
+      <label>Amount</label>
+      <input type="number" name="amount" required>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Sale Modal -->
+<div class="modal" id="editSaleModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editSaleModal')">&times;</button>
+    <h2>Edit Sale</h2>
+    <form id="editSaleForm" onsubmit="editSale(event)">
+      <label>Customer</label>
+      <input type="text" name="customer" required>
+      <label>Car</label>
+      <input type="text" name="car" required>
+      <label>Date</label>
+      <input type="date" name="date" required>
+      <label>Amount</label>
+      <input type="number" name="amount" required>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    // Sidebar dropdown logic
+    document.addEventListener('DOMContentLoaded', function () {
+    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close all other dropdowns
+        dropdownToggles.forEach(function(other) {
+          if (other !== toggle) {
+            other.classList.remove('open');
+            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
+              other.nextElementSibling.style.display = 'none';
+            }
+          }
+        });
+        // Toggle this dropdown
+        toggle.classList.toggle('open');
+        var submenu = toggle.nextElementSibling;
+        if (submenu && submenu.classList.contains('sidebar-submenu')) {
+          if (toggle.classList.contains('open')) {
+            submenu.style.display = 'flex';
+          } else {
+            submenu.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // On page load, hide all submenus
+    var submenus = document.querySelectorAll('.sidebar-submenu');
+    submenus.forEach(function(submenu) {
+      submenu.style.display = 'none';
+    });
+  });
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+  function addSale(event) {
+    event.preventDefault();
+    const form = event.target;
+    const customer = form.customer.value;
+    const car = form.car.value;
+    const date = form.date.value;
+    const amount = form.amount.value;
+    const status = form.status.value;
+    const tbody = document.getElementById('salesTableBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${customer}</td>
+      <td>${car}</td>
+      <td>${date}</td>
+      <td>${amount}</td>
+      <td>${status}</td>
+      <td class="actions">
+        <button onclick="openEditSaleModal('${customer}', '${car}', '${date}', '${amount}', '${status}')">Edit</button>
+        <button onclick="alert('Delete not implemented')">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+    closeModal('addSaleModal');
+    form.reset();
+  }
+  function openEditSaleModal(customer, car, date, amount, status) {
+    openModal('editSaleModal');
+    const form = document.getElementById('editSaleForm');
+    form.customer.value = customer;
+    form.car.value = car;
+    form.date.value = date;
+    form.amount.value = amount;
+    form.status.value = status;
+  }
+  function editSale(event) {
+    event.preventDefault();
+    alert('Edit functionality is a demo. Implement persistence as needed.');
+    closeModal('editSaleModal');
+  }
+</script>
+</body>
+</html> 

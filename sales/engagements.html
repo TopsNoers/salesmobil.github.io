@@ -7,12 +7,12 @@
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <div class="container">
-  <!-- Navbar (now outside .main) -->
+  <!-- Navbar (now outside .main) --> 
   <div class="navbar">
     <div class="navbar-left">
     </div>
@@ -28,88 +28,60 @@
       </div>
     </div>
   </div>
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <i class="fa-solid fa-car"></i>
-    </div>
-    <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+ <!-- Sidebar -->
+ <nav class="sidebar">
+  <div class="sidebar-logo">
+    <i class="fa-solid fa-car"></i>
+  </div>
+  <h2>Showroom Admin</h2>
+  <a href="dashboard_sales.html" class="{{active_dashboard}}">
+    <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+  </a>
+  <div class="sidebar-group">
+    <div class="sidebar-group-title">Transaction</div>
+    <a href="sales.html" class="{{active_sales}}">
+      <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-      </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-      </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-      </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-      </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-      </a>
-    </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="sales.html" class="{{active_sales}}">
-        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-      </a>
-      <a href="engagements.html" class="{{active_engagements}}">
-        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-      </a>
-      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
-      </a>
-      <div id="reportsDropdown" class="sidebar-submenu">
-        <a href="reports_sales.html" class="{{active_reports_sales}}">
-        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
-        </a>
-        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-  <!-- End of Sidebar -->
+    <a href="engagements.html" class="{{active_engagements}}">
+      <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+    </a>
+  </div>
+</nav>
+<!-- End of Sidebar -->
   <!-- Main Content -->
   <main class="main">
     <!-- make breadcrumb -->
     <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
+      <a href="index.html">Dashboard</a>
       <span>></span>
-      <a href="sales.html">Sales</a>
+      <a href="engagements.html">Engagements</a>
     </div>
     <div class="section-header">
-      <h2>Sales</h2>
-      <button class="btn" onclick="window.location.href='add_sales.html'">+ Add Sale</button>
+      <h2>Engagements</h2>
+      <button class="btn" onclick="window.location.href='add_engagements.html'">+ Add Engagement</button>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>Car</th>
-          <th>Date</th>
-          <th>Amount</th>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>DateTime</th>
+            <th>Sales Person</th>
+            <th>Notes</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="carsTableBody">
+      <tbody id="engagementsTableBody">
         <tr>
-          <td>John Doe</td>
-          <td>Toyota Corolla</td>
-          <td>21/06/2025</td>
-          <td>10000</td>
-          <td class="actions">
-            <button onclick="openEditSaleModal('John Doe', 'Toyota Corolla', '21/06/2025', '10000', 'Pending')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
+          <td data-label="Customer">John Doe</td>
+          <td data-label="DateTime">21/06/2025 10:00 AM</td>
+          <td data-label="Sales Person">John Doe</td>
+          <td data-label="Notes">Notes</td>
+          <td data-label="Status">New</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditEngagementModal('John Doe', '21/06/2025 10:00 AM', 'John Doe', 'Notes', 'New')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
         <!-- Add more rows as needed -->
@@ -119,19 +91,24 @@
 </div>
 
 <!-- Add Car Modal -->
-<div class="modal" id="addSaleModal">
+<div class="modal" id="addCustomerModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addSaleModal')">&times;</button>
-    <h2>Add Sale</h2>
-    <form id="addSaleForm" onsubmit="addSale(event)">
+    <button class="close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
+    <h2>Add Engagement</h2>
+    <form id="addEngagementForm" onsubmit="addEngagement(event)">
       <label>Customer</label>
       <input type="text" name="customer" required>
       <label>Car</label>
       <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
+      <label>DateTime</label>
+      <input type="datetime-local" name="dateTime" required>
+      <label>Sales Person</label>
+      <input type="text" name="salesPerson" required>
+      <label>Status</label>
+      <select name="status" required>
+        <option value="Pending">Pending</option>
+            <option value="Sold">Sold</option>
+      </select>
       <div class="modal-actions">
         <button type="submit" class="btn">Add</button>
       </div>
@@ -139,20 +116,25 @@
   </div>
 </div>
 
-<!-- Edit Sale Modal -->
-<div class="modal" id="editSaleModal">
+<!-- Edit Engagement Modal -->
+<div class="modal" id="editEngagementModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editSaleModal')">&times;</button>
-    <h2>Edit Sale</h2>
-    <form id="editSaleForm" onsubmit="editSale(event)">
+    <button class="close-btn" onclick="closeModal('editEngagementModal')">&times;</button>
+    <h2>Edit Engagement</h2>
+    <form id="editEngagementForm" onsubmit="editEngagement(event)">
       <label>Customer</label>
       <input type="text" name="customer" required>
       <label>Car</label>
       <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
+      <label>DateTime</label>
+      <input type="datetime-local" name="dateTime" required>
+      <label>Sales Person</label>
+      <input type="text" name="salesPerson" required>
+      <label>Status</label>
+      <select name="status" required>
+        <option value="Pending">Pending</option>
+        <option value="Sold">Sold</option>
+      </select>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>
@@ -201,45 +183,45 @@
   function closeModal(id) {
     document.getElementById(id).classList.remove('active');
   }
-  function addSale(event) {
+  function addEngagement(event) {
     event.preventDefault();
     const form = event.target;
     const customer = form.customer.value;
     const car = form.car.value;
-    const date = form.date.value;
-    const amount = form.amount.value;
+    const dateTime = form.dateTime.value;
+    const salesPerson = form.salesPerson.value;
     const status = form.status.value;
-    const tbody = document.getElementById('salesTableBody');
+    const tbody = document.getElementById('engagementsTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${customer}</td>
       <td>${car}</td>
-      <td>${date}</td>
-      <td>${amount}</td>
+      <td>${dateTime}</td>
+      <td>${salesPerson}</td>
       <td>${status}</td>
       <td class="actions">
-        <button onclick="openEditSaleModal('${customer}', '${car}', '${date}', '${amount}', '${status}')">Edit</button>
+        <button onclick="openEditEngagementModal('${customer}', '${car}', '${dateTime}', '${salesPerson}', '${status}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
       </td>
     `;
     tbody.appendChild(row);
-    closeModal('addSaleModal');
+    closeModal('addCarModal');
     form.reset();
   }
-  function openEditSaleModal(customer, car, date, amount, status) {
-    openModal('editSaleModal');
-    const form = document.getElementById('editSaleForm');
+  function openEditEngagementModal(customer, car, dateTime, salesPerson, status) {
+    openModal('editEngagementModal');
+    const form = document.getElementById('editEngagementForm');
     form.customer.value = customer;
     form.car.value = car;
-    form.date.value = date;
-    form.amount.value = amount;
+    form.dateTime.value = dateTime;
+    form.salesPerson.value = salesPerson;
     form.status.value = status;
   }
-  function editSale(event) {
+  function editEngagement(event) {
     event.preventDefault();
     alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editSaleModal');
+    closeModal('editEngagementModal');
   }
 </script>
 </body>
-</html> 
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Sales Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Inter font for shadcn look (optional but recommended) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <!-- Navbar (now outside .main) -->
+  <div class="navbar">
+    <div class="navbar-left">
+    </div>
+    <div class="navbar-right">
+      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
+        <div class="profile-avatar">JD</div>
+        <span class="profile-name">John Doe</span>
+        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a href="#">Profile</a>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <i class="fa-solid fa-car"></i>
+    </div>
+    <h2>Showroom Admin</h2>
+    <a href="index.html" class="{{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+    </a>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Master Data</div>
+      <a href="cars.html" class="{{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+      </a>
+      <a href="brands.html" class="{{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+      </a>
+      <a href="customers.html" class="{{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+      </a>
+      <a href="users.html" class="{{active_users}}">
+        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+      </a>
+      <a href="targets.html" class="{{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+      </a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Transaction</div>
+      <a href="sales.html" class="{{active_sales}}">
+        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+      </a>
+      <a href="engagements.html" class="{{active_engagements}}">
+        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+      </a>
+    </div>
+  </nav>
+  <!-- Main Content -->
+  <main class="main">
+    <!-- make breadcrumb -->
+    <div class="breadcrumb">
+      <a href="dashboard.html">Dashboard</a>
+      <span>></span>
+      <a href="customers.html">Customers</a>
+    </div>
+    <div class="section-header">
+      <h2>Customers</h2>
+      <button class="btn" onclick="openModal('addCustomerModal')">+ Add Customer</button>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="customersTableBody">
+        <tr>
+          <td data-label="Name">John Doe</td>
+          <td data-label="Phone">1234567890</td>
+          <td data-label="Address">123 Main St</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
+          </td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- Add Car Modal -->
+<div class="modal" id="addCustomerModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
+    <h2>Add Customer</h2>
+    <form id="addCustomerForm" onsubmit="addCustomer(event)">
+      <label>Name</label>
+      <input type="text" name="name" required>
+      <label>Phone</label>
+      <input type="text" name="phone" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Address</label>
+      <input type="text" name="address" required>
+      <label>City</label>
+      <input type="text" name="city" required>
+      <label>State</label>
+      <input type="text" name="state" required>
+      <label>Zip</label>
+      <input type="text" name="zip" required>
+      <label>Country</label>
+      <select name="status" required>
+        <option value="Available">Available</option>
+        <option value="Sold">Sold</option>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Customer Modal -->
+<div class="modal" id="editCustomerModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editCustomerModal')">&times;</button>
+    <h2>Edit Customer</h2>
+    <form id="editCustomerForm" onsubmit="editCustomer(event)">
+      <label>Name</label>
+      <input type="text" name="name" required>
+      <label>Phone</label>
+      <input type="text" name="phone" required>
+      <label>Address</label>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    // Sidebar dropdown logic
+    document.addEventListener('DOMContentLoaded', function () {
+    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close all other dropdowns
+        dropdownToggles.forEach(function(other) {
+          if (other !== toggle) {
+            other.classList.remove('open');
+            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
+              other.nextElementSibling.style.display = 'none';
+            }
+          }
+        });
+        // Toggle this dropdown
+        toggle.classList.toggle('open');
+        var submenu = toggle.nextElementSibling;
+        if (submenu && submenu.classList.contains('sidebar-submenu')) {
+          if (toggle.classList.contains('open')) {
+            submenu.style.display = 'flex';
+          } else {
+            submenu.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // On page load, hide all submenus
+    var submenus = document.querySelectorAll('.sidebar-submenu');
+    submenus.forEach(function(submenu) {
+      submenu.style.display = 'none';
+    });
+  });
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+  function addCustomer(event) {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const phone = form.phone.value;
+    const address = form.address.value;
+    const tbody = document.getElementById('customersTableBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${name}</td>
+      <td>${phone}</td>
+      <td>${address}</td>
+      <td class="actions">
+        <button onclick="openEditCustomerModal('${name}', '${phone}', '${email}', '${address}', '${city}', '${state}', '${zip}', '${country}')">Edit</button>
+        <button onclick="alert('Delete not implemented')">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+    closeModal('addCarModal');
+    form.reset();
+  }
+  function openEditCustomerModal(name, phone, email, address, city, state, zip, country) {
+    openModal('editCustomerModal');
+    const form = document.getElementById('editCustomerForm');
+    form.name.value = name;
+    form.phone.value = phone;
+    form.address.value = address;
+  }
+  function editCustomer(event) {
+    event.preventDefault();
+    alert('Edit functionality is a demo. Implement persistence as needed.');
+    closeModal('editCustomerModal');
+  }
+</script>
+</body>
+</html>

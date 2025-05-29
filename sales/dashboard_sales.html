@@ -7,7 +7,7 @@
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -34,28 +34,9 @@
       <i class="fa-solid fa-car"></i>
     </div>
     <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
+    <a href="dashboard_sales.html" class="{{active_dashboard}}">
       <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-      </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-      </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-      </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-      </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-      </a>
-    </div>
-
     <div class="sidebar-group">
       <div class="sidebar-group-title">Transaction</div>
       <a href="sales.html" class="{{active_sales}}">
@@ -66,68 +47,52 @@
       </a>
     </div>
   </nav>
+  <!-- End of Sidebar -->
   <!-- Main Content -->
   <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="customers.html">Customers</a>
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards">
+      <div class="card">
+        <h3>Total Cars</h3>
+        <div class="value" id="totalCars">12</div>
+      </div>
+      <div class="card">
+        <h3>Cars Sold</h3>
+        <div class="value" id="carsSold">7</div>
+      </div>
+      <div class="card">
+        <h3>Total Sales Person</h3>
+        <div class="value" id="totalSalesPerson">3</div>
+      </div>
+      <div class="card">
+        <h3>Cars Available</h3>
+        <div class="value" id="carsAvailable">12</div>
+      </div>
     </div>
-    <div class="section-header">
-      <h2>Customers</h2>
-      <button class="btn" onclick="openModal('addCustomerModal')">+ Add Customer</button>
-    </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="customersTableBody">
-        <tr>
-          <td data-label="Name">John Doe</td>
-          <td data-label="Phone">1234567890</td>
-          <td data-label="Address">123 Main St</td>
-          <td data-label="Actions">
-            <button onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
   </main>
 </div>
 
 <!-- Add Car Modal -->
-<div class="modal" id="addCustomerModal">
+<div class="modal" id="addCarModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
-    <h2>Add Customer</h2>
-    <form id="addCustomerForm" onsubmit="addCustomer(event)">
-      <label>Name</label>
-      <input type="text" name="name" required>
-      <label>Phone</label>
-      <input type="text" name="phone" required>
-      <label>Email</label>
-      <input type="email" name="email" required>
-      <label>Address</label>
-      <input type="text" name="address" required>
-      <label>City</label>
-      <input type="text" name="city" required>
-      <label>State</label>
-      <input type="text" name="state" required>
-      <label>Zip</label>
-      <input type="text" name="zip" required>
-      <label>Country</label>
+    <button class="close-btn" onclick="closeModal('addCarModal')">&times;</button>
+    <h2>Add Car</h2>
+    <form id="addCarForm" onsubmit="addCar(event)">
+      <label>Model</label>
+      <input type="text" name="model" required>
+      <label>Brand</label>
+      <input type="text" name="brand" required>
+      <label>Year</label>
+      <input type="number" name="year" min="1900" max="2100" required>
+      <label>Price</label>
+      <input type="number" name="price" min="0" required>
+      <label>Status</label>
       <select name="status" required>
         <option value="Available">Available</option>
         <option value="Sold">Sold</option>
+      </select>
+      <label>Description</label>
+      <textarea name="description"></textarea>
       <div class="modal-actions">
         <button type="submit" class="btn">Add</button>
       </div>
@@ -135,17 +100,27 @@
   </div>
 </div>
 
-<!-- Edit Customer Modal -->
-<div class="modal" id="editCustomerModal">
+<!-- Edit Car Modal -->
+<div class="modal" id="editCarModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editCustomerModal')">&times;</button>
-    <h2>Edit Customer</h2>
-    <form id="editCustomerForm" onsubmit="editCustomer(event)">
-      <label>Name</label>
-      <input type="text" name="name" required>
-      <label>Phone</label>
-      <input type="text" name="phone" required>
-      <label>Address</label>
+    <button class="close-btn" onclick="closeModal('editCarModal')">&times;</button>
+    <h2>Edit Car</h2>
+    <form id="editCarForm" onsubmit="editCar(event)">
+      <label>Model</label>
+      <input type="text" name="model" required>
+      <label>Brand</label>
+      <input type="text" name="brand" required>
+      <label>Year</label>
+      <input type="number" name="year" min="1900" max="2100" required>
+      <label>Price</label>
+      <input type="number" name="price" min="0" required>
+      <label>Status</label>
+      <select name="status" required>
+        <option value="Available">Available</option>
+        <option value="Sold">Sold</option>
+      </select>
+      <label>Description</label>
+      <textarea name="description"></textarea>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>
@@ -154,8 +129,8 @@
 </div>
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
+  // Sidebar dropdown logic
+  document.addEventListener('DOMContentLoaded', function () {
     var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
     dropdownToggles.forEach(function(toggle) {
       toggle.addEventListener('click', function(e) {
@@ -188,26 +163,36 @@
       submenu.style.display = 'none';
     });
   });
+
+  // Modal logic
   function openModal(id) {
     document.getElementById(id).classList.add('active');
   }
   function closeModal(id) {
     document.getElementById(id).classList.remove('active');
   }
-  function addCustomer(event) {
+
+  // Add Car logic (demo, not persistent)
+  function addCar(event) {
     event.preventDefault();
     const form = event.target;
-    const name = form.name.value;
-    const phone = form.phone.value;
-    const address = form.address.value;
-    const tbody = document.getElementById('customersTableBody');
+    const model = form.model.value;
+    const brand = form.brand.value;
+    const year = form.year.value;
+    const price = form.price.value;
+    const status = form.status.value;
+    const description = form.description.value;
+    const tbody = document.getElementById('carsTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${name}</td>
-      <td>${phone}</td>
-      <td>${address}</td>
+      <td>${model}</td>
+      <td>${brand}</td>
+      <td>${year}</td>
+      <td>$${Number(price).toLocaleString()}</td>
+      <td>${status}</td>
+      <td>${description}</td>
       <td class="actions">
-        <button onclick="openEditCustomerModal('${name}', '${phone}', '${email}', '${address}', '${city}', '${state}', '${zip}', '${country}')">Edit</button>
+        <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
       </td>
     `;
@@ -215,17 +200,23 @@
     closeModal('addCarModal');
     form.reset();
   }
-  function openEditCustomerModal(name, phone, email, address, city, state, zip, country) {
-    openModal('editCustomerModal');
-    const form = document.getElementById('editCustomerForm');
-    form.name.value = name;
-    form.phone.value = phone;
-    form.address.value = address;
+
+  // Edit Car logic (demo, not persistent)
+  function openEditCarModal(model, brand, year, price, status, description) {
+    openModal('editCarModal');
+    const form = document.getElementById('editCarForm');
+    form.model.value = model;
+    form.brand.value = brand;
+    form.year.value = year;
+    form.price.value = price;
+    form.status.value = status;
+    form.description.value = description;
+    // For demo: editing does not update the table
   }
-  function editCustomer(event) {
+  function editCar(event) {
     event.preventDefault();
     alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editCustomerModal');
+    closeModal('editCarModal');
   }
 </script>
 </body>

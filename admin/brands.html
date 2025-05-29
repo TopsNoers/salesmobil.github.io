@@ -7,7 +7,7 @@
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
       <i class="fa-solid fa-car"></i>
     </div>
     <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
+    <a href="dashboard_admin.html" class="{{active_dashboard}}">
       <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
     </a>
     <div class="sidebar-group">
@@ -83,63 +83,55 @@
   <main class="main">
     <!-- make breadcrumb -->
     <div class="breadcrumb">
-      <a href="index.html">Dashboard</a>
+      <a href="dashboard.html">Dashboard</a>
       <span>></span>
-      <a href="engagements.html">Engagements</a>
+      <a href="brands.html">Brands</a>
     </div>
     <div class="section-header">
-      <h2>Engagements</h2>
-      <button class="btn" onclick="window.location.href='add_engagements.html'">+ Add Engagement</button>
+      <h2>Brands</h2>
+      <button class="btn" onclick="openModal('addBrandModal')">+ Add Brand</button>
     </div>
     <div class="table-responsive">
       <table>
         <thead>
           <tr>
-            <th>Customer</th>
-            <th>DateTime</th>
-            <th>Sales Person</th>
-            <th>Notes</th>
-          <th>Status</th>
-          <th>Actions</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="engagementsTableBody">
+      <tbody id="brandsTableBody">
         <tr>
-          <td data-label="Customer">John Doe</td>
-          <td data-label="DateTime">21/06/2025 10:00 AM</td>
-          <td data-label="Sales Person">John Doe</td>
-          <td data-label="Notes">Notes</td>
-          <td data-label="Status">New</td>
+          <td data-label="Brand">Toyota</td>
+          <td data-label="Description" style="text-wrap: wrap;">Toyota Mobil</td>
           <td data-label="Actions">
-            <button class="btn" onclick="openEditEngagementModal('John Doe', '21/06/2025 10:00 AM', 'John Doe', 'Notes', 'New')">Edit</button>
+            <button class="btn" onclick="openEditBrandModal('Toyota', 'Toyota Mobil')">Edit</button>
             <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
           </td>
         </tr>
-        <!-- Add more rows as needed -->
+        <tr>
+          <td data-label="Brand">Honda</td>
+          <td data-label="Description" style="text-wrap: wrap;">Honda Mobil</td>
+          <td data-label="Actions">
+            <button class="btn" onclick="openEditBrandModal('Honda', 'Honda Mobil')">Edit</button>
+            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </main>
 </div>
 
-<!-- Add Car Modal -->
-<div class="modal" id="addCustomerModal">
+<!-- Add Brand Modal -->
+<div class="modal" id="addBrandModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
-    <h2>Add Engagement</h2>
-    <form id="addEngagementForm" onsubmit="addEngagement(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>DateTime</label>
-      <input type="datetime-local" name="dateTime" required>
-      <label>Sales Person</label>
-      <input type="text" name="salesPerson" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-            <option value="Sold">Sold</option>
-      </select>
+    <button class="close-btn" onclick="closeModal('addBrandModal')">&times;</button>
+    <h2>Add Brand</h2>
+    <form id="addBrandForm" onsubmit="addBrand(event)">
+      <label>Brand</label>
+      <input type="text" name="brand" required>
+      <label>Description</label>
+      <textarea name="description"></textarea>
       <div class="modal-actions">
         <button type="submit" class="btn">Add</button>
       </div>
@@ -147,25 +139,16 @@
   </div>
 </div>
 
-<!-- Edit Engagement Modal -->
-<div class="modal" id="editEngagementModal">
+<!-- Edit Brand Modal -->
+<div class="modal" id="editBrandModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editEngagementModal')">&times;</button>
-    <h2>Edit Engagement</h2>
-    <form id="editEngagementForm" onsubmit="editEngagement(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>DateTime</label>
-      <input type="datetime-local" name="dateTime" required>
-      <label>Sales Person</label>
-      <input type="text" name="salesPerson" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Pending">Pending</option>
-        <option value="Sold">Sold</option>
-      </select>
+    <button class="close-btn" onclick="closeModal('editBrandModal')">&times;</button>
+    <h2>Edit Brand</h2>
+    <form id="editBrandForm" onsubmit="editBrand(event)">
+      <label>Brand</label>
+      <input type="text" name="brand" required>
+      <label>Description</label>
+      <textarea name="description"></textarea>
       <div class="modal-actions">
         <button type="submit" class="btn">Save</button>
       </div>
@@ -214,44 +197,35 @@
   function closeModal(id) {
     document.getElementById(id).classList.remove('active');
   }
-  function addEngagement(event) {
+  function addBrand(event) {
     event.preventDefault();
     const form = event.target;
-    const customer = form.customer.value;
-    const car = form.car.value;
-    const dateTime = form.dateTime.value;
-    const salesPerson = form.salesPerson.value;
-    const status = form.status.value;
-    const tbody = document.getElementById('engagementsTableBody');
+    const brand = form.brand.value;
+    const description = form.description.value;
+    const tbody = document.getElementById('brandsTableBody');
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${customer}</td>
-      <td>${car}</td>
-      <td>${dateTime}</td>
-      <td>${salesPerson}</td>
-      <td>${status}</td>
+      <td>${brand}</td>
+      <td>${description}</td>
       <td class="actions">
-        <button onclick="openEditEngagementModal('${customer}', '${car}', '${dateTime}', '${salesPerson}', '${status}')">Edit</button>
+        <button onclick="openEditBrandModal('${brand}', '${description}')">Edit</button>
         <button onclick="alert('Delete not implemented')">Delete</button>
       </td>
     `;
     tbody.appendChild(row);
-    closeModal('addCarModal');
+    closeModal('addBrandModal');
     form.reset();
   }
-  function openEditEngagementModal(customer, car, dateTime, salesPerson, status) {
-    openModal('editEngagementModal');
-    const form = document.getElementById('editEngagementForm');
-    form.customer.value = customer;
-    form.car.value = car;
-    form.dateTime.value = dateTime;
-    form.salesPerson.value = salesPerson;
-    form.status.value = status;
+  function openEditBrandModal(brand, description) {
+    openModal('editBrandModal')
+    const form = document.getElementById('editBrandForm');
+    form.brand.value = brand;
+    form.description.value = description;
   }
-  function editEngagement(event) {
+  function editBrand(event) {
     event.preventDefault();
     alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editEngagementModal');
+    closeModal('editBrandModal');
   }
 </script>
 </body>

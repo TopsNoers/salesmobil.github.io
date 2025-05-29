@@ -1,254 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Car Sales Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px 0 rgba(16,24,40,0.10);
+            padding: 40px 32px 32px 32px;
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-logo {
+            background: #6366f1;
+            color: #fff;
+            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 18px;
+        }
+        .login-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #11181c;
+        }
+        .login-desc {
+            color: #64748b;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .login-form label {
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 4px;
+        }
+        .login-form input {
+            width: 90%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f1f5f9;
+            color: #11181c;
+            outline: none;
+            transition: border 0.15s;
+        }
+        .login-form input:focus {
+            border-color: #6366f1;
+            background: #fff;
+        }
+        .login-btn {
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .login-btn:hover {
+            background: #4f46e5;
+        }
+        .login-footer {
+            margin-top: 18px;
+            font-size: 0.95em;
+            color: #64748b;
+            text-align: center;
+        }
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 24px 8px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-    </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
+    <div class="login-container">
+        <div class="login-logo">
+            <i class="fa-solid fa-car"></i>
         </div>
-      </div>
+        <div class="login-title">Sign in to Showroom</div>
+        <div class="login-desc">Enter your email and password to access the dashboard.</div>
+        <form class="login-form" onsubmit="login(event)">
+            <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required autocomplete="username">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+        <p>
+            Note:
+            <ul>
+                <li>Admin: admin@mail.com, Password: admin</li>
+                <li>Sales: sales@mail.com, Password: sales</li>
+            </ul>   
+        </p>
+        <div class="login-footer">
+            &copy; 2024 Showroom Admin
+        </div>
     </div>
-  </div>
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <i class="fa-solid fa-car"></i>
-    </div>
-    <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-    </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-      </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-      </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-      </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-      </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-      </a>
-    </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="sales.html" class="{{active_sales}}">
-        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-      </a>
-      <a href="engagements.html" class="{{active_engagements}}">
-        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-      </a>
-      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
-      </a>
-      <div id="reportsDropdown" class="sidebar-submenu">
-        <a href="reports_sales.html" class="{{active_reports_sales}}">
-        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
-        </a>
-        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-  <!-- End of Sidebar -->
-  <!-- Main Content -->
-  <main class="main">
-    <!-- Dashboard Cards -->
-    <div class="dashboard-cards">
-      <div class="card">
-        <h3>Total Cars</h3>
-        <div class="value" id="totalCars">12</div>
-      </div>
-      <div class="card">
-        <h3>Cars Sold</h3>
-        <div class="value" id="carsSold">7</div>
-      </div>
-      <div class="card">
-        <h3>Total Sales</h3>
-        <div class="value" id="totalSales">$120,000</div>
-      </div>
-      <div class="card">
-        <h3>Active Targets</h3>
-        <div class="value" id="activeTargets">3</div>
-      </div>
-    </div>
-  </main>
-</div>
-
-<!-- Add Car Modal -->
-<div class="modal" id="addCarModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addCarModal')">&times;</button>
-    <h2>Add Car</h2>
-    <form id="addCarForm" onsubmit="addCar(event)">
-      <label>Model</label>
-      <input type="text" name="model" required>
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Year</label>
-      <input type="number" name="year" min="1900" max="2100" required>
-      <label>Price</label>
-      <input type="number" name="price" min="0" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Available">Available</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- Edit Car Modal -->
-<div class="modal" id="editCarModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editCarModal')">&times;</button>
-    <h2>Edit Car</h2>
-    <form id="editCarForm" onsubmit="editCar(event)">
-      <label>Model</label>
-      <input type="text" name="model" required>
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Year</label>
-      <input type="number" name="year" min="1900" max="2100" required>
-      <label>Price</label>
-      <input type="number" name="price" min="0" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Available">Available</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script>
-  // Sidebar dropdown logic
-  document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <script>
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (email === 'admin@mail.com' && password === 'admin') {
+                window.location.href = 'admin/dashboard_admin.html';
+            } else if (email === 'sales@mail.com' && password === 'sales') {
+                window.location.href = 'sales/dashboard_sales.html';
+            } else {
+                alert('Invalid credentials');
             }
-          }
-        });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
         }
-      });
-    });
-
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Modal logic
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-
-  // Add Car logic (demo, not persistent)
-  function addCar(event) {
-    event.preventDefault();
-    const form = event.target;
-    const model = form.model.value;
-    const brand = form.brand.value;
-    const year = form.year.value;
-    const price = form.price.value;
-    const status = form.status.value;
-    const description = form.description.value;
-    const tbody = document.getElementById('carsTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${model}</td>
-      <td>${brand}</td>
-      <td>${year}</td>
-      <td>$${Number(price).toLocaleString()}</td>
-      <td>${status}</td>
-      <td>${description}</td>
-      <td class="actions">
-        <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addCarModal');
-    form.reset();
-  }
-
-  // Edit Car logic (demo, not persistent)
-  function openEditCarModal(model, brand, year, price, status, description) {
-    openModal('editCarModal');
-    const form = document.getElementById('editCarForm');
-    form.model.value = model;
-    form.brand.value = brand;
-    form.year.value = year;
-    form.price.value = price;
-    form.status.value = status;
-    form.description.value = description;
-    // For demo: editing does not update the table
-  }
-  function editCar(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editCarModal');
-  }
-</script>
+    </script>
 </body>
 </html>
