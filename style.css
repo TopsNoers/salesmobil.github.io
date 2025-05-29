@@ -791,3 +791,22 @@ tr:last-child td {
     padding: 8px 8px;
   }
 }
+
+.sidebar-logo-image {
+  width: 100%;
+  height: auto;
+  max-width: 240px;
+}
+
+@media (max-width: 900px) {
+  .sidebar-logo-image {
+    max-width: 180px;
+  }
+}
+
+.sidebar-divider {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}

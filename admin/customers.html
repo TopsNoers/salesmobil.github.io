@@ -7,7 +7,7 @@
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -30,11 +30,11 @@
   </div>
   <!-- Sidebar -->
   <nav class="sidebar">
-    <div class="sidebar-logo">
-      <i class="fa-solid fa-car"></i>
+    <div class="sidebar-logo-image">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image">
     </div>
-    <h2>Showroom Admin</h2>
-    <a href="index.html" class="{{active_dashboard}}">
+    <hr class="sidebar-divider">
+    <a href="dashboard_admin.html" class="{{active_dashboard}}">
       <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
     </a>
     <div class="sidebar-group">
@@ -58,12 +58,18 @@
 
     <div class="sidebar-group">
       <div class="sidebar-group-title">Transaction</div>
-      <a href="sales.html" class="{{active_sales}}">
-        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
+        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
+        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
       </a>
-      <a href="engagements.html" class="{{active_engagements}}">
-        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-      </a>
+      <div id="reportsDropdown" class="sidebar-submenu">
+        <a href="reports_sales.html" class="{{active_reports_sales}}">
+        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+        </a>
+        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+        </a>
+      </div>
     </div>
   </nav>
   <!-- Main Content -->

@@ -26,17 +26,11 @@
             flex-direction: column;
             align-items: center;
         }
-        .login-logo {
-            background: #6366f1;
-            color: #fff;
-            border-radius: 8px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 18px;
+        .login-brand-image {
+            max-width: 240px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 24px;
         }
         .login-title {
             font-size: 1.4rem;
@@ -105,9 +99,7 @@
 </head>
 <body>
     <div class="login-container">
-        <div class="login-logo">
-            <i class="fa-solid fa-car"></i>
-        </div>
+        <img src="logo2.png" alt="Simpang Tiga Motor Logo" class="login-brand-image">
         <div class="login-title">Sign in to Showroom</div>
         <div class="login-desc">Enter your email and password to access the dashboard.</div>
         <form class="login-form" onsubmit="login(event)">
@@ -132,7 +124,6 @@
             &copy; 2024 Showroom Admin
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script>
         function login(event) {
             event.preventDefault();
