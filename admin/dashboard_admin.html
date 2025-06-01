@@ -15,6 +15,11 @@
   <!-- Navbar (now outside .main) -->
   <div class="navbar">
     <div class="navbar-left">
+      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
+        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
+          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
+        </svg>
+      </button>
     </div>
     <div class="navbar-right">
       <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
@@ -31,7 +36,7 @@
   <!-- Sidebar -->
   <nav class="sidebar">
     <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
     </div>
     <hr class="sidebar-divider">
     <a href="dashboard_admin.html" class="{{active_dashboard}}">
@@ -91,7 +96,7 @@
       </div>
       <div class="card">
         <h3>Cars Available</h3>
-        <div class="value" id="carsAvailable">12</div>
+        <div class="value" id="carsAvailable">5</div>
       </div>
     </div>
   </main>
@@ -186,6 +191,41 @@
     var submenus = document.querySelectorAll('.sidebar-submenu');
     submenus.forEach(function(submenu) {
       submenu.style.display = 'none';
+    });
+
+    // Theme toggling logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
+    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
+
+    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
+    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        body.classList.add('dark-mode');
+        themeIcon.innerHTML = sunIcon;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-mode');
+        themeIcon.innerHTML = moonIcon;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (body.classList.contains('dark-mode')) {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
     });
   });
 

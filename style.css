@@ -1,19 +1,55 @@
 :root {
-  --background: #f8fafc;
-  --foreground: #11181c;
-  --muted: #f1f5f9;
-  --border: #e2e8f0;
-  --card: #fff;
-  --primary: #11181c;
-  --primary-foreground: #fff;
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
+  /* Light Theme (Default) - Inspired by Simpang Tiga Motor Logo */
+  --background: #F8F9FA; /* Off-White */
+  --foreground: #212529; /* Dark Gray Text */
+  --muted: #E9ECEF;      /* Light Gray for muted backgrounds */
+  --border: #DEE2E6;     /* Standard Light Border */
+  --card: #FFFFFF;          /* White Card Background */
+
+  --primary: #D32F2F;    /* Logo Red for headings/key text */
+  --primary-foreground: #FFFFFF; /* Text on primary-colored surfaces */
+
+  --accent: #B8860B;     /* Classic Gold (DarkGoldenrod) for buttons, links */
+  --accent-hover: #946D09; /* Darker Gold for hover */
+
   --radius: 0.5rem;
-  --shadow: 0 2px 8px 0 rgba(16, 24, 40, 0.04);
-  --sidebar-bg: #fff;
-  --sidebar-border: #e2e8f0;
-  --sidebar-active: #f1f5f9;
-  --sidebar-accent: #6366f1;
+  --shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+
+  --sidebar-bg: #FFFFFF;
+  --sidebar-border: #DEE2E6;
+  --sidebar-active: rgba(184, 134, 11, 0.08); /* Subtle Gold highlight */
+  --sidebar-accent: #B8860B; /* Gold for active item text/icon */
+
+  /* Specific variables for theme toggle icon */
+  --theme-toggle-icon-color: #4A4A4A;
+  --theme-toggle-icon-hover-bg: #E0E0E0;
+}
+
+body.dark-mode {
+  /* Dark Theme - Inspired by Simpang Tiga Motor Logo */
+  --background: #121212; /* Very Dark Gray */
+  --foreground: #EAEAEA; /* Light Gray Text */
+  --muted: #242424;      /* Subtle Dark Backgrounds */
+  --border: #383838;     /* Dark Borders */
+  --card: #1E1E1E;       /* Card Background */
+
+  --primary: #D32F2F;    /* Logo Red - remains consistent */
+  --primary-foreground: #FFFFFF; /* Text on primary-colored surfaces */
+
+  --accent: #FFB300;     /* Logo Gold (Brighter for dark theme) */
+  --accent-hover: #FFA000; /* Darker Gold for hover */
+
+  /* --radius is inherited */
+  --shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.25); /* Adjusted shadow for dark theme */
+
+  --sidebar-bg: #1A1A1A;
+  --sidebar-border: #303030;
+  --sidebar-active: rgba(255, 179, 0, 0.15); /* Subtle Gold highlight */
+  --sidebar-accent: #FFC107; /* Brighter Gold for active item text/icon */
+
+  /* Specific variables for theme toggle icon in dark mode */
+  --theme-toggle-icon-color: #E0E0E0;
+  --theme-toggle-icon-hover-bg: #3A3A3A;
 }
 
 body {
@@ -809,4 +845,38 @@ tr:last-child td {
   height: 1px;
   background: var(--border);
   margin: 16px 0;
+}
+
+/* Theme Toggle Button Styles */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px; /* Space between toggle and profile */
+}
+
+.theme-toggle-btn svg {
+  fill: var(--theme-toggle-icon-color); /* Uses variables defined in :root and body.dark-mode */
+  transition: fill 0.2s ease-in-out;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--theme-toggle-icon-hover-bg);
+}
+
+/* Ensure the toggle is positioned correctly on smaller screens if navbar layout changes */
+@media (max-width: 900px) {
+  .theme-toggle-btn {
+    margin-right: 8px; /* Adjust spacing for smaller navbar */
+    padding: 6px;
+  }
+  .theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+  }
 }

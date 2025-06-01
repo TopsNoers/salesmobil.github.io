@@ -21,16 +21,16 @@
       margin-right: 10px;
     }
     .filter-section input {
-      margin-right: 10px;
-    }
-    .filter-section button {
       padding: 5px 10px;
       border: none;
       border-radius: 5px;
-      background-color: #000;
-      color: #fff;
+      border: 1px solid #e4d0d0;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      color: #000000;
+      height: 25px;
+      margin-right: 10px;
     }
-
     .filter-input {
       padding: 5px 10px;
       border: none;
@@ -47,6 +47,11 @@
   <!-- Navbar (now outside .main) -->
   <div class="navbar">
     <div class="navbar-left">
+      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
+        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
+          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
+        </svg>
+      </button>
     </div>
     <div class="navbar-right">
       <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
@@ -63,7 +68,7 @@
   <!-- Sidebar -->
   <nav class="sidebar">
     <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
     </div>
     <hr class="sidebar-divider">
     <a href="dashboard_admin.html" class="{{active_dashboard}}">
@@ -123,13 +128,6 @@
       <!-- filter end end date -->
       <label for="endDate">End Date</label>
       <input class="filter-input" type="date" id="endDate">
-      <!-- filter end apply button -->
-      <button class="filter-button" id="applyFilter">Apply</button>
-      <!-- filter end reset button -->
-      <button class="filter-button" id="resetFilter">Reset</button>
-
-      <!-- print button -->
-      <button class="filter-button" id="printButton">Print</button>
     </div>
     <div class="filter-section">
       <!-- filter end start date -->
@@ -147,12 +145,12 @@
         <option value="12/10/2024 - 12/10/2025">12/10/2024 - 12/10/2025</option>
       </select>
       <!-- filter end apply button -->
-      <button class="filter-button" id="applyFilter">Apply</button>
+      <button class="btn" id="applyFilter">Apply</button>
       <!-- filter end reset button -->
-      <button class="filter-button" id="resetFilter">Reset</button>
+      <button class="btn" id="resetFilter">Reset</button>
 
       <!-- print button -->
-      <button class="filter-button" id="printButton">Print</button>
+      <button class="btn" id="printButton">Print</button>
     </div>
     <div class="table-responsive">
       <table>
@@ -228,6 +226,42 @@
       submenu.style.display = 'none';
     });
   });
+
+  // Theme toggling logic
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
+    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
+
+    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
+    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        body.classList.add('dark-mode');
+        themeIcon.innerHTML = sunIcon;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-mode');
+        themeIcon.innerHTML = moonIcon;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (body.classList.contains('dark-mode')) {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
+    });
+  
   function openModal(id) {
     document.getElementById(id).classList.add('active');
   }
