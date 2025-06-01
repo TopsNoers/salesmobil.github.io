@@ -100,7 +100,6 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Brand</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Year</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Price (IDR)</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Stock</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Status</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
                     </tr>
@@ -112,17 +111,12 @@
                             <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-16 h-16 object-cover rounded-md">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Avanza 1.3 G</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                        <!-- image dumy -->
-                        <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-20 h-20 object-cover rounded-md">
-                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Toyota</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2023</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">250,000,000</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">5</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100">Available</span></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button onclick="openModal('editCarModal', {id:'car1', model:'Avanza 1.3 G', brand:'Toyota', year:2023, price:250000000, stock:5, status:'Available', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button onclick="openModal('editCarModal', {id:'car1', model:'Avanza 1.3 G', brand:'Toyota', year:2023, price:250000000, status:'Available', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
                             <button data-car-id="car1" class="delete-car-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
                         </td>
                     </tr>
@@ -132,16 +126,12 @@
                             <img src="../images/altis_fr.png" alt="Xenia 1.5 R" class="w-16 h-16 object-cover rounded-md">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Xenia 1.5 R</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                            <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-20 h-20 object-cover rounded-md">
-                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Daihatsu</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">275,000,000</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">0</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-100">Sold Out</span></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                           <button onclick="openModal('editCarModal', {id:'car2', model:'Xenia 1.5 R', brand:'Daihatsu', year:2024, price:275000000, stock:0, status:'Sold Out', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                           <button onclick="openModal('editCarModal', {id:'car2', model:'Xenia 1.5 R', brand:'Daihatsu', year:2024, price:275000000, status:'Sold Out', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
                             <button data-car-id="car2" class="delete-car-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
                         </td>
                     </tr>
@@ -184,15 +174,13 @@
                 </div>
             </div>
             <div>
-                <label for="carImageUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Car Image</label>
-                <input type="file" id="carImageUrl" name="imageUrl" accept="image/*" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
-                <div id="currentImagePreviewContainer" class="mt-2" style="display: none;">
-                    <p class="text-sm text-slate-600 dark:text-slate-400">Current image:</p>
-                    <img id="currentImagePreview" src="#" alt="Current car image" class="mt-1 max-h-24 rounded shadow">
-                    <p id="currentImageUrlText" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+                <label for="carImageUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Car Images</label>
+                <input type="file" id="carImageUrl" name="imageUrl" accept="image/*" multiple class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                <div id="imagePreviewContainer" class="mt-2 flex space-x-2 overflow-x-auto p-2 bg-slate-100 dark:bg-slate-700 rounded" style="min-height: 100px; max-height: 120px;">
+                    <!-- Image previews will be populated here -->
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label for="carYear" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Year</label>
                     <input type="number" id="carYear" name="year" required placeholder="YYYY" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
@@ -200,10 +188,6 @@
                 <div>
                     <label for="carPrice" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Price (IDR)</label>
                     <input type="number" id="carPrice" name="price" required placeholder="e.g., 250000000" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
-                </div>
-                <div>
-                    <label for="carStock" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Stock</label>
-                    <input type="number" id="carStock" name="stock" required placeholder="e.g., 5" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
                 </div>
             </div>
             <div>
@@ -327,17 +311,21 @@
 
     function renderCarRow(car) {
         const statusBadgeClass = getStatusBadgeClass(car.status);
-        const imageUrl = car.imageUrl || '../images/placeholder_car.png'; // Default placeholder
+        const primaryImageUrl = Array.isArray(car.imageUrls) && car.imageUrls.length > 0 ? car.imageUrls[0] : '../images/placeholder_car.png';
+        const additionalImagesCount = Array.isArray(car.imageUrls) ? car.imageUrls.length - 1 : 0;
+
         return `
             <tr data-car-id="${car.id}">
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <img src="${imageUrl}" alt="${car.model}" class="w-16 h-16 object-cover rounded-md">
+                    <div class="flex items-center">
+                        <img src="${primaryImageUrl}" alt="${car.model}" class="w-16 h-16 object-cover rounded-md">
+                        ${additionalImagesCount > 0 ? `<span class="ml-2 text-xs text-slate-500 dark:text-slate-400">(+${additionalImagesCount})</span>` : ''}
+                    </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${car.model}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${car.brand}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${car.year}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${parseFloat(car.price).toLocaleString('id-ID')}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">${car.stock}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusBadgeClass}">${car.status}</span></td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                     <button onclick="openModal('editCarModal', '${car.id}')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
@@ -349,10 +337,15 @@
 
     function renderCarCard(car) {
         const statusBadgeClass = getStatusBadgeClass(car.status);
-        const imageUrl = car.imageUrl || '../images/placeholder_car.png'; // Default placeholder
+        const primaryImageUrl = Array.isArray(car.imageUrls) && car.imageUrls.length > 0 ? car.imageUrls[0] : '../images/placeholder_car.png';
+        const additionalImagesCount = Array.isArray(car.imageUrls) ? car.imageUrls.length - 1 : 0;
+
         return `
             <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-4 space-y-3" data-car-id="${car.id}">
-                <img src="${imageUrl}" alt="${car.model}" class="w-full h-40 object-cover rounded-md mb-3">
+                <div class="relative">
+                    <img src="${primaryImageUrl}" alt="${car.model}" class="w-full h-40 object-cover rounded-md mb-3">
+                    ${additionalImagesCount > 0 ? `<span class="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded V">(+${additionalImagesCount} images)</span>` : ''}
+                </div>
                 <div class="flex justify-between items-start">
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${car.model}</h3>
                     <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusBadgeClass}">${car.status}</span>
@@ -360,7 +353,6 @@
                 <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                     <div><span class="font-medium text-slate-600 dark:text-slate-400">Brand:</span> <span class="text-slate-800 dark:text-slate-200">${car.brand}</span></div>
                     <div><span class="font-medium text-slate-600 dark:text-slate-400">Year:</span> <span class="text-slate-800 dark:text-slate-200">${car.year}</span></div>
-                    <div><span class="font-medium text-slate-600 dark:text-slate-400">Stock:</span> <span class="text-slate-800 dark:text-slate-200">${car.stock}</span></div>
                 </div>
                 <div class="text-sm"><span class="font-medium text-slate-600 dark:text-slate-400">Price:</span> <span class="text-slate-800 dark:text-slate-200">IDR ${parseFloat(car.price).toLocaleString('id-ID')}</span></div>
                 <div class="flex justify-end space-x-3 pt-2 border-t border-slate-200 dark:border-slate-700 mt-3">
@@ -390,39 +382,54 @@
         const initialRows = carsTableBody ? Array.from(carsTableBody.querySelectorAll('tr')) : [];
         initialRows.forEach(row => {
             const editButton = row.querySelector('button[onclick*="editCarModal"]');
-            const imageCell = row.cells[0]; // Assuming first cell is image
-            let imageUrl = '../images/placeholder_car.png'; // Default
+            const imageCell = row.cells[0]; 
+            let imageUrls = ['../images/placeholder_car.png']; // Default
+            
             if (imageCell && imageCell.querySelector('img')) {
-                imageUrl = imageCell.querySelector('img').src;
+                // For now, assume the single image in HTML is the first of potentially multiple.
+                // A more robust solution would involve checking for multiple img tags or a data attribute.
+                const singleImageUrl = imageCell.querySelector('img').src;
+                if (singleImageUrl && singleImageUrl !== '../images/placeholder_car.png') {
+                    imageUrls = [singleImageUrl]; 
+                }
             }
 
             if (editButton) {
                 const onclickAttr = editButton.getAttribute('onclick');
-                // Updated regex to be more robust for parsing the object string
                 const match = onclickAttr.match(/openModal\('editCarModal',\s*(\{[\s\S]*?\})\)/);
                 if (match && match[1]) {
                     try {
                         let carDataString = match[1];
-                        // Sanitize string for new Function: ensure keys are quoted if not already
-                        // and handle potential single quotes in string values correctly
                         carDataString = carDataString.replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":');
-                        carDataString = carDataString.replace(/'/g, '"'); // Convert single to double quotes for JSON parsing
+                        carDataString = carDataString.replace(/'/g, '"'); 
                         
                         const car = JSON.parse(carDataString);
                         
-                        // Ensure imageUrl is included, either from parsed data or from the image cell
-                        if (!car.imageUrl) {
-                            car.imageUrl = imageUrl;
+                        // If car.imageUrl exists and is a string, convert to array.
+                        // If car.imageUrls exists and is not an array, attempt to handle.
+                        // Prioritize imageUrls if present.
+                        if (car.imageUrls && Array.isArray(car.imageUrls)) {
+                            // Already in correct format
+                        } else if (car.imageUrl && typeof car.imageUrl === 'string') {
+                            car.imageUrls = [car.imageUrl]; // Convert single URL to array
+                        } else {
+                            // If no imageUrl or imageUrls in parsed object, use the one extracted from the cell.
+                            car.imageUrls = imageUrls;
                         }
-                        // If the object from onclick doesn't have id, try to get it from data-car-id of the button
+                        delete car.imageUrl; // Remove the old single imageUrl property
+
                         if (!car.id) {
                             const deleteButton = row.querySelector('button.delete-car-btn');
                             if (deleteButton) {
                                 car.id = deleteButton.dataset.carId;
                             }
                         }
-                        // Ensure all core properties are present
-                        if (car.id && car.model && car.brand && car.year != null && car.price != null && car.stock != null && car.status) {
+
+                        if (car.id && car.model && car.brand && car.year != null && car.price != null && car.status) {
+                            // Ensure imageUrls is an array, even if empty
+                            if (!Array.isArray(car.imageUrls)) {
+                                car.imageUrls = ['../images/placeholder_car.png'];
+                            }
                             carsData.push(car);
                         } else {
                             console.warn("Skipping row due to missing essential car data:", row, car);
@@ -433,7 +440,6 @@
                 }
             }
         });
-        // Clear static rows after data extraction as they will be re-rendered
         if (carsTableBody) carsTableBody.innerHTML = ''; 
     }
 
@@ -442,15 +448,52 @@
     const carModalTitle = document.getElementById('carModalTitle');
     const carForm = document.getElementById('carForm');
     const carModalSubmitBtn = document.getElementById('carModalSubmitBtn');
-    const currentImagePreviewContainer = document.getElementById('currentImagePreviewContainer');
-    const currentImagePreview = document.getElementById('currentImagePreview');
-    const currentImageUrlText = document.getElementById('currentImageUrlText');
-    currentImagePreviewContainer.style.display = 'none'; // Hide by default
+    // const currentImagePreviewContainer = document.getElementById('currentImagePreviewContainer'); // Removed
+    // const currentImagePreview = document.getElementById('currentImagePreview'); // Removed
+    // const currentImageUrlText = document.getElementById('currentImageUrlText'); // Removed
+    // currentImagePreviewContainer.style.display = 'none'; // Hide by default // Removed
+
+    // Helper function to add image to preview container
+    function addImageToPreview(imageUrl, fileName, isExisting) {
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        if (!previewContainer) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'relative flex-shrink-0 w-24 h-24 border border-slate-300 dark:border-slate-600 rounded-md overflow-hidden group';
+        if (isExisting) {
+            wrapper.dataset.originalUrl = imageUrl; // Store original URL for existing images
+        }
+        wrapper.dataset.fileName = fileName; // Store filename for later association
+
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = fileName;
+        img.className = 'w-full h-full object-cover';
+        wrapper.appendChild(img);
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100';
+        removeButton.innerHTML = '<i class="fas fa-times"></i>';
+        removeButton.title = 'Remove image';
+        removeButton.onclick = function() {
+            wrapper.remove();
+            // The form submission logic will handle which files are actually included
+            // by checking what previews remain.
+        };
+        wrapper.appendChild(removeButton);
+        previewContainer.appendChild(wrapper);
+    }
+
 
     window.openModal = function(modalType, entityId = null) {
         if (!carForm) return;
         carForm.reset();
         document.getElementById('carId').value = ''; 
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        if (imagePreviewContainer) imagePreviewContainer.innerHTML = ''; // Clear all previews
+        document.getElementById('carImageUrl').value = null; // Clear file input selection
+
 
         if (modalType === 'addCarModal') {
             carModalTitle.textContent = 'Add New Car';
@@ -465,18 +508,20 @@
                 document.getElementById('carBrand').value = carToEdit.brand;
                 document.getElementById('carYear').value = carToEdit.year;
                 document.getElementById('carPrice').value = carToEdit.price;
-                document.getElementById('carStock').value = carToEdit.stock;
                 document.getElementById('carStatus').value = carToEdit.status;
-                // carImageUrl is a file input, cannot set its value directly.
-                // Show current image in preview
-                if (carToEdit.imageUrl && carToEdit.imageUrl !== '../images/placeholder_car.png') {
-                    currentImagePreview.src = carToEdit.imageUrl;
-                    currentImageUrlText.textContent = carToEdit.imageUrl.split('/').pop(); // Display filename
-                    currentImagePreviewContainer.style.display = 'block';
+                
+                if (Array.isArray(carToEdit.imageUrls)) {
+                    carToEdit.imageUrls.forEach(url => {
+                        // Avoid showing placeholder as a removable image if it's the only one
+                        if (url && (carToEdit.imageUrls.length > 1 || url !== '../images/placeholder_car.png')) {
+                           const fileName = url.substring(url.lastIndexOf('/') + 1);
+                           addImageToPreview(url, fileName, true); // true for existing
+                        }
+                    });
                 }
             } else {
                 console.error("Car not found for editing:", entityId);
-                return; // Don't open modal if car not found
+                return; 
             }
         }
         if (carModal) {
@@ -491,62 +536,97 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-        // Also hide image preview if it's the carModal
-        if (modalId === 'carModal') {
-            const currentImagePreviewContainer = document.getElementById('currentImagePreviewContainer');
-            if (currentImagePreviewContainer) { // Ensure element exists
-                 currentImagePreviewContainer.style.display = 'none';
-            }
-        }
+        // No longer need to hide specific image preview container here as it's part of the modal
+        // and cleared/repopulated on openModal.
     }
+
+    const carImageInput = document.getElementById('carImageUrl');
+    if (carImageInput) {
+        carImageInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            // Clear only previews of *newly selected* files before adding the new set
+            if (previewContainer) {
+                Array.from(previewContainer.children).forEach(child => {
+                    if (!child.dataset.originalUrl) { // if it's a preview of a new file (not an existing one)
+                        child.remove();
+                    }
+                });
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.type.startsWith('image/')) { // Basic type check
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        addImageToPreview(e.target.result, file.name, false); // false for new
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    }
+
 
     if (carForm) {
         carForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const formData = new FormData(carForm);
-            const carId = formData.get('carId'); // Keep this as it's a hidden input
+            const carId = formData.get('carId'); 
             
-            const imageFile = formData.get('imageUrl'); // This is a File object
+            // const imageFile = formData.get('imageUrl'); // This will now be a FileList if multiple
 
-            // Construct data object without imageUrl first
             const data = {
-                carId: carId, // Will be empty string if adding, or the id if editing
+                // carId is handled below for edit/add distinction
                 model: formData.get('model'),
                 brand: formData.get('brand'),
                 year: parseInt(formData.get('year'), 10),
                 price: parseFloat(formData.get('price')),
-                stock: parseInt(formData.get('stock'), 10),
-                status: formData.get('status')
+                status: formData.get('status'),
+                // imageUrls will be populated below
             };
 
-            let newImageUrl = null;
-
-            if (imageFile && imageFile.size > 0) { // A new file has been selected
-                // For client-side demo, we'll use a placeholder path.
-                // In a real app, you'd upload the file and get a URL from the server.
-                newImageUrl = `../images/uploads/${imageFile.name}`; // Simulate an upload path
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const keptExistingImageUrls = [];
+            if (imagePreviewContainer) {
+                for (const previewElement of imagePreviewContainer.children) {
+                    if (previewElement.dataset.originalUrl) {
+                        keptExistingImageUrls.push(previewElement.dataset.originalUrl);
+                    }
+                }
             }
 
-            if (data.carId) { // Editing existing car
-                const carIndex = carsData.findIndex(car => car.id === data.carId);
-                if (carIndex !== -1) {
-                    if (newImageUrl) {
-                        data.imageUrl = newImageUrl;
-                    } else {
-                        // No new file selected, keep the existing image URL
-                        data.imageUrl = carsData[carIndex].imageUrl;
+            const newlySelectedFiles = Array.from(document.getElementById('carImageUrl').files);
+            const simulatedNewImageUrls = [];
+            if (newlySelectedFiles.length > 0 && imagePreviewContainer) {
+                 const newPreviewFileNames = Array.from(imagePreviewContainer.children)
+                                           .filter(el => !el.dataset.originalUrl && el.dataset.fileName) // It's a new file preview
+                                           .map(el => el.dataset.fileName);
+
+                newlySelectedFiles.forEach(file => {
+                    if (newPreviewFileNames.includes(file.name)) { // Check if its preview is still there
+                        simulatedNewImageUrls.push(`../images/uploads/${file.name}`); // Simulate an upload path
                     }
-                    carsData[carIndex] = { ...carsData[carIndex], ...data };
+                });
+            }
+            
+            data.imageUrls = [...keptExistingImageUrls, ...simulatedNewImageUrls];
+
+            if (data.imageUrls.length === 0) {
+                data.imageUrls.push('../images/placeholder_car.png');
+            }
+
+
+            if (carId) { // Editing existing car
+                const carIndex = carsData.findIndex(car => car.id === carId);
+                if (carIndex !== -1) {
+                    const existingCar = carsData[carIndex];
+                    carsData[carIndex] = { ...existingCar, ...data }; 
                     alert('Car details updated.');
                 }
             } else { // Adding new car
-                data.id = 'car-' + Date.now(); // Create a unique ID
-                if (newImageUrl) {
-                    data.imageUrl = newImageUrl;
-                } else {
-                    // No file selected for new car, use placeholder
-                    data.imageUrl = '../images/placeholder_car.png';
-                }
+                data.id = 'car-' + Date.now(); 
                 carsData.push(data);
                 alert('New car added.');
             }
@@ -555,6 +635,9 @@
         });
     }
     
+    extractInitialData();
+    refreshViews();
+
     // Unified Delete Handler
     document.body.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-car-btn')) {
@@ -569,10 +652,6 @@
             }
         }
     });
-
-    // Initial Load
-    extractInitialData();
-    refreshViews();
 
     // Add active class to sidebar link for current page
     const currentPath = window.location.pathname.split("/").pop();
