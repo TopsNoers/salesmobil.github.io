@@ -2,268 +2,230 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Add New Engagement | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
     </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
+    <a href="dashboard_sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span class="">Dashboard</span>
+    </a>
+    <a href="cars_catalogue.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars_catalogue}}">
+      <i class="fa-solid fa-car"></i> <span class="">Cars Catalogue</span>
+    </a>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_sales}}">
+        <i class="fa-solid fa-dollar-sign"></i> <span>Sales</span>
+      </a>
+      <a href="engagements.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_engagements}}">
+        <i class="fa-solid fa-handshake"></i> <span>Engagements</span>
+      </a>
+    </div>
+  </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">JD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">John Doe</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="profile.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
-  </div>
- <!-- Sidebar -->
- <nav class="sidebar">
-  <div class="sidebar-logo-image">
-    <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
-  </div>
-  <a href="dashboard_sales.html" class="{{active_dashboard}}">
-    <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-  </a>
-  <div class="sidebar-group">
-    <div class="sidebar-group-title">Transaction</div>
-    <a href="sales.html" class="{{active_sales}}">
-      <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-    </a>
-    <a href="engagements.html" class="{{active_engagements}}">
-      <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-    </a>
-  </div>
-</nav>
-<!-- End of Sidebar -->
-  <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard_sales.html">Dashboard</a>
-      <span>></span>
-      <a href="engagements.html">Engagements</a>
-    </div>
-    <div class="section-header">
-      <h2>Add Engagement</h2>
-    </div>
-    <div class="section-content">
-        <!-- card -->
-        <div class="card">
-            <div class="card-body">
-                <div class="card-content">
-                   <div class="row">
-                     <form id="addEngagementForm" class="form form-row" onsubmit="addEngagement(event)">
-                        <div class="form-col">
-                          <div class="form-group">
-                            <label for="customer">Customer</label>
-                            <select id="customer" name="customer" required>
-                              <option value="">Select Customer</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="salesperson">Salesperson</label>
-                            <select id="salesperson" name="salesperson" required>
-                              <option value="">Select Salesperson</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" id="date" name="date" required>
-                          </div>
-                        </div>
-                        <div class="form-col">
-                          <div class="form-group">
-                            <label for="notes">Notes</label>
-                            <textarea id="notes" name="notes" required></textarea>
-                          </div>
-                          <div class="form-group">
-                            <label for="status">Status</label>
-                            <select id="status" name="status" required>
-                              <option value="">Select Status</option>
-                            </select>
-                          </div>
-                          <div class="form-actions" style="margin-top: 24px;">
-                            <button type="submit" class="btn">Add</button>
-                          </div>
-                        </div>
-                     </form>
-                   </div>
-                </div>
-            </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Add New Engagement</h1>
         </div>
-    </div>
-  </main>
+
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-6">
+            <form id="addEngagementForm" class="space-y-6">
+                <div>
+                    <label for="customerName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Customer Name</label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="Enter customer name" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+
+                <div>
+                    <label for="engagementDate" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Date & Time</label>
+                    <input type="datetime-local" id="engagementDate" name="engagementDate" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                
+                <div>
+                    <label for="engagementType" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Engagement Type</label>
+                    <select id="engagementType" name="engagementType" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        <option value="">Select type</option>
+                        <option value="Call">Call</option>
+                        <option value="Meeting">Meeting</option>
+                        <option value="Test Drive">Test Drive</option>
+                        <option value="Follow Up">Follow Up</option>
+                        <option value="Email">Email</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="salesPerson" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Sales Person (Assigned To)</label>
+                    <input type="text" id="salesPerson" name="salesPerson" required placeholder="Enter sales person name" value="John Doe" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                     <!-- This could be a select dropdown populated with users if a user system is in place -->
+                </div>
+
+                <div>
+                    <label for="notes" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Notes</label>
+                    <textarea id="notes" name="notes" rows="4" required placeholder="Describe the engagement..." class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200"></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="window.location.href='engagements.html'" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 dark:focus:ring-offset-slate-900">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-slate-900">
+                        Add Engagement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+  </div>
 </div>
 
-<nav class="bottom-navbar">
-  <a href="dashboard_sales.html" class="bottom-nav-link"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-  <a href="sales.html" class="bottom-nav-link"><i class="fa-solid fa-dollar-sign"></i><span>Sales</span></a>
-  <a href="engagements.html" class="bottom-nav-link active"><i class="fa-solid fa-handshake"></i><span>Engagements</span></a>
-  <a href="profile.html" class="bottom-nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
-</nav>
-
 <script>
-      // Sidebar dropdown logic
   document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+    // Sidebar Toggle
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
-        }
-      });
-    });
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+          } else {
+            applyTheme('dark');
+          }
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
-    
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addSale(event) {
-    event.preventDefault();
-    const form = event.target;
-    const customer = form.customer.value;
-    const car = form.car.value;
-    const date = form.date.value;
-    const amount = form.amount.value;
-    const status = form.status.value;
-    const tbody = document.getElementById('salesTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${customer}</td>
-      <td>${car}</td>
-      <td>${date}</td>
-      <td>${amount}</td>
-      <td>${status}</td>
-      <td class="actions">
-        <button onclick="openEditSaleModal('${customer}', '${car}', '${date}', '${amount}', '${status}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addSaleModal');
-    form.reset();
-  }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        }
+    });
 
-
-  const customers = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Doe' },
-    { id: 3, name: 'John Smith' },
-    { id: 4, name: 'Jane Smith' },
-  ];
-
-  const salesPerson = [
-    { id: 1, name: 'Maudy Ayunda' },
-    { id: 2, name: 'Dian Sastrowardoyo' },
-    { id: 3, name: 'Rizky Nazar' },
-    { id: 4, name: 'Rizky Febian' },
-  ]
-
-  const statuses = [
-    { id: 1, name: 'New' },
-    { id: 2, name: 'Follow Up' },
-  ];
-
-
-  // add customer to select
-  const customerSelect = document.getElementById('customer');
-  customers.forEach(customer => {
-    const option = document.createElement('option');
-    option.value = customer.id;
-    option.textContent = customer.name;
-    customerSelect.appendChild(option);
-  });
-
-  // add salesperson to select
-  const salespersonSelect = document.getElementById('salesperson');
-  salesPerson.forEach(salesperson => {
-    const option = document.createElement('option');
-    option.value = salesperson.id;
-    option.textContent = salesperson.name;
-    salespersonSelect.appendChild(option);
-  });
-
-  // add status to select
-  const statusSelect = document.getElementById('status');
-  statuses.forEach(status => {
-    const option = document.createElement('option');
-    option.value = status.id; 
-    option.textContent = status.name;
-    statusSelect.appendChild(option);
+    const addEngagementForm = document.getElementById('addEngagementForm');
+    if (addEngagementForm) {
+        addEngagementForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(addEngagementForm);
+            const engagementData = Object.fromEntries(formData.entries());
+            console.log('New Engagement Data:', engagementData);
+            alert('New engagement added (see console for data). This is a demo.');
+            addEngagementForm.reset();
+            // window.location.href = 'engagements.html'; // Optionally redirect
+        });
+    }
   });
 </script>
+
+<!-- Bottom Navbar for mobile -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-2 py-3 flex justify-around items-center z-20 lg:hidden">
+  <a href="dashboard_sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_dashboard}}">
+    <i class="fa-solid fa-gauge text-lg"></i><span class="text-xs mt-1">Dashboard</span>
+  </a>
+  <a href="sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_sales}}">
+    <i class="fa-solid fa-dollar-sign text-lg"></i><span class="text-xs mt-1">Sales</span>
+  </a>
+  <a href="cars_catalogue.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_cars_catalogue}}"> <!-- Active link style for Cars Catalogue -->
+    <i class="fa-solid fa-car text-lg"></i><span class="text-xs mt-1">Catalogue</span>
+  </a>
+  <a href="engagements.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_engagements}}">
+    <i class="fa-solid fa-handshake text-lg"></i><span class="text-xs mt-1">Engagements</span>
+  </a>
+  <a href="profile.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_profile}}">
+    <i class="fa-solid fa-user text-lg"></i><span class="text-xs mt-1">Profile</span>
+  </a>
+</nav>
+
 </body>
 </html> 

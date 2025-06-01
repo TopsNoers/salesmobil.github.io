@@ -2,315 +2,596 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Manage Cars | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">  
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-    <!-- Navbar (now outside .main) -->
-    <div class="navbar">
-      <div class="navbar-left">
-        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-          <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
+    </div>
+    <hr class="border-t border-slate-200 dark:border-slate-700 my-2">
+    <a href="dashboard_admin.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
+    </a>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Master Data</div>
+      <a href="cars.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span>Cars</span>
+      </a>
+      <a href="brands.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span>Brands</span>
+      </a>
+      <a href="customers.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span>Customers</span>
+      </a>
+      <a href="users.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_users}}">
+        <i class="fa-solid fa-users"></i> <span>Users & Permissions</span>
+      </a>
+      <a href="targets.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span>Targets</span>
+      </a>
+    </div>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines"></i> <span>Reports</span>
+        <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
+      </a>
+      <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1">
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line"></i> <span>Report Sales</span>
+        </a>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span>Report Engagement</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
           </svg>
         </button>
       </div>
-      <div class="navbar-right">
-        <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-          <div class="profile-avatar">JD</div>
-          <span class="profile-name">John Doe</span>
-          <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-          <div class="profile-dropdown" id="profileDropdown">
-            <a href="#">Profile</a>
-            <button onclick="logout()">Logout</button>
-          </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">AD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">Admin User</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="sidebar-logo-image">
-        <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
-      </div>
-      <hr class="sidebar-divider">
-      <a href="dashboard_admin.html" class="{{active_dashboard}}">
-        <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-      </a>
-      <div class="sidebar-group">
-        <div class="sidebar-group-title">Master Data</div>
-        <a href="cars.html" class="{{active_cars}}">
-          <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-        </a>
-        <a href="brands.html" class="{{active_brands}}">
-          <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-        </a>
-        <a href="customers.html" class="{{active_customers}}">
-          <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-        </a>
-        <a href="users.html" class="{{active_users}}">
-          <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-        </a>
-        <a href="targets.html" class="{{active_targets}}">
-          <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-        </a>
-      </div>
-  
-      <div class="sidebar-group">
-        <div class="sidebar-group-title">Transaction</div>
-        <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-          <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-          <i class="fa-solid fa-chevron-down dropdown-caret"></i>
-        </a>
-        <div id="reportsDropdown" class="sidebar-submenu">
-          <a href="reports_sales.html" class="{{active_reports_sales}}">
-          <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
-          </a>
-          <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-            <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
-          </a>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Manage Cars</h1>
+            <button onclick="openModal('addCarModal')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                Add New Car
+            </button>
         </div>
-      </div>
-    </nav>
-  <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="cars.html">Cars</a>
-    </div>
-    <div class="section-header">
-      <h2>Cars</h2>
-      <button class="btn" onclick="openModal('addCarModal')">+ Add Car</button>
-    </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Brand</th>
-            <th>Image</th>
-            <th>Year</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="carsTableBody">
-          <tr>
-            <td data-label="Model">Corolla</td>
-            <td data-label="Brand">Toyota</td>
-            <td data-label="Image">
-              <img src="../images/altis_fr.png" alt="Car Image" style="width: 100px;">
-            </td>
-            <td data-label="Year">2021</td>
-            <td data-label="Price">Rp. 200.000.000</td>
-            <td data-label="Status">Available</td>
-            <td data-label="Description">Reliable sedan</td>
-            <td data-label="Actions">
-              <button class="btn" onclick="openEditCarModal('Corolla', 'Toyota', '../images/altis_fr.png', 2021, 20000, 'Available', 'Reliable sedan')">Edit</button>
-              <br>
-              <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
-            </td>
-          </tr>
-          <!-- Add more rows as needed, each <td> with data-label="Column Name" -->
-        </tbody>
-      </table>
-    </div>
-  </main>
-</div>
 
-<!-- Add Car Modal -->
-<div class="modal" id="addCarModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addCarModal')">&times;</button>
-    <h2>Add Car</h2>
-    <form id="addCarForm" onsubmit="addCar(event)">
-      <label>Model</label>
-      <input type="text" name="model" required>
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Image</label>
-      <input type="file" name="image" accept="image/*" required>
-      <label>Year</label>
-      <input type="number" name="year" min="1900" max="2100" required>
-      <label>Price</label>
-      <input type="number" name="price" min="0" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Available">Available</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
+        <!-- Cars Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto hidden sm:block">
+            <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead class="bg-slate-50 dark:bg-slate-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Image</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Model</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Brand</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Year</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Price (IDR)</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Stock</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Status</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="carsTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                    <!-- Demo Row 1 (will be removed by JS, data extracted) -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                            <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-16 h-16 object-cover rounded-md">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Avanza 1.3 G</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        <!-- image dumy -->
+                        <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-20 h-20 object-cover rounded-md">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Toyota</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2023</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">250,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">5</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100">Available</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="openModal('editCarModal', {id:'car1', model:'Avanza 1.3 G', brand:'Toyota', year:2023, price:250000000, stock:5, status:'Available', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button data-car-id="car1" class="delete-car-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Demo Row 2 (will be removed by JS, data extracted) -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                            <img src="../images/altis_fr.png" alt="Xenia 1.5 R" class="w-16 h-16 object-cover rounded-md">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Xenia 1.5 R</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                            <img src="../images/altis_fr.png" alt="Avanza 1.3 G" class="w-20 h-20 object-cover rounded-md">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Daihatsu</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">275,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">0</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-100">Sold Out</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                           <button onclick="openModal('editCarModal', {id:'car2', model:'Xenia 1.5 R', brand:'Daihatsu', year:2024, price:275000000, stock:0, status:'Sold Out', imageUrl:'../images/altis_fr.png'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button data-car-id="car2" class="delete-car-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Card List for Mobile -->
+        <div id="carsCardList" class="space-y-4 sm:hidden">
+            <!-- Cards will be populated by JavaScript -->
+        </div>
+    </main>
   </div>
 </div>
 
-<!-- Edit Car Modal -->
-<div class="modal" id="editCarModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editCarModal')">&times;</button>
-    <h2>Edit Car</h2>
-    <form id="editCarForm" onsubmit="editCar(event)">
-      <label>Model</label>
-      <input type="text" name="model" required>
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Image</label>
-      <input type="file" name="image" accept="image/*" required>
-      <label>Year</label>
-      <input type="number" name="year" min="1900" max="2100" required>
-      <label>Price</label>
-      <input type="number" name="price" min="0" required>
-      <label>Status</label>
-      <select name="status" required>
-        <option value="Available">Available</option>
-        <option value="Sold">Sold</option>
-      </select>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
+<!-- Add/Edit Car Modal -->
+<div id="carModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-lg p-6 space-y-4">
+        <div class="flex justify-between items-center">
+            <h2 id="carModalTitle" class="text-xl font-semibold text-slate-800 dark:text-slate-200">Add New Car</h2>
+            <button onclick="closeModal('carModal')" class="p-1 rounded-full text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="carForm" class="space-y-4">
+            <input type="hidden" id="carId" name="carId">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="carModel" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Model</label>
+                    <input type="text" id="carModel" name="model" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div>
+                    <label for="carBrand" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Brand</label>
+                    <select id="carBrand" name="brand" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        <option value="Toyota">Toyota</option>
+                        <option value="Daihatsu">Daihatsu</option>
+                        <option value="Honda">Honda</option>
+                        <!-- Populate with actual brands -->
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label for="carImageUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Car Image</label>
+                <input type="file" id="carImageUrl" name="imageUrl" accept="image/*" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                <div id="currentImagePreviewContainer" class="mt-2" style="display: none;">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Current image:</p>
+                    <img id="currentImagePreview" src="#" alt="Current car image" class="mt-1 max-h-24 rounded shadow">
+                    <p id="currentImageUrlText" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="carYear" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Year</label>
+                    <input type="number" id="carYear" name="year" required placeholder="YYYY" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div>
+                    <label for="carPrice" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Price (IDR)</label>
+                    <input type="number" id="carPrice" name="price" required placeholder="e.g., 250000000" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div>
+                    <label for="carStock" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Stock</label>
+                    <input type="number" id="carStock" name="stock" required placeholder="e.g., 5" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+            </div>
+            <div>
+                <label for="carStatus" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Status</label>
+                <select id="carStatus" name="status" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                    <option value="Available">Available</option>
+                    <option value="Sold Out">Sold Out</option>
+                    <option value="Booked">Booked</option>
+                </select>
+            </div>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button type="button" onclick="closeModal('carModal')" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Cancel</button>
+                <button type="submit" id="carModalSubmitBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium">Add Car</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sidebar Toggle & Dropdown (Reports)
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const reportsDropdownToggle = document.getElementById('reportsDropdownToggle');
+    const reportsDropdown = document.getElementById('reportsDropdown');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    if (reportsDropdownToggle && reportsDropdown) {
+        if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
+            reportsDropdown.classList.remove('hidden');
+            reportsDropdown.classList.add('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.add('rotate-180');
         }
-      });
-    });
+        reportsDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportsDropdown.classList.toggle('hidden');
+            reportsDropdown.classList.toggle('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
-  
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addCar(event) {
-    event.preventDefault();
-    const form = event.target;
-    const model = form.model.value;
-    const brand = form.brand.value;
-    const image = form.image.value;
-    const year = form.year.value;
-    const price = form.price.value;
-    const status = form.status.value;
-    const description = form.description.value;
-    const tbody = document.getElementById('carsTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td data-label="Model">${model}</td>
-      <td data-label="Brand">${brand}</td>
-      <td data-label="Image">
-        <img src="${image}" alt="Car Image" style="width: 100px;">
-      </td>
-      <td data-label="Year">${year}</td>
-      <td data-label="Price">$${Number(price).toLocaleString()}</td>
-      <td data-label="Status">${status}</td>
-      <td data-label="Description">${description}</td>
-      <td class="actions" data-label="Actions">
-        <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addCarModal');
-    form.reset();
-  }
-  function openEditCarModal(model, brand, image, year, price, status, description) {
-    openModal('editCarModal');
-    const form = document.getElementById('editCarForm');
-    form.model.value = model;
-    form.brand.value = brand;
-    form.image.value = image;
-    form.year.value = year;
-    form.price.value = price;
-    form.status.value = status;
-    form.description.value = description;
-  }
-  function editCar(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editCarModal');
-  }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+            closeModal('carModal');
+        }
+    });
+
+    // Car Data Management
+    let carsData = [];
+    const carsTableBody = document.getElementById('carsTableBody');
+    const carsCardList = document.getElementById('carsCardList');
+
+    function getStatusBadgeClass(status) {
+        if (status === 'Available') return 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100';
+        if (status === 'Sold Out') return 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-100';
+        if (status === 'Booked') return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-100';
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100';
+    }
+
+    function renderCarRow(car) {
+        const statusBadgeClass = getStatusBadgeClass(car.status);
+        const imageUrl = car.imageUrl || '../images/placeholder_car.png'; // Default placeholder
+        return `
+            <tr data-car-id="${car.id}">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <img src="${imageUrl}" alt="${car.model}" class="w-16 h-16 object-cover rounded-md">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${car.model}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${car.brand}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${car.year}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${parseFloat(car.price).toLocaleString('id-ID')}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-center">${car.stock}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusBadgeClass}">${car.status}</span></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                    <button onclick="openModal('editCarModal', '${car.id}')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                    <button data-car-id="${car.id}" class="delete-car-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                </td>
+            </tr>
+        `;
+    }
+
+    function renderCarCard(car) {
+        const statusBadgeClass = getStatusBadgeClass(car.status);
+        const imageUrl = car.imageUrl || '../images/placeholder_car.png'; // Default placeholder
+        return `
+            <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-4 space-y-3" data-car-id="${car.id}">
+                <img src="${imageUrl}" alt="${car.model}" class="w-full h-40 object-cover rounded-md mb-3">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">${car.model}</h3>
+                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusBadgeClass}">${car.status}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                    <div><span class="font-medium text-slate-600 dark:text-slate-400">Brand:</span> <span class="text-slate-800 dark:text-slate-200">${car.brand}</span></div>
+                    <div><span class="font-medium text-slate-600 dark:text-slate-400">Year:</span> <span class="text-slate-800 dark:text-slate-200">${car.year}</span></div>
+                    <div><span class="font-medium text-slate-600 dark:text-slate-400">Stock:</span> <span class="text-slate-800 dark:text-slate-200">${car.stock}</span></div>
+                </div>
+                <div class="text-sm"><span class="font-medium text-slate-600 dark:text-slate-400">Price:</span> <span class="text-slate-800 dark:text-slate-200">IDR ${parseFloat(car.price).toLocaleString('id-ID')}</span></div>
+                <div class="flex justify-end space-x-3 pt-2 border-t border-slate-200 dark:border-slate-700 mt-3">
+                    <button onclick="openModal('editCarModal', '${car.id}')" class="px-3 py-1 text-sm rounded-md text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-700/30 transition">Edit</button>
+                    <button data-car-id="${car.id}" class="delete-car-btn px-3 py-1 text-sm rounded-md text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-700/30 transition">Delete</button>
+                </div>
+            </div>
+        `;
+    }
+    
+    function populateTable() {
+        if (!carsTableBody) return;
+        carsTableBody.innerHTML = carsData.map(car => renderCarRow(car)).join('');
+    }
+
+    function populateCardList() {
+        if (!carsCardList) return;
+        carsCardList.innerHTML = carsData.map(car => renderCarCard(car)).join('');
+    }
+
+    function refreshViews() {
+        populateTable();
+        populateCardList();
+    }
+
+    function extractInitialData() {
+        const initialRows = carsTableBody ? Array.from(carsTableBody.querySelectorAll('tr')) : [];
+        initialRows.forEach(row => {
+            const editButton = row.querySelector('button[onclick*="editCarModal"]');
+            const imageCell = row.cells[0]; // Assuming first cell is image
+            let imageUrl = '../images/placeholder_car.png'; // Default
+            if (imageCell && imageCell.querySelector('img')) {
+                imageUrl = imageCell.querySelector('img').src;
+            }
+
+            if (editButton) {
+                const onclickAttr = editButton.getAttribute('onclick');
+                // Updated regex to be more robust for parsing the object string
+                const match = onclickAttr.match(/openModal\('editCarModal',\s*(\{[\s\S]*?\})\)/);
+                if (match && match[1]) {
+                    try {
+                        let carDataString = match[1];
+                        // Sanitize string for new Function: ensure keys are quoted if not already
+                        // and handle potential single quotes in string values correctly
+                        carDataString = carDataString.replace(/([{,]\s*)([a-zA-Z0-9_]+)\s*:/g, '$1"$2":');
+                        carDataString = carDataString.replace(/'/g, '"'); // Convert single to double quotes for JSON parsing
+                        
+                        const car = JSON.parse(carDataString);
+                        
+                        // Ensure imageUrl is included, either from parsed data or from the image cell
+                        if (!car.imageUrl) {
+                            car.imageUrl = imageUrl;
+                        }
+                        // If the object from onclick doesn't have id, try to get it from data-car-id of the button
+                        if (!car.id) {
+                            const deleteButton = row.querySelector('button.delete-car-btn');
+                            if (deleteButton) {
+                                car.id = deleteButton.dataset.carId;
+                            }
+                        }
+                        // Ensure all core properties are present
+                        if (car.id && car.model && car.brand && car.year != null && car.price != null && car.stock != null && car.status) {
+                            carsData.push(car);
+                        } else {
+                            console.warn("Skipping row due to missing essential car data:", row, car);
+                        }
+                    } catch (e) {
+                        console.error("Error parsing car data from HTML:", e, "Raw data string:", match[1], "Row:", row);
+                    }
+                }
+            }
+        });
+        // Clear static rows after data extraction as they will be re-rendered
+        if (carsTableBody) carsTableBody.innerHTML = ''; 
+    }
+
+    // Modal Handling (Add/Edit Car)
+    const carModal = document.getElementById('carModal');
+    const carModalTitle = document.getElementById('carModalTitle');
+    const carForm = document.getElementById('carForm');
+    const carModalSubmitBtn = document.getElementById('carModalSubmitBtn');
+    const currentImagePreviewContainer = document.getElementById('currentImagePreviewContainer');
+    const currentImagePreview = document.getElementById('currentImagePreview');
+    const currentImageUrlText = document.getElementById('currentImageUrlText');
+    currentImagePreviewContainer.style.display = 'none'; // Hide by default
+
+    window.openModal = function(modalType, entityId = null) {
+        if (!carForm) return;
+        carForm.reset();
+        document.getElementById('carId').value = ''; 
+
+        if (modalType === 'addCarModal') {
+            carModalTitle.textContent = 'Add New Car';
+            carModalSubmitBtn.textContent = 'Add Car';
+        } else if (modalType === 'editCarModal' && entityId) {
+            const carToEdit = carsData.find(car => car.id === entityId);
+            if (carToEdit) {
+                carModalTitle.textContent = 'Edit Car';
+                carModalSubmitBtn.textContent = 'Save Changes';
+                document.getElementById('carId').value = carToEdit.id;
+                document.getElementById('carModel').value = carToEdit.model;
+                document.getElementById('carBrand').value = carToEdit.brand;
+                document.getElementById('carYear').value = carToEdit.year;
+                document.getElementById('carPrice').value = carToEdit.price;
+                document.getElementById('carStock').value = carToEdit.stock;
+                document.getElementById('carStatus').value = carToEdit.status;
+                // carImageUrl is a file input, cannot set its value directly.
+                // Show current image in preview
+                if (carToEdit.imageUrl && carToEdit.imageUrl !== '../images/placeholder_car.png') {
+                    currentImagePreview.src = carToEdit.imageUrl;
+                    currentImageUrlText.textContent = carToEdit.imageUrl.split('/').pop(); // Display filename
+                    currentImagePreviewContainer.style.display = 'block';
+                }
+            } else {
+                console.error("Car not found for editing:", entityId);
+                return; // Don't open modal if car not found
+            }
+        }
+        if (carModal) {
+            carModal.classList.remove('hidden');
+            carModal.classList.add('flex');
+        }
+    }
+
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        // Also hide image preview if it's the carModal
+        if (modalId === 'carModal') {
+            const currentImagePreviewContainer = document.getElementById('currentImagePreviewContainer');
+            if (currentImagePreviewContainer) { // Ensure element exists
+                 currentImagePreviewContainer.style.display = 'none';
+            }
+        }
+    }
+
+    if (carForm) {
+        carForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(carForm);
+            const carId = formData.get('carId'); // Keep this as it's a hidden input
+            
+            const imageFile = formData.get('imageUrl'); // This is a File object
+
+            // Construct data object without imageUrl first
+            const data = {
+                carId: carId, // Will be empty string if adding, or the id if editing
+                model: formData.get('model'),
+                brand: formData.get('brand'),
+                year: parseInt(formData.get('year'), 10),
+                price: parseFloat(formData.get('price')),
+                stock: parseInt(formData.get('stock'), 10),
+                status: formData.get('status')
+            };
+
+            let newImageUrl = null;
+
+            if (imageFile && imageFile.size > 0) { // A new file has been selected
+                // For client-side demo, we'll use a placeholder path.
+                // In a real app, you'd upload the file and get a URL from the server.
+                newImageUrl = `../images/uploads/${imageFile.name}`; // Simulate an upload path
+            }
+
+            if (data.carId) { // Editing existing car
+                const carIndex = carsData.findIndex(car => car.id === data.carId);
+                if (carIndex !== -1) {
+                    if (newImageUrl) {
+                        data.imageUrl = newImageUrl;
+                    } else {
+                        // No new file selected, keep the existing image URL
+                        data.imageUrl = carsData[carIndex].imageUrl;
+                    }
+                    carsData[carIndex] = { ...carsData[carIndex], ...data };
+                    alert('Car details updated.');
+                }
+            } else { // Adding new car
+                data.id = 'car-' + Date.now(); // Create a unique ID
+                if (newImageUrl) {
+                    data.imageUrl = newImageUrl;
+                } else {
+                    // No file selected for new car, use placeholder
+                    data.imageUrl = '../images/placeholder_car.png';
+                }
+                carsData.push(data);
+                alert('New car added.');
+            }
+            refreshViews();
+            closeModal('carModal');
+        });
+    }
+    
+    // Unified Delete Handler
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-car-btn')) {
+            const carIdToDelete = event.target.dataset.carId;
+            const carToDelete = carsData.find(car => car.id === carIdToDelete);
+            if (carToDelete) {
+                if (confirm(`Are you sure you want to delete car ${carToDelete.model}?`)) {
+                    carsData = carsData.filter(car => car.id !== carIdToDelete);
+                    refreshViews();
+                    alert(`Car ${carToDelete.model} deleted.`);
+                }
+            }
+        }
+    });
+
+    // Initial Load
+    extractInitialData();
+    refreshViews();
+
+    // Add active class to sidebar link for current page
+    const currentPath = window.location.pathname.split("/").pop();
+    if (currentPath === "cars.html") {
+        const carsLink = document.querySelector('a[href="cars.html"]');
+        if (carsLink) {
+            carsLink.classList.add('bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white');
+            carsLink.classList.remove('hover:bg-red-500', 'dark:hover:bg-red-600');
+        }
+    } else if (currentPath.startsWith("reports")) {
+         const reportsToggle = document.querySelector('#reportsDropdownToggle');
+         if (reportsToggle) {
+            reportsToggle.classList.add('bg-yellow-400', 'text-white', 'dark:bg-yellow-500', 'dark:text-white');
+            reportsToggle.classList.remove('hover:bg-yellow-400', 'dark:hover:bg-yellow-500');
+         }
+    }
+
+  });
 </script>
+
 </body>
 </html>

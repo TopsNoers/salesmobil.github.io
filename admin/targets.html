@@ -2,266 +2,411 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Sales Targets | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
-        </svg>
-      </button>
-    </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
   <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
     </div>
-    <hr class="sidebar-divider">
-    <a href="dashboard_admin.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+    <hr class="border-t border-slate-200 dark:border-slate-700 my-2">
+    <a href="dashboard_admin.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Master Data</div>
+      <a href="cars.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span>Cars</span>
       </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+      <a href="brands.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span>Brands</span>
       </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+      <a href="customers.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span>Customers</span>
       </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+      <a href="users.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_users}}">
+        <i class="fa-solid fa-users"></i> <span>Users & Permissions</span>
       </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+      <a href="targets.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span>Targets</span>
       </a>
     </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines"></i> <span>Reports</span>
+        <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
       </a>
-      <div id="reportsDropdown" class="sidebar-submenu">
-        <a href="reports_sales.html" class="{{active_reports_sales}}">
-        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+      <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1">
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line"></i> <span>Report Sales</span>
         </a>
-        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span>Report Engagement</span>
         </a>
       </div>
     </div>
   </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
   <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="targets.html">Targets</a>
-    </div>
-    <div class="section-header">
-      <h2>Targets</h2>
-      <button class="btn" onclick="openModal('addTargetModal')">+ Add Target</button>
-    </div>
-    <div class="table-responsive">
-    <table>
-      <thead>
-        <tr>
-          <th>Target</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="targetsTableBody">
-        <tr>
-          <td data-label="Target">100</td>
-          <td data-label="Start Date">2025-Jan-01</td>
-          <td data-label="End Date">2025-Jan-31</td>
-          <td data-label="Status">Active</td>
-          <td data-label="Actions">
-            <button class="btn" onclick="openEditTargetModal('100', '2025-Jan-01', '2025-Jan-31')">Edit</button>
-            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
-  </main>
-</div>
-
-<!-- Add Target Modal -->
-<div class="modal" id="addTargetModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addTargetModal')">&times;</button>
-    <h2>Add Target</h2>
-    <form id="addTargetForm" onsubmit="addTarget(event)">
-      <label>Target</label>
-      <input type="text" name="target" required>
-      <label>Start Date</label>
-      <input type="text" name="start_date" required>
-      <label>End Date</label>
-      <input type="text" name="end_date" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
       </div>
-    </form>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">AD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">Admin User</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Sales Targets</h1>
+            <button onclick="openModal('addTargetModal')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                Set New Target
+            </button>
+        </div>
+
+        <!-- Targets Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+            <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead class="bg-slate-50 dark:bg-slate-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Sales Person</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Period</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Target Units</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actual Units</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Achievement (%)</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="targetsTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                    <!-- Demo Row 1 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">John Doe</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">July 2024</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">50</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">45</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <div class="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 ml-1">90%</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="openModal('editTargetModal', {id: 'demo-1', salesPerson: 'John Doe', period: '2024-07', targetUnits: 50, actualUnits: 45})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Demo Row 2 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Jane Smith</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">July 2024</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">60</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">63</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <div class="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 100%"></div> <!-- Cap progress bar at 100% for display -->
+                            </div>
+                            <span class="text-xs text-green-500 ml-1">105%</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="openModal('editTargetModal', {id: 'demo-2', salesPerson: 'Jane Smith', period: '2024-07', targetUnits: 60, actualUnits: 63})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
   </div>
 </div>
 
-<!-- Edit Target Modal -->
-<div class="modal" id="editTargetModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editTargetModal')">&times;</button>
-    <h2>Edit Target</h2>
-    <form id="editTargetForm" onsubmit="editTarget(event)">
-      <label>Target</label>
-      <input type="text" name="target" required>
-      <label>Start Date</label>
-      <input type="text" name="start_date" required>
-      <label>End Date</label>
-      <input type="text" name="end_date" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
+<!-- Add/Edit Target Modal -->
+<div id="targetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+        <div class="flex justify-between items-center">
+            <h2 id="targetModalTitle" class="text-xl font-semibold text-slate-800 dark:text-slate-200">Set New Target</h2>
+            <button onclick="closeModal('targetModal')" class="p-1 rounded-full text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="targetForm" class="space-y-4">
+            <input type="hidden" id="targetId" name="targetId">
+            <div>
+                <label for="salesPerson" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Sales Person</label>
+                <select id="salesPerson" name="salesPerson" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                    <option value="John Doe">John Doe</option>
+                    <option value="Jane Smith">Jane Smith</option>
+                    <!-- Populate with actual sales persons -->
+                </select>
+            </div>
+            <div>
+                <label for="periodMonth" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Period (Month)</label>
+                <input type="month" id="periodMonth" name="periodMonth" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="targetUnits" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Target Units</label>
+                <input type="number" id="targetUnits" name="targetUnits" required placeholder="e.g., 50" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="actualUnits" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Actual Units (Optional)</label>
+                <input type="number" id="actualUnits" name="actualUnits" placeholder="e.g., 45" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button type="button" onclick="closeModal('targetModal')" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Cancel</button>
+                <button type="submit" id="targetModalSubmitBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium">Set Target</button>
+            </div>
+        </form>
+    </div>
 </div>
+
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sidebar Toggle & Dropdown (Reports)
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const reportsDropdownToggle = document.getElementById('reportsDropdownToggle');
+    const reportsDropdown = document.getElementById('reportsDropdown');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    if (reportsDropdownToggle && reportsDropdown) {
+        if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
+            reportsDropdown.classList.remove('hidden');
+            reportsDropdown.classList.add('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.add('rotate-180');
         }
-      });
-    });
+        reportsDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportsDropdown.classList.toggle('hidden');
+            reportsDropdown.classList.toggle('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
-  
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addTarget(event) {
-    event.preventDefault();
-    const form = event.target;
-    const target = form.target.value;
-    const date = form.date.value;
-    const tbody = document.getElementById('targetsTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${target}</td>
-      <td>${date}</td>
-      <td class="actions">
-        <button onclick="openEditTargetModal('${target}', '${date}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td> 
-    `;
-    tbody.appendChild(row);
-    closeModal('addTargetModal');
-    form.reset();
-  }
-  function openEditTargetModal(target, date) {
-    openModal('editTargetModal');
-    const form = document.getElementById('editTargetForm');
-    form.target.value = target;
-    form.date.value = date;
-  }
-  function editTarget(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editTargetModal');
-  }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+            closeModal('targetModal');
+        }
+    });
+
+    // Modal Handling
+    const targetModal = document.getElementById('targetModal');
+    const targetModalTitle = document.getElementById('targetModalTitle');
+    const targetForm = document.getElementById('targetForm');
+    const targetModalSubmitBtn = document.getElementById('targetModalSubmitBtn');
+
+    window.openModal = function(modalType, targetData = null) {
+        targetForm.reset();
+        document.getElementById('targetId').value = '';
+        if (modalType === 'addTargetModal') {
+            targetModalTitle.textContent = 'Set New Target';
+            targetModalSubmitBtn.textContent = 'Set Target';
+        } else if (modalType === 'editTargetModal' && targetData) {
+            targetModalTitle.textContent = 'Edit Target';
+            targetModalSubmitBtn.textContent = 'Save Changes';
+            document.getElementById('targetId').value = targetData.id; 
+            document.getElementById('salesPerson').value = targetData.salesPerson;
+            document.getElementById('periodMonth').value = targetData.period; 
+            document.getElementById('targetUnits').value = targetData.targetUnits;
+            document.getElementById('actualUnits').value = targetData.actualUnits;
+        }
+        targetModal.classList.remove('hidden');
+        targetModal.classList.add('flex');
+    }
+
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    if (targetForm) {
+        targetForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(targetForm);
+            const data = Object.fromEntries(formData.entries());
+            const targetId = data.targetId;
+
+            // Ensure units are treated as integers
+            const targetUnits = data.targetUnits ? parseInt(data.targetUnits, 10) : 0;
+            const actualUnits = data.actualUnits ? parseInt(data.actualUnits, 10) : 0;
+
+            const achievement = (actualUnits && targetUnits) ? (actualUnits / targetUnits * 100).toFixed(0) : 0;
+            const achievementWidth = Math.min(achievement, 100); // Cap at 100% for progress bar width
+
+            if (targetId) { // Editing existing target
+                console.log('Editing Target:', data);
+                alert('Target updated (demo - see console).');
+                // Find row by ID and update (more robust update logic needed for a real app)
+                // For demo purposes, let's assume we find the row and update its cells
+                const rows = document.getElementById('targetsTableBody').getElementsByTagName('tr');
+                for (let row of rows) {
+                    // This matching is simplistic. In a real app, use a data attribute for the ID on the row.
+                    const editButton = row.querySelector('button.text-indigo-600');
+                    if (editButton) {
+                        const onclickAttr = editButton.getAttribute('onclick');
+                        if (onclickAttr && onclickAttr.includes(`'${targetId}'`)) {
+                             row.cells[0].textContent = data.salesPerson;
+                             row.cells[1].textContent = new Date(data.periodMonth + '-02').toLocaleString('default', { month: 'long', year: 'numeric' });
+                             row.cells[2].textContent = targetUnits;
+                             row.cells[3].textContent = actualUnits || '-';
+                             row.cells[4].querySelector('.bg-green-500').style.width = `${achievementWidth}%`;
+                             row.cells[4].querySelector('span').textContent = `${achievement}%`;
+                             row.cells[4].querySelector('span').className = `text-xs ${achievement >= 100 ? 'text-green-500' : 'text-slate-500 dark:text-slate-400'} ml-1`;
+                             // Update the edit button's onclick data
+                             editButton.setAttribute('onclick', `openModal('editTargetModal', {id: '${targetId}', salesPerson: '${data.salesPerson}', period: '${data.periodMonth}', targetUnits: ${targetUnits}, actualUnits: ${actualUnits || null}})`);
+                            break;
+                        }
+                    }
+                }
+            } else { // Adding new target
+                console.log('Adding New Target:', data);
+                alert('New target set (demo - see console).');
+                const tableBody = document.getElementById('targetsTableBody');
+                const newRow = tableBody.insertRow();
+                const newId = 'demo-' + Math.random().toString(36).substr(2, 9);
+                newRow.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${data.salesPerson}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${new Date(data.periodMonth + '-02').toLocaleString('default', { month: 'long', year: 'numeric' })}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${targetUnits}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${actualUnits || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <div class="w-full bg-slate-200 dark:bg-slate-600 rounded-full h-2.5">
+                            <div class="bg-green-500 h-2.5 rounded-full" style="width: ${achievementWidth}%"></div>
+                        </div>
+                        <span class="text-xs ${achievement >= 100 ? 'text-green-500' : 'text-slate-500 dark:text-slate-400'} ml-1">${achievement}%</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button onclick="openModal('editTargetModal', {id: '${newId}', salesPerson: '${data.salesPerson}', period: '${data.periodMonth}', targetUnits: ${targetUnits}, actualUnits: ${actualUnits || null}})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                        <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                    </td>
+                `;
+            }
+            closeModal('targetModal');
+        });
+    }
+    
+    // Table actions (Delete - simplified, Edit uses openModal)
+    const targetsTableBody = document.getElementById('targetsTableBody');
+    if (targetsTableBody) {
+        targetsTableBody.addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON' && event.target.textContent.toLowerCase() === 'delete') {
+                const row = event.target.closest('tr');
+                const salesPerson = row.cells[0].textContent;
+                if (confirm(`Are you sure you want to delete target for ${salesPerson}? (Demo)`)) {
+                    alert(`Target for ${salesPerson} deleted (Demo)`);
+                    // row.remove(); // Example: remove row from DOM. Add ID to row for proper deletion.
+                }
+            }
+            // Edit button calls openModal which is now updated.
+            // The data passed to openModal for edit demo rows has already been updated above in the HTML part.
+            // The logic below for dynamic rows' edit buttons is handled by the form submission logic which updates the onclick attribute.
+        });
+    }
+
+    // Add active class to sidebar link for current page
+    const currentPath = window.location.pathname.split("/").pop();
+    if (currentPath === "targets.html") {
+        document.querySelector('a[href="targets.html"]').classList.add('bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white');
+        document.querySelector('a[href="targets.html"]').classList.remove('hover:bg-red-500', 'dark:hover:bg-red-600');
+    } else if (currentPath.startsWith("reports")) {
+         document.querySelector('#reportsDropdownToggle').classList.add('bg-yellow-400', 'text-white', 'dark:bg-yellow-500', 'dark:text-white');
+         document.querySelector('#reportsDropdownToggle').classList.remove('hover:bg-yellow-400', 'dark:hover:bg-yellow-500');
+    }
+
+  });
 </script>
+
 </body>
 </html> 
+

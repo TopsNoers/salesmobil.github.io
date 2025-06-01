@@ -5,138 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Car Sales Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            background: #f8fafc;
-            font-family: 'Inter', Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-container {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px 0 rgba(16,24,40,0.10);
-            padding: 40px 32px 32px 32px;
-            width: 100%;
-            max-width: 360px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .login-brand-image {
-            max-width: 240px;
-            width: 100%;
-            height: auto;
-            margin-bottom: 24px;
-        }
-        .login-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #11181c;
-        }
-        .login-desc {
-            color: #64748b;
-            font-size: 1rem;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-        .login-form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .login-form label {
-            font-weight: 500;
-            color: #475569;
-            margin-bottom: 4px;
-        }
-        .login-form input {
-            width: 90%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 1rem;
-            background: #f1f5f9;
-            color: #11181c;
-            outline: none;
-            transition: border 0.15s;
-        }
-        .login-form input:focus {
-            border-color: #6366f1;
-            background: #fff;
-        }
-        .login-btn {
-            background: #6366f1;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 0;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .login-btn:hover {
-            background: #4f46e5;
-        }
-        .login-footer {
-            margin-top: 18px;
-            font-size: 0.95em;
-            color: #64748b;
-            text-align: center;
-        }
-        @media (max-width: 500px) {
-            .login-container {
-                padding: 24px 8px;
-            }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div class="login-container">
-        <img src="logo2.png" alt="Simpang Tiga Motor Logo" class="login-brand-image">
-        <div class="login-title">Sign in to Showroom</div>
-        <div class="login-desc">Enter your email and password to access the dashboard.</div>
-        <form class="login-form" onsubmit="login(event)">
-            <div>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" required autocomplete="username">
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" required autocomplete="current-password">
-            </div>
-            <button type="submit" class="login-btn">Sign In</button>
-        </form>
-        <p>
-            Note:
-            <ul>
-                <li>Admin: admin@mail.com, Password: admin</li>
-                <li>Sales: sales@mail.com, Password: sales</li>
-            </ul>   
-        </p>
-        <div class="login-footer">
-            &copy; 2024 Showroom Admin
-        </div>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen flex flex-col items-center justify-center font-sans p-4">
+    <div class="fixed top-4 right-4">
+        <button id="themeToggleBtn" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition text-slate-600 dark:text-slate-300" title="Toggle theme">
+            <svg id="themeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <!-- Moon icon initially -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+        </button>
     </div>
-    <script>
-        function login(event) {
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl px-8 py-10 w-full max-w-md flex flex-col items-center">
+        <img src="logo2.png" alt="Simpang Tiga Motor Logo" class="max-w-xs w-full h-auto mb-6" id="loginLogo">
+        <div class="text-2xl font-bold mb-2 text-slate-900 dark:text-slate-100">Simpang Tiga Motor</div>
+        <div class="text-sm text-slate-500 dark:text-slate-400 mb-8">Please login to continue</div>
+        <form id="loginForm" class="w-full space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Username</label>
+                <input type="text" id="username" name="username" required class="w-full px-4 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500" placeholder="Enter your username">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                <input type="password" id="password" name="password" required class="w-full px-4 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500" placeholder="Enter your password">
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700">
+                    <label for="remember-me" class="ml-2 block text-sm text-slate-700 dark:text-slate-300">Remember me</label>
+                </div>
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300">Forgot your password?</a>
+                </div>
+            </div>
+            <ul id="errorMessages" class="text-sm text-red-500 dark:text-red-400 space-y-1"></ul>
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900">
+                Login
+            </button>
+        </form>
+    </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Theme toggling logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const loginLogo = document.getElementById('loginLogo'); // Get the logo element
+
+    const sunIconSVG = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+    const moonIconSVG = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (loginLogo) loginLogo.src = 'logo1.png'; // Assuming logo1.png is for dark mode
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (loginLogo) loginLogo.src = 'logo2.png'; // Assuming logo2.png is for light mode
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+          } else {
+            applyTheme('dark');
+          }
+        });
+    }
+
+    // Login form submission (existing logic)
+    const loginForm = document.getElementById('loginForm');
+    const errorMessagesUl = document.getElementById('errorMessages');
+
+    if(loginForm) {
+        loginForm.addEventListener('submit', async function(event) {
             event.preventDefault();
-            const email = document.getElementById('email').value;
+            errorMessagesUl.innerHTML = ''; // Clear previous errors
+
+            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (email === 'admin@mail.com' && password === 'admin') {
+
+            // Basic validation
+            if (!username || !password) {
+                const li = document.createElement('li');
+                li.textContent = 'Username and password are required.';
+                errorMessagesUl.appendChild(li);
+                return;
+            }
+
+            // --- Replace with your actual API call --- 
+            // Simulate API call
+            // try {
+            //     const response = await fetch('/api/login', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({ username, password })
+            //     });
+            //     const data = await response.json();
+            //     if (response.ok && data.token) {
+            //         localStorage.setItem('token', data.token);
+            //         // Determine user role and redirect
+            //         if (data.role === 'admin') {
+            //             window.location.href = 'admin/dashboard_admin.html';
+            //         } else if (data.role === 'sales') {
+            //             window.location.href = 'sales/dashboard_sales.html';
+            //         } else {
+            //             // Handle other roles or default redirect
+            //             window.location.href = 'index.html'; // Or an error page
+            //         }
+            //     } else {
+            //         const li = document.createElement('li');
+            //         li.textContent = data.message || 'Login failed. Please check your credentials.';
+            //         errorMessagesUl.appendChild(li);
+            //     }
+            // } catch (error) {
+            //     const li = document.createElement('li');
+            //     li.textContent = 'An error occurred. Please try again later.';
+            //     errorMessagesUl.appendChild(li);
+            //     console.error('Login error:', error);
+            // }
+            // --- End of API call section ---
+            
+            // DEMO LOGIN (Remove this in production)
+            if (username === 'admin' && password === 'admin') {
+                localStorage.setItem('token', 'fake-admin-token');
+                localStorage.setItem('role', 'admin'); 
                 window.location.href = 'admin/dashboard_admin.html';
-            } else if (email === 'sales@mail.com' && password === 'sales') {
+            } else if (username === 'sales' && password === 'sales') {
+                localStorage.setItem('token', 'fake-sales-token');
+                localStorage.setItem('role', 'sales');
                 window.location.href = 'sales/dashboard_sales.html';
             } else {
-                alert('Invalid credentials');
+                const li = document.createElement('li');
+                li.textContent = 'Invalid username or password (demo). Try admin/admin or sales/sales.';
+                errorMessagesUl.appendChild(li);
             }
-        }
-    </script>
+        });
+    }
+
+    // Check if user is already logged in
+    // const token = localStorage.getItem('token');
+    // const role = localStorage.getItem('role');
+    // if (token && role) {
+    //    if (role === 'admin') {
+    //        window.location.href = 'admin/dashboard_admin.html';
+    //    } else if (role === 'sales') {
+    //        window.location.href = 'sales/dashboard_sales.html';
+    //    }
+    // }
+  });
+</script>
 </body>
 </html>

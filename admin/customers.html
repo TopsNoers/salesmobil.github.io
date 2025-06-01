@@ -2,278 +2,406 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Customers | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
-        </svg>
-      </button>
-    </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
   <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
     </div>
-    <hr class="sidebar-divider">
-    <a href="dashboard_admin.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+    <hr class="border-t border-slate-200 dark:border-slate-700 my-2">
+    <a href="dashboard_admin.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Master Data</div>
+      <a href="cars.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span>Cars</span>
       </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+      <a href="brands.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span>Brands</span>
       </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+      <a href="customers.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span>Customers</span>
       </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+      <a href="users.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_users}}">
+        <i class="fa-solid fa-users"></i> <span>Users & Permissions</span>
       </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+      <a href="targets.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span>Targets</span>
       </a>
     </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines"></i> <span>Reports</span>
+        <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
       </a>
-      <div id="reportsDropdown" class="sidebar-submenu">
-        <a href="reports_sales.html" class="{{active_reports_sales}}">
-        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+      <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1">
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line"></i> <span>Report Sales</span>
         </a>
-        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span>Report Engagement</span>
         </a>
       </div>
     </div>
   </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
   <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="customers.html">Customers</a>
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">AD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">Admin User</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
-    <div class="section-header">
-      <h2>Customers</h2>
-      <button class="btn" onclick="openModal('addCustomerModal')">+ Add Customer</button>
-    </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="customersTableBody">
-        <tr>
-          <td data-label="Name">John Doe</td>
-          <td data-label="Phone">1234567890</td>
-          <td data-label="Address">123 Main St</td>
-          <td data-label="Actions">
-            <button class="btn" onclick="openEditCustomerModal('John Doe', '1234567890', 'john.doe@example.com', '123 Main St')">Edit</button>
-            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
-  </main>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Customers</h1>
+            <button onclick="openModal('addCustomerModal')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                Add New Customer
+            </button>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+            <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead class="bg-slate-50 dark:bg-slate-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Name</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Email</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Phone</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Address</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customersTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                    <!-- Demo Row 1 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Budi Santoso</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">budi.santoso@example.com</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">081234567890</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Jl. Merdeka No. 10, Jakarta</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="openModal('editCustomerModal')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Demo Row 2 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Citra Lestari</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">citra.lestari@example.com</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">085678901234</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Jl. Pahlawan No. 20, Surabaya</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="openModal('editCustomerModal')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+  </div>
 </div>
 
-<!-- Add Car Modal -->
-<div class="modal" id="addCustomerModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
-    <h2>Add Customer</h2>
-    <form id="addCustomerForm" onsubmit="addCustomer(event)">
-      <label>Name</label>
-      <input type="text" name="name" required>
-      <label>Phone</label>
-      <input type="text" name="phone" required>
-      <label>Email</label>
-      <input type="email" name="email" required>
-      <label>Address</label>
-      <input type="text" name="address" required>
-      <label>City</label>
-      <input type="text" name="city" required>
-      <label>State</label>
-      <input type="text" name="state" required>
-      <label>Zip</label>
-      <input type="text" name="zip" required>
-      <label>Country</label>
-      <select name="status" required>
-        <option value="Available">Available</option>
-        <option value="Sold">Sold</option>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
-  </div>
+<!-- Add Customer Modal -->
+<div id="addCustomerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Add New Customer</h2>
+            <button onclick="closeModal('addCustomerModal')" class="p-1 rounded-full text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="addCustomerForm" class="space-y-4">
+            <div>
+                <label for="addCustomerName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Full Name</label>
+                <input type="text" id="addCustomerName" name="name" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="addCustomerEmail" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+                <input type="email" id="addCustomerEmail" name="email" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="addCustomerPhone" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Phone</label>
+                <input type="tel" id="addCustomerPhone" name="phone" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="addCustomerAddress" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Address</label>
+                <textarea id="addCustomerAddress" name="address" rows="3" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200"></textarea>
+            </div>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button type="button" onclick="closeModal('addCustomerModal')" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium">Add Customer</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <!-- Edit Customer Modal -->
-<div class="modal" id="editCustomerModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editCustomerModal')">&times;</button>
-    <h2>Edit Customer</h2>
-    <form id="editCustomerForm" onsubmit="editCustomer(event)">
-      <label>Name</label>
-      <input type="text" name="name" required>
-      <label>Phone</label>
-      <input type="text" name="phone" required>
-      <label>Address</label>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
-  </div>
+<div id="editCustomerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Edit Customer</h2>
+            <button onclick="closeModal('editCustomerModal')" class="p-1 rounded-full text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="editCustomerForm" class="space-y-4">
+            <input type="hidden" id="editCustomerId" name="customerId">
+            <div>
+                <label for="editCustomerName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Full Name</label>
+                <input type="text" id="editCustomerName" name="name" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="editCustomerEmail" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
+                <input type="email" id="editCustomerEmail" name="email" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="editCustomerPhone" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Phone</label>
+                <input type="tel" id="editCustomerPhone" name="phone" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+            </div>
+            <div>
+                <label for="editCustomerAddress" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Address</label>
+                <textarea id="editCustomerAddress" name="address" rows="3" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200"></textarea>
+            </div>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button type="button" onclick="closeModal('editCustomerModal')" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium">Save Changes</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sidebar Toggle & Dropdown (Reports)
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const reportsDropdownToggle = document.getElementById('reportsDropdownToggle');
+    const reportsDropdown = document.getElementById('reportsDropdown');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    if (reportsDropdownToggle && reportsDropdown) {
+        // Check if the current page is a reports page to open by default
+        if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
+            reportsDropdown.classList.remove('hidden');
+            reportsDropdown.classList.add('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.add('rotate-180');
         }
-      });
-    });
+        reportsDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportsDropdown.classList.toggle('hidden');
+            reportsDropdown.classList.toggle('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+          } else {
+            applyTheme('dark');
+          }
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
-  
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addCustomer(event) {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const phone = form.phone.value;
-    const address = form.address.value;
-    const tbody = document.getElementById('customersTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${name}</td>
-      <td>${phone}</td>
-      <td>${address}</td>
-      <td class="actions">
-        <button onclick="openEditCustomerModal('${name}', '${phone}', '${email}', '${address}', '${city}', '${state}', '${zip}', '${country}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addCarModal');
-    form.reset();
-  }
-  function openEditCustomerModal(name, phone, email, address, city, state, zip, country) {
-    openModal('editCustomerModal');
-    const form = document.getElementById('editCustomerForm');
-    form.name.value = name;
-    form.phone.value = phone;
-    form.address.value = address;
-  }
-  function editCustomer(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editCustomerModal');
-  }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+            closeModal('addCustomerModal');
+            closeModal('editCustomerModal');
+        }
+    });
+
+    // Modal Handling
+    window.openModal = function(modalId, customerData = null) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (modalId === 'editCustomerModal' && customerData) {
+                document.getElementById('editCustomerId').value = customerData.id;
+                document.getElementById('editCustomerName').value = customerData.name;
+                document.getElementById('editCustomerEmail').value = customerData.email;
+                document.getElementById('editCustomerPhone').value = customerData.phone;
+                document.getElementById('editCustomerAddress').value = customerData.address;
+            }
+        }
+    }
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            if (modalId === 'addCustomerModal') {
+                document.getElementById('addCustomerForm').reset();
+            }
+        }
+    }
+
+    // Add Customer Form
+    const addCustomerForm = document.getElementById('addCustomerForm');
+    if (addCustomerForm) {
+        addCustomerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(addCustomerForm);
+            const customerData = Object.fromEntries(formData.entries());
+            console.log('Add Customer Data:', customerData);
+            alert('New customer added (demo - see console).');
+            // Add to table (demo)
+            const tableBody = document.getElementById('customersTableBody');
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${customerData.name}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${customerData.email}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${customerData.phone}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${customerData.address}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                    <button onclick="openModal('editCustomerModal', {id: 'new', name: '${customerData.name}', email: '${customerData.email}', phone: '${customerData.phone}', address: '${customerData.address}'})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                </td>
+            `;
+            closeModal('addCustomerModal');
+        });
+    }
+
+    // Edit Customer Form
+    const editCustomerForm = document.getElementById('editCustomerForm');
+    if (editCustomerForm) {
+        editCustomerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(editCustomerForm);
+            const customerData = Object.fromEntries(formData.entries());
+            console.log('Edit Customer Data (ID: ${customerData.customerId}):', customerData);
+            alert('Customer details updated (demo - see console).');
+            // Update table row (demo)
+            closeModal('editCustomerModal');
+        });
+    }
+
+    // Table actions (Delete - simplified)
+    const customersTableBody = document.getElementById('customersTableBody');
+    if (customersTableBody) {
+        customersTableBody.addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON' && event.target.textContent.toLowerCase() === 'delete') {
+                const row = event.target.closest('tr');
+                const customerName = row.cells[0].textContent;
+                if (confirm(`Are you sure you want to delete customer ${customerName}? (Demo)`)) {
+                    alert(`Customer ${customerName} deleted (Demo)`);
+                    // row.remove();
+                }
+            }
+            // Populate edit modal when edit is clicked
+            if (event.target.tagName === 'BUTTON' && event.target.textContent.toLowerCase() === 'edit') {
+                const row = event.target.closest('tr');
+                const customer = {
+                    id: row.dataset.customerId || 'demoId-' + Math.random().toString(36).substr(2, 9), // Use a data attribute if available
+                    name: row.cells[0].textContent,
+                    email: row.cells[1].textContent,
+                    phone: row.cells[2].textContent,
+                    address: row.cells[3].textContent,
+                };
+                openModal('editCustomerModal', customer);
+            }
+        });
+    }
+
+    // Add active class to sidebar link for current page
+    const currentPath = window.location.pathname.split("/").pop();
+    if (currentPath === "customers.html") {
+        document.querySelector('a[href="customers.html"]').classList.add('bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white');
+        document.querySelector('a[href="customers.html"]').classList.remove('hover:bg-red-500', 'dark:hover:bg-red-600'); // Avoid double hover effect
+    } else if (currentPath.startsWith("reports")) {
+         document.querySelector('#reportsDropdownToggle').classList.add('bg-yellow-400', 'text-white', 'dark:bg-yellow-500', 'dark:text-white');
+         document.querySelector('#reportsDropdownToggle').classList.remove('hover:bg-yellow-400', 'dark:hover:bg-yellow-500');
+    }
+
+  });
 </script>
+
 </body>
 </html>

@@ -2,259 +2,292 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Sales | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
-        </svg>
-      </button>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
     </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
+    <a href="dashboard_sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span class="">Dashboard</span>
+    </a>
+    <a href="cars_catalogue.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars_catalogue}}">
+      <i class="fa-solid fa-car"></i> <span class="">Cars Catalogue</span>
+    </a>
+    <!-- Transaction -->
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <!-- Sales -->
+      <a href="sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_sales}}">
+        <i class="fa-solid fa-dollar-sign"></i> <span>Sales</span>
+      </a>
+      <a href="engagements.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_engagements}}">
+        <i class="fa-solid fa-handshake"></i> <span>Engagements</span>
+      </a>
+    </div>
+  </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">JD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">John Doe</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="profile.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
-  </div>
- <!-- Sidebar -->
- <nav class="sidebar">
-  <div class="sidebar-logo-image">
-    <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
-  </div>
-  <a href="dashboard_sales.html" class="{{active_dashboard}}">
-    <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-  </a>
-  <div class="sidebar-group">
-    <div class="sidebar-group-title">Transaction</div>
-    <a href="sales.html" class="{{active_sales}}">
-      <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
-    </a>
-    <a href="engagements.html" class="{{active_engagements}}">
-      <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
-    </a>
-  </div>
-</nav>
-<!-- End of Sidebar -->
-  <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard_sales.html">Dashboard</a>
-      <span>></span>
-      <a href="sales.html">Sales</a>
-    </div>
-    <div class="section-header">
-      <h2>Sales</h2>
-      <button class="btn" onclick="window.location.href='add_sales.html'">+ Add Sale</button>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>Car</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="carsTableBody">
-        <tr>
-          <td>John Doe</td>
-          <td>Toyota Corolla</td>
-          <td>21/06/2025</td>
-          <td>10000</td>
-          <td class="actions">
-            <button onclick="openEditSaleModal('John Doe', 'Toyota Corolla', '21/06/2025', '10000', 'Pending')">Edit</button>
-            <button onclick="alert('Delete not implemented')">Delete</button>
-          </td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
-  </main>
-</div>
 
-<!-- Add Car Modal -->
-<div class="modal" id="addSaleModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addSaleModal')">&times;</button>
-    <h2>Add Sale</h2>
-    <form id="addSaleForm" onsubmit="addSale(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Sales Transactions</h1>
+            <a href="add_sales.html" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                Add New Sale
+            </a>
+        </div>
 
-<!-- Edit Sale Modal -->
-<div class="modal" id="editSaleModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editSaleModal')">&times;</button>
-    <h2>Edit Sale</h2>
-    <form id="editSaleForm" onsubmit="editSale(event)">
-      <label>Customer</label>
-      <input type="text" name="customer" required>
-      <label>Car</label>
-      <input type="text" name="car" required>
-      <label>Date</label>
-      <input type="date" name="date" required>
-      <label>Amount</label>
-      <input type="number" name="amount" required>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
-      </div>
-    </form>
+        <!-- Filters -->
+        <div class="mb-6 p-4 bg-white dark:bg-slate-800 rounded-lg shadow">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                    <label for="filterCustomer" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Customer</label>
+                    <input type="text" id="filterCustomer" name="filterCustomer" placeholder="Search customer..." class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div>
+                    <label for="filterCarModel" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Car Model</label>
+                    <input type="text" id="filterCarModel" name="filterCarModel" placeholder="Search car model..." class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div>
+                    <label for="filterDate" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Date Range</label>
+                    <input type="date" id="filterDate" name="filterDate" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                </div>
+                <div class="flex items-end">
+                    <button type="button" id="applyFilters" class="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sales Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+            <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead class="bg-slate-50 dark:bg-slate-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Invoice ID</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Customer</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Car Model</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Date</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Amount (IDR)</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Sales Person</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                    <!-- Demo Row 1 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">INV-2024001</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Ahmad Yani</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Toyota Avanza</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024-07-20</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">250,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">John Doe</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">View</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Demo Row 2 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">INV-2024002</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Siti Aminah</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Daihatsu Xenia</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024-07-18</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">220,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">John Doe</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">View</button>
+                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- More rows will be added by JavaScript or from a backend -->
+                </tbody>
+            </table>
+        </div>
+         <!-- Pagination -->
+        <div class="mt-6 flex justify-center">
+            <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <span class="sr-only">Previous</span>
+                    <i class="fas fa-chevron-left h-5 w-5"></i>
+                </a>
+                <a href="#" aria-current="page" class="relative z-10 inline-flex items-center px-4 py-2 border border-red-500 bg-red-50 dark:bg-red-900/30 text-sm font-medium text-red-600 dark:text-red-400">1</a>
+                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">2</a>
+                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <span class="sr-only">Next</span>
+                    <i class="fas fa-chevron-right h-5 w-5"></i>
+                </a>
+            </nav>
+        </div>
+    </main>
   </div>
 </div>
-
-<nav class="bottom-navbar">
-  <a href="dashboard_sales.html" class="bottom-nav-link"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-  <a href="sales.html" class="bottom-nav-link active"><i class="fa-solid fa-dollar-sign"></i><span>Sales</span></a>
-  <a href="engagements.html" class="bottom-nav-link"><i class="fa-solid fa-handshake"></i><span>Engagements</span></a>
-  <a href="profile.html" class="bottom-nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
-</nav>
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sidebar Toggle
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
-        }
-      });
-    });
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addSale(event) {
-    event.preventDefault();
-    const form = event.target;
-    const customer = form.customer.value;
-    const car = form.car.value;
-    const date = form.date.value;
-    const amount = form.amount.value;
-    const status = form.status.value;
-    const tbody = document.getElementById('salesTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${customer}</td>
-      <td>${car}</td>
-      <td>${date}</td>
-      <td>${amount}</td>
-      <td>${status}</td>
-      <td class="actions">
-        <button onclick="openEditSaleModal('${customer}', '${car}', '${date}', '${amount}', '${status}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addSaleModal');
-    form.reset();
-  }
-  function openEditSaleModal(customer, car, date, amount, status) {
-    openModal('editSaleModal');
-    const form = document.getElementById('editSaleForm');
-    form.customer.value = customer;
-    form.car.value = car;
-    form.date.value = date;
-    form.amount.value = amount;
-    form.status.value = status;
-  }
-  function editSale(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editSaleModal');
-  }
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+          } else {
+            applyTheme('dark');
+          }
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        }
+    });
+
+    // Demo filter functionality
+    const applyFiltersBtn = document.getElementById('applyFilters');
+    if(applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', () => {
+            const customerFilter = document.getElementById('filterCustomer').value;
+            const carModelFilter = document.getElementById('filterCarModel').value;
+            const dateFilter = document.getElementById('filterDate').value;
+            console.log('Applying filters:', { customerFilter, carModelFilter, dateFilter });
+            alert('Filter functionality is for demo. See console for filter values.');
+        });
+    }
+
+    // Placeholder for view/delete actions on table rows
+    const salesTableBody = document.getElementById('salesTableBody');
+    if (salesTableBody) {
+        salesTableBody.addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON') {
+                const action = event.target.textContent.toLowerCase();
+                const row = event.target.closest('tr');
+                const invoiceId = row.cells[0].textContent;
+                if (action === 'view') {
+                    alert(`View action for Invoice ${invoiceId} (Demo)`);
+                    // window.location.href = `view_sale_details.html?id=${invoiceId}`; // Example redirect
+                } else if (action === 'delete') {
+                    if (confirm(`Are you sure you want to delete Invoice ${invoiceId}? (Demo)`)) {
+                        alert(`Delete action for Invoice ${invoiceId} (Demo)`);
+                        // row.remove(); // Example: remove row from DOM
+                    }
+                }
+            }
+        });
+    }
+  });
 </script>
+
+<!-- Bottom Navbar for mobile -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-2 py-3 flex justify-around items-center z-20 lg:hidden">
+  <a href="dashboard_sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_dashboard}}">
+    <i class="fa-solid fa-gauge text-lg"></i><span class="text-xs mt-1">Dashboard</span>
+  </a>
+  <a href="sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_sales}}">
+    <i class="fa-solid fa-dollar-sign text-lg"></i><span class="text-xs mt-1">Sales</span>
+  </a>
+  <a href="cars_catalogue.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_cars_catalogue}}"> <!-- Active link style for Cars Catalogue -->
+    <i class="fa-solid fa-car text-lg"></i><span class="text-xs mt-1">Catalogue</span>
+  </a>
+  <a href="engagements.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_engagements}}">
+    <i class="fa-solid fa-handshake text-lg"></i><span class="text-xs mt-1">Engagements</span>
+  </a>
+  <a href="profile.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_profile}}">
+    <i class="fa-solid fa-user text-lg"></i><span class="text-xs mt-1">Profile</span>
+  </a>
+</nav>
+
 </body>
 </html> 

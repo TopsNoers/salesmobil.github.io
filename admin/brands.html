@@ -2,267 +2,502 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Manage Brands | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <!-- Link to your compiled Tailwind CSS file -->
+  <!-- <link href="/path/to/your/tailwind.css" rel="stylesheet"> -->
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Temporary for demonstration; replace with compiled CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-    <!-- Navbar (now outside .main) -->
-    <div class="navbar">
-      <div class="navbar-left">
-        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-          <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
+    </div>
+    <hr class="border-t border-slate-200 dark:border-slate-700 my-2">
+    <a href="dashboard_admin.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge w-5 text-center"></i> <span>Dashboard</span>
+    </a>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Master Data</div>
+      <a href="cars.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars}}">
+        <i class="fa-solid fa-car w-5 text-center"></i> <span>Cars</span>
+      </a>
+      <a href="brands.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_brands}}">
+        <i class="fa-solid fa-flag w-5 text-center"></i> <span>Brands</span>
+      </a>
+      <a href="customers.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_customers}}">
+        <i class="fa-solid fa-user w-5 text-center"></i> <span>Customers</span>
+      </a>
+      <a href="users.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_users}}">
+        <i class="fa-solid fa-users w-5 text-center"></i> <span>Users & Permissions</span>
+      </a>
+      <a href="targets.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_targets}}">
+        <i class="fa-solid fa-bullseye w-5 text-center"></i> <span>Targets</span>
+      </a>
+    </div>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines w-5 text-center"></i> <span>Reports</span>
+        <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
+      </a>
+      <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1"> {/* Initially hidden, JS will control display */}
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line w-5 text-center"></i> <span>Report Sales</span>
+        </a>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle w-5 text-center"></i> <span>Report Engagement</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar --> 
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            {/* Path will be set by JS */}
           </svg>
         </button>
       </div>
-      <div class="navbar-right">
-        <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-          <div class="profile-avatar">JD</div>
-          <span class="profile-name">John Doe</span>
-          <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-          <div class="profile-dropdown" id="profileDropdown">
-            <a href="#">Profile</a>
-            <button onclick="logout()">Logout</button>
-          </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">JD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">John Doe</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="sidebar-logo-image">
-        <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+      <!-- Breadcrumb -->
+      <div class="mb-6 text-sm text-slate-500 dark:text-slate-400">
+        <a href="dashboard_admin.html" class="hover:text-red-600 dark:hover:text-red-500">Dashboard</a>
+        <span class="mx-1">></span>
+        <a href="brands.html" class="hover:text-red-600 dark:hover:text-red-500">Brands</a>
       </div>
-      <hr class="sidebar-divider">
-      <a href="dashboard_admin.html" class="{{active_dashboard}}">
-        <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
-      </a>
-      <div class="sidebar-group">
-        <div class="sidebar-group-title">Master Data</div>
-        <a href="cars.html" class="{{active_cars}}">
-          <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
-        </a>
-        <a href="brands.html" class="{{active_brands}}">
-          <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
-        </a>
-        <a href="customers.html" class="{{active_customers}}">
-          <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
-        </a>
-        <a href="users.html" class="{{active_users}}">
-          <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
-        </a>
-        <a href="targets.html" class="{{active_targets}}">
-          <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
-        </a>
-      </div>
-  
-      <div class="sidebar-group">
-        <div class="sidebar-group-title">Transaction</div>
-        <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-          <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-          <i class="fa-solid fa-chevron-down dropdown-caret"></i>
-        </a>
-        <div id="reportsDropdown" class="sidebar-submenu">
-          <a href="reports_sales.html" class="{{active_reports_sales}}">
-          <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
-          </a>
-          <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-            <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
-          </a>
-        </div>
-      </div>
-    </nav>
-  <!-- End of Sidebar -->
-  <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="brands.html">Brands</a>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Manage Brands</h1>
+        <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition shadow-sm" onclick="openModal('addBrandModal')">
+            + Add Brand
+        </button>
     </div>
-    <div class="section-header">
-      <h2>Brands</h2>
-      <button class="btn" onclick="openModal('addBrandModal')">+ Add Brand</button>
-    </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Brand</th>
-            <th>Description</th>
-            <th>Actions</th>
+      <div id="brandsListContainer" class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+        <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+          <thead class="bg-slate-50 dark:bg-slate-700">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Brand</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Description</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
-      <tbody id="brandsTableBody">
-        <tr>
-          <td data-label="Brand">Toyota</td>
-          <td data-label="Description" style="text-wrap: wrap;">Toyota Mobil</td>
-          <td data-label="Actions">
-            <button class="btn" onclick="openEditBrandModal('Toyota', 'Toyota Mobil')">Edit</button>
-            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
+        <tbody id="brandsTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+          <!-- Demo Row 1 -->
+          <tr data-brand-id="brand1">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Toyota</td>
+            <td class="px-6 py-4 whitespace-normal text-sm text-slate-500 dark:text-slate-400 max-w-xs">Toyota Mobil</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+              <button onclick="openEditBrandModal('Toyota', 'Toyota Mobil', 'brand1')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+              <button onclick="deleteBrand('brand1', 'Toyota')" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td data-label="Brand">Honda</td>
-          <td data-label="Description" style="text-wrap: wrap;">Honda Mobil</td>
-          <td data-label="Actions">
-            <button class="btn" onclick="openEditBrandModal('Honda', 'Honda Mobil')">Edit</button>
-            <button class="btn" onclick="alert('Delete not implemented')">Delete</button>
+          <!-- Demo Row 2 -->
+          <tr data-brand-id="brand2">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Honda</td>
+            <td class="px-6 py-4 whitespace-normal text-sm text-slate-500 dark:text-slate-400 max-w-xs">Honda Mobil</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+              <button onclick="openEditBrandModal('Honda', 'Honda Mobil', 'brand2')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+              <button onclick="deleteBrand('brand2', 'Honda')" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div id="brandsCardView" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        <!-- Cards will be injected here by JavaScript -->
+    </div>
+    </div>
   </main>
-</div>
-
-<!-- Add Brand Modal -->
-<div class="modal" id="addBrandModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('addBrandModal')">&times;</button>
-    <h2>Add Brand</h2>
-    <form id="addBrandForm" onsubmit="addBrand(event)">
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Add</button>
-      </div>
-    </form>
   </div>
 </div>
 
-<!-- Edit Brand Modal -->
-<div class="modal" id="editBrandModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editBrandModal')">&times;</button>
-    <h2>Edit Brand</h2>
-    <form id="editBrandForm" onsubmit="editBrand(event)">
-      <label>Brand</label>
-      <input type="text" name="brand" required>
-      <label>Description</label>
-      <textarea name="description"></textarea>
-      <div class="modal-actions">
-        <button type="submit" class="btn">Save</button>
+<!-- Add/Edit Brand Modal -->
+<div id="brandModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 p-4">
+  <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-lg p-6 space-y-4">
+    <div class="flex justify-between items-center">
+      <h2 id="brandModalTitle" class="text-xl font-semibold text-slate-800 dark:text-slate-200">Add New Brand</h2>
+      <button onclick="closeModal('brandModal')" class="p-1 rounded-full text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form id="brandForm" class="space-y-4">
+      <input type="hidden" id="brandId" name="brandId">
+      <div>
+        <label for="brandName" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Brand Name</label>
+        <input type="text" id="brandName" name="name" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+      </div>
+      <div>
+        <label for="brandDescription" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Description</label>
+        <textarea id="brandDescription" name="description" rows="3" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200"></textarea>
+      </div>
+      <div class="flex justify-end space-x-3 pt-2">
+        <button type="button" onclick="closeModal('brandModal')" class="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Cancel</button>
+        <button type="submit" id="brandModalSubmitBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium">Add Brand</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-    // Sidebar dropdown logic
     document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+    // Sidebar Toggle & Dropdown (Reports)
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const reportsDropdownToggle = document.getElementById('reportsDropdownToggle');
+    const reportsDropdown = document.getElementById('reportsDropdown');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    if (reportsDropdownToggle && reportsDropdown) {
+        // Keep reports dropdown open if on a reports page (example)
+        if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
+            reportsDropdown.classList.remove('hidden');
+            reportsDropdown.classList.add('flex'); // Use flex for vertical layout if needed
+            const caret = reportsDropdownToggle.querySelector('i.fa-chevron-down');
+            if (caret) caret.classList.add('rotate-180');
         }
-      });
-    });
+        reportsDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportsDropdown.classList.toggle('hidden');
+            reportsDropdown.classList.toggle('flex'); // Or 'block' depending on desired layout
+            const caret = reportsDropdownToggle.querySelector('i.fa-chevron-down');
+            if (caret) caret.classList.toggle('rotate-180');
+        });
+    }
+    
+    // Global logout function
+    window.logout = function() {
+      console.log('Logout clicked');
+      // Add actual logout logic here, e.g., clearing tokens, redirecting
+      // localStorage.removeItem('token'); 
+      // window.location.href = '../index.html'; 
+      alert('Logout functionality to be implemented.');
+    }
 
-
-    // Theme toggling logic
+    // Theme Toggling
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sidebarLogo = document.getElementById('sidebarLogo'); // Assuming you have a logo in sidebar
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Dark mode logo
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Light mode logo
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-    applyTheme(savedTheme);
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme); // Apply theme on load
 
+    if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+    }
+
+    // Profile Menu Dropdown
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation(); // Prevent click from bubbling to document
+        });
+    }
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
+    // Close on Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+            closeModal('brandModal'); // Also close brand modal if open
+        }
+    });
+
+    // Modal Handling (Add/Edit Brand)
+    const brandModal = document.getElementById('brandModal');
+    const brandModalTitle = document.getElementById('brandModalTitle');
+    const brandForm = document.getElementById('brandForm');
+    const brandModalSubmitBtn = document.getElementById('brandModalSubmitBtn');
+
+    // --- START: Responsive Brand List ---
+    const brandsListContainer = document.getElementById('brandsListContainer');
+    const brandsTable = brandsListContainer ? brandsListContainer.querySelector('table') : null;
+    const brandsTableBody = document.getElementById('brandsTableBody');
+    const brandsCardView = document.getElementById('brandsCardView');
+
+    let brandsData = []; // To store our brand data
+
+    function parseInitialTableData() {
+        brandsData = []; // Clear before parsing
+        if (!brandsTableBody) return;
+
+        const rows = brandsTableBody.querySelectorAll('tr[data-brand-id]');
+        rows.forEach(row => {
+            const id = row.dataset.brandId;
+            const nameCell = row.cells[0];
+            const descriptionCell = row.cells[1];
+
+            if (id && nameCell && descriptionCell) {
+                const name = nameCell.textContent.trim();
+                const description = descriptionCell.textContent.trim();
+                brandsData.push({ id, name, description });
+            }
+        });
+        
+        // Fallback if data-brand-id was somehow not on the initial rows, or table was empty
+        if (brandsData.length === 0) {
+            console.log("No brands with data-brand-id found or table empty. Adding demo data.");
+            // Add default demo data if table was empty or parsing failed
+            if (!brandsData.find(b => b.id === 'brand1')) {
+                 brandsData.push({ id: 'brand1', name: 'Toyota', description: 'Toyota Mobil' });
+            }
+            if (!brandsData.find(b => b.id === 'brand2')) {
+                 brandsData.push({ id: 'brand2', name: 'Honda', description: 'Honda Mobil' });
+            }
+        }
+    }
+
+    function isMobileView() {
+        return window.innerWidth < 768; // Tailwind's md breakpoint (adjust as needed)
+    }
+
+    function renderBrands() {
+        if (!brandsTable || !brandsCardView || !brandsTableBody || !brandsListContainer) {
+            console.error('Required elements for rendering brands are missing.');
+            return;
+        }
+
+        const mobile = isMobileView();
+        brandsTableBody.innerHTML = ''; 
+        brandsCardView.innerHTML = '';  
+
+        if (mobile) {
+            brandsTable.classList.add('hidden');
+            brandsCardView.classList.remove('hidden');
+            brandsListContainer.classList.remove('overflow-x-auto');
+
+            if (brandsData.length === 0) {
+                brandsCardView.innerHTML = '<p class="text-slate-500 dark:text-slate-400 col-span-full text-center py-4">No brands to display.</p>';
+            } else {
+                brandsData.forEach(brand => {
+                    const safeName = brand.name ? brand.name.replace(/'/g, "\\'") : 'Unnamed Brand';
+                    const safeDescription = brand.description ? brand.description.replace(/'/g, "\\'") : '';
+                    const safeId = brand.id ? brand.id.replace(/'/g, "\\'") : 'temp-id-' + Date.now();
+
+                    const cardHTML = `
+                        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-4 flex flex-col justify-between" data-brand-id="${safeId}">
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">${brand.name || 'Unnamed Brand'}</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-3 break-words">${brand.description || 'No description'}</p>
+                            </div>
+                            <div class="flex justify-end space-x-2 mt-auto pt-2 border-t border-slate-200 dark:border-slate-700">
+                                <button onclick="openEditBrandModal('${safeName}', '${safeDescription}', '${safeId}')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm py-1 px-2 rounded hover:bg-indigo-50 dark:hover:bg-indigo-700/20 transition-colors">Edit</button>
+                                <button onclick="deleteBrand('${safeId}', '${safeName}')" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm py-1 px-2 rounded hover:bg-red-50 dark:hover:bg-red-700/20 transition-colors">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    brandsCardView.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            }
+        } else { // Desktop view (table)
+            brandsTable.classList.remove('hidden');
+            brandsCardView.classList.add('hidden');
+            brandsListContainer.classList.add('overflow-x-auto');
+
+            if (brandsData.length === 0) {
+                const row = brandsTableBody.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 3; 
+                cell.className = 'px-6 py-4 text-center text-slate-500 dark:text-slate-400';
+                cell.textContent = 'No brands to display.';
+            } else {
+                brandsData.forEach(brand => {
+                    const safeName = brand.name ? brand.name.replace(/'/g, "\\'") : 'Unnamed Brand';
+                    const safeDescription = brand.description ? brand.description.replace(/'/g, "\\'") : '';
+                    const safeId = brand.id ? brand.id.replace(/'/g, "\\'") : 'temp-id-' + Date.now();
+                    
+                    const rowHTML = `
+                        <tr data-brand-id="${safeId}">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${brand.name || 'Unnamed Brand'}</td>
+                            <td class="px-6 py-4 whitespace-normal text-sm text-slate-500 dark:text-slate-400 max-w-xs">${brand.description || 'No description'}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                <button onclick="openEditBrandModal('${safeName}', '${safeDescription}', '${safeId}')" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                                <button onclick="deleteBrand('${safeId}', '${safeName}')" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                    brandsTableBody.insertAdjacentHTML('beforeend', rowHTML);
+                });
+            }
+        }
+    }
+
+    // Unified openModal function (original one is good, just ensure brandData is handled by form submit)
+    window.openModal = function(modalType, brandDataToEdit = null) { 
+        if (!brandForm || !brandModalTitle || !brandModalSubmitBtn || !brandModal) {
+             console.error("Modal elements not found for openModal");
+             return;
+        }
+        brandForm.reset();
+        document.getElementById('brandId').value = ''; 
+
+        if (modalType === 'addBrandModal') {
+            brandModalTitle.textContent = 'Add New Brand';
+            brandModalSubmitBtn.textContent = 'Add Brand';
+        } else if (modalType === 'editBrandModal' && brandDataToEdit) {
+            brandModalTitle.textContent = 'Edit Brand';
+            brandModalSubmitBtn.textContent = 'Save Changes';
+            document.getElementById('brandId').value = brandDataToEdit.id;
+            document.getElementById('brandName').value = brandDataToEdit.name;
+            document.getElementById('brandDescription').value = brandDataToEdit.description;
+        }
+        brandModal.classList.remove('hidden');
+        brandModal.classList.add('flex');
+    }
+    
+    // Used by onclick attributes in HTML for edit buttons
+    // This remains the same as it just calls the updated openModal
+    window.openEditBrandModal = function(name, description, id) {
+        openModal('editBrandModal', { id, name, description });
+    }
+    
+    // Modify brandForm submission
+    if (brandForm) {
+        brandForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(brandForm);
+            const data = Object.fromEntries(formData.entries());
+            const currentBrandId = data.brandId;
+
+            if (currentBrandId) { 
+                const brandIndex = brandsData.findIndex(b => b.id === currentBrandId);
+                if (brandIndex > -1) {
+                    brandsData[brandIndex].name = data.name;
+                    brandsData[brandIndex].description = data.description;
+                    alert(`Brand '${data.name}' updated (demo).`);
+                } else {
+                    alert(`Error: Brand with ID ${currentBrandId} not found for editing.`);
+                }
+            } else { 
+                const newBrand = {
+                    id: 'brand-' + Date.now(), 
+                    name: data.name,
+                    description: data.description
+                };
+                brandsData.push(newBrand);
+                alert(`New brand '${data.name}' added (demo).`);
+            }
+            renderBrands(); 
+            closeModal('brandModal');
+            // brandForm.reset(); // Already called in openModal
+        });
+    }
+    
+    // Modify deleteBrand
+    window.deleteBrand = function(brandId, brandName) {
+        if (confirm(`Are you sure you want to delete brand '${brandName}'?`)) {
+            brandsData = brandsData.filter(b => b.id !== brandId);
+            alert(`Brand '${brandName}' deleted (demo).`);
+            renderBrands();
+        }
+    }
+
+    // Initial setup
+    if (brandsListContainer && brandsTable && brandsTableBody && brandsCardView) {
+        parseInitialTableData(); 
+        renderBrands();          
+        window.addEventListener('resize', renderBrands); 
+    } else {
+        console.error('One or more critical brand list elements are missing. Responsive functionality disabled.');
+    }
+    // --- END: Responsive Brand List ---
+
+    // Add active class to sidebar link for current page
+    const currentPath = window.location.pathname.split("/").pop();
+    const activeLinkClasses = ['bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white'];
+    const hoverLinkClassesRemove = ['hover:bg-red-500', 'dark:hover:bg-red-600', 'hover:text-white', 'dark:hover:text-white'];
+    
+    document.querySelectorAll('#mainSidebar a').forEach(link => {
+        hoverLinkClassesRemove.forEach(cls => link.classList.remove(cls)); // Reset hover for all
+         if(!link.parentElement.id?.includes('Dropdown')) { // Don't remove general hover from parent of dropdown
+            activeLinkClasses.forEach(cls => link.classList.remove(cls));
+         }
+    });
+    
+    if (currentPath === "brands.html") {
+        const link = document.querySelector('a[href="brands.html"]');
+        if(link) {
+            activeLinkClasses.forEach(cls => link.classList.add(cls));
+        }
+    } else if (currentPath.startsWith("reports")) {
+         const toggle = document.querySelector('#reportsDropdownToggle');
+         if(toggle) {
+            ['bg-yellow-400', 'text-white', 'dark:bg-yellow-500', 'dark:text-white'].forEach(cls => toggle.classList.add(cls));
+            ['hover:bg-yellow-400', 'dark:hover:bg-yellow-500'].forEach(cls => toggle.classList.remove(cls));
+         }
+    }
+    // Re-apply general hover styles AFTER specific active styles are set
+    document.querySelectorAll('#mainSidebar a:not(.' + activeLinkClasses.join(':not(.') + ')').forEach(link => {
+        if (!link.closest('#reportsDropdown')) { // Don't re-apply to dropdown parent if it's active
+             link.classList.add('hover:bg-red-500', 'dark:hover:bg-red-600', 'hover:text-white', 'dark:hover:text-white');
+        }
+    });
+     document.querySelectorAll('#reportsDropdown a').forEach(link => {
+        link.classList.add('hover:bg-yellow-100', 'dark:hover:bg-yellow-700/20', 'hover:text-yellow-700', 'dark:hover:text-yellow-400');
+    });
+
+
   });
-
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addBrand(event) {
-    event.preventDefault();
-    const form = event.target;
-    const brand = form.brand.value;
-    const description = form.description.value;
-    const tbody = document.getElementById('brandsTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${brand}</td>
-      <td>${description}</td>
-      <td class="actions">
-        <button onclick="openEditBrandModal('${brand}', '${description}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addBrandModal');
-    form.reset();
-  }
-  function openEditBrandModal(brand, description) {
-    openModal('editBrandModal')
-    const form = document.getElementById('editBrandForm');
-    form.brand.value = brand;
-    form.description.value = description;
-  }
-  function editBrand(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editBrandModal');
-  }
 </script>
 </body>
 </html>

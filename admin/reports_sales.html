@@ -2,314 +2,317 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Sales Dashboard</title>
+  <title>Sales Report | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-  <style>
-    .filter-section {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .filter-section label {
-      margin-right: 10px;
-    }
-    .filter-section input {
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      border: 1px solid #e4d0d0;
-      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      background-color: #ffffff;
-      color: #000000;
-      height: 25px;
-      margin-right: 10px;
-    }
-    .filter-input {
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      border: 1px solid #e4d0d0;
-      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      background-color: #ffffff;
-      color: #000000;
-    }
-  </style>
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
-        </svg>
-      </button>
-    </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
   <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
     </div>
-    <hr class="sidebar-divider">
-    <a href="dashboard_admin.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+    <hr class="border-t border-slate-200 dark:border-slate-700 my-2">
+    <a href="dashboard_admin.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Master Data</div>
-      <a href="cars.html" class="{{active_cars}}">
-        <i class="fa-solid fa-car"></i> <span class="link-text">Cars</span>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Master Data</div>
+      <a href="cars.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars}}">
+        <i class="fa-solid fa-car"></i> <span>Cars</span>
       </a>
-      <a href="brands.html" class="{{active_brands}}">
-        <i class="fa-solid fa-flag"></i> <span class="link-text">Brands</span>
+      <a href="brands.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_brands}}">
+        <i class="fa-solid fa-flag"></i> <span>Brands</span>
       </a>
-      <a href="customers.html" class="{{active_customers}}">
-        <i class="fa-solid fa-user"></i> <span class="link-text">Customers</span>
+      <a href="customers.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_customers}}">
+        <i class="fa-solid fa-user"></i> <span>Customers</span>
       </a>
-      <a href="users.html" class="{{active_users}}">
-        <i class="fa-solid fa-users"></i> <span class="link-text">Users & Permissions</span>
+      <a href="users.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_users}}">
+        <i class="fa-solid fa-users"></i> <span>Users & Permissions</span>
       </a>
-      <a href="targets.html" class="{{active_targets}}">
-        <i class="fa-solid fa-bullseye"></i> <span class="link-text">Targets</span>
+      <a href="targets.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_targets}}">
+        <i class="fa-solid fa-bullseye"></i> <span>Targets</span>
       </a>
     </div>
-
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="#" class="{{active_reports}} sidebar-dropdown-toggle">
-        <i class="fa-solid fa-file-lines"></i> <span class="link-text">Reports</span>
-        <i class="fa-solid fa-chevron-down dropdown-caret"></i>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines"></i> <span>Reports</span>
+        <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
       </a>
-      <div id="reportsDropdown" class="sidebar-submenu">
-        <a href="reports_sales.html" class="{{active_reports_sales}}">
-        <i class="fa-solid fa-chart-line"></i> <span class="link-text">Report Sales</span>
+      <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1">
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line"></i> <span>Report Sales</span>
         </a>
-        <a href="reports_engagement.html" class="{{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span class="link-text">Report Engagement</span>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle"></i> <span>Report Engagement</span>
         </a>
       </div>
     </div>
   </nav>
-  <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard.html">Dashboard</a>
-      <span>></span>
-      <a href="reports_sales.html">Report Sales</a>
-    </div>
-    <div class="section-header">
-      <h2>Report Sales</h2>
-    </div>
-    <!-- filter section -->
-    <div class="filter-section">
-      <!-- filter end start date -->
-      <label for="startDate">Start Date</label>
-      <input class="filter-input" type="date" id="startDate">
-      <!-- filter end end date -->
-      <label for="endDate">End Date</label>
-      <input class="filter-input" type="date" id="endDate">
-    </div>
-    <div class="filter-section">
-      <!-- filter end start date -->
-      <label for="startDate">Sales Person</label>
-      <select class="filter-input" id="salesPerson">
-        <option value="">All</option>
-        <option value="John Doe">John Doe</option>
-        <option value="Jane Doe">Jane Doe</option>
-      </select>
-      <!-- filter target period -->
-      <label for="targetPeriod">Target Period</label>
-      <select class="filter-input" id="targetPeriod">
-        <option value="">All</option>
-        <option value="12/10/2024 - 12/10/2025">12/10/2024 - 12/10/2025</option>
-        <option value="12/10/2024 - 12/10/2025">12/10/2024 - 12/10/2025</option>
-      </select>
-      <!-- filter end apply button -->
-      <button class="btn" id="applyFilter">Apply</button>
-      <!-- filter end reset button -->
-      <button class="btn" id="resetFilter">Reset</button>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
 
-      <!-- print button -->
-      <button class="btn" id="printButton">Print</button>
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">AD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">Admin User</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Sales Person</th>
-            <th>Customer</th>
-            <th>Amount</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="carsTableBody">
-          <tr>
-            <td data-label="Date">2021-01-01</td>
-            <td data-label="Sales Person">John Doe</td>
-            <td data-label="Customer">John Doe</td>
-            <td data-label="Amount">$20,000</td>
-            <td data-label="Status">Done</td>
-          </tr>
-          <tr>
-            <td data-label="Date">2021-01-01</td>
-            <td data-label="Sales Person">John Doe</td>
-            <td data-label="Customer">John Doe</td>
-            <td data-label="Amount">$20,000</td>
-            <td data-label="Status">Done</td>
-          </tr>
-          <tr>
-            <td data-label="Date">2021-01-01</td>
-            <td data-label="Sales Person">John Doe</td>
-            <td data-label="Customer">John Doe</td>
-            <td data-label="Amount">$20,000</td>
-            <td data-label="Status">Done</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">Sales Report</h1>
+            <div class="flex items-center gap-2 flex-wrap">
+                <select id="dateRangeFilter" class="px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+                <div id="customDateRangeContainer" class="hidden items-center gap-2">
+                    <input type="date" id="startDate" class="px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200" title="Start Date">
+                    <span class="text-slate-500 dark:text-slate-400">-</span>
+                    <input type="date" id="endDate" class="px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200" title="End Date">
+                </div>
+                <select id="salesPersonFilter" class="px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                    <option value="all">All Sales Persons</option>
+                </select>
+                <button id="exportReportBtn" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition shadow-sm">
+                    <i class="fa-solid fa-download mr-2"></i>Export
+                </button>
+            </div>
+        </div>
+
+        <!-- Report Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Revenue</h3>
+                <p class="text-3xl font-semibold text-slate-800 dark:text-slate-100 mt-1">Rp 1.250.000.000</p>
+                <p class="text-xs text-green-500 mt-1">+15% from last month</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Units Sold</h3>
+                <p class="text-3xl font-semibold text-slate-800 dark:text-slate-100 mt-1">45</p>
+                <p class="text-xs text-green-500 mt-1">+5 units from last month</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Average Sale Value</h3>
+                <p class="text-3xl font-semibold text-slate-800 dark:text-slate-100 mt-1">Rp 27.777.778</p>
+                <p class="text-xs text-red-500 mt-1">-2% from last month</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow">
+                <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Top Sales Person</h3>
+                <p class="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-1">Maudy Ayunda</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">15 Sales</p>
+            </div>
+        </div>
+
+        <!-- Detailed Sales Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+            <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-200 p-4 border-b dark:border-slate-700">Detailed Sales Data</h2>
+            <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                <thead class="bg-slate-50 dark:bg-slate-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Invoice ID</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Customer</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Car Model</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Date</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Amount (IDR)</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Sales Person</th>
+                    </tr>
+                </thead>
+                <tbody id="detailedSalesTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                    <!-- Demo Row 1 -->
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">INV-2024001</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Ahmad Yani</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Toyota Avanza</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024-07-20</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">250,000,000</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">John Doe</td>
+                    </tr>
+                    <!-- More rows here -->
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+  </div>
 </div>
 
 <script>
-    // Sidebar dropdown logic
-    document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sidebar Toggle & Dropdown (Reports)
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const reportsDropdownToggle = document.getElementById('reportsDropdownToggle');
+    const reportsDropdown = document.getElementById('reportsDropdown');
+
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
         });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    if (reportsDropdownToggle && reportsDropdown) {
+        // Check if the current page is a reports page to open by default
+        if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
+            reportsDropdown.classList.remove('hidden');
+            reportsDropdown.classList.add('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.add('rotate-180');
         }
-      });
-    });
+        reportsDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            reportsDropdown.classList.toggle('hidden');
+            reportsDropdown.classList.toggle('flex');
+            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+        });
+    }
+    
+    window.logout = function() {
+      console.log('Logout clicked');
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
-    });
-  });
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
+    const sidebarLogo = document.getElementById('sidebarLogo');
 
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
+    let salesChartInstance = null;
 
     function applyTheme(theme) {
       if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
         localStorage.setItem('theme', 'dark');
       } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
         localStorage.setItem('theme', 'light');
       }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+    }
+
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
-  
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-  }
-  function addCar(event) {
-    event.preventDefault();
-    const form = event.target;
-    const model = form.model.value;
-    const brand = form.brand.value;
-    const year = form.year.value;
-    const price = form.price.value;
-    const status = form.status.value;
-    const description = form.description.value;
-    const tbody = document.getElementById('carsTableBody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td data-label="Model">${model}</td>
-      <td data-label="Brand">${brand}</td>
-      <td data-label="Year">${year}</td>
-      <td data-label="Price">$${Number(price).toLocaleString()}</td>
-      <td data-label="Status">${status}</td>
-      <td data-label="Description">${description}</td>
-      <td class="actions" data-label="Actions">
-        <button onclick="openEditCarModal('${model}', '${brand}', ${year}, ${price}, '${status}', '${description.replace(/'/g, "\\'")}')">Edit</button>
-        <button onclick="alert('Delete not implemented')">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-    closeModal('addCarModal');
-    form.reset();
-  }
-  function openEditCarModal(model, brand, year, price, status, description) {
-    openModal('editCarModal');
-    const form = document.getElementById('editCarForm');
-    form.model.value = model;
-    form.brand.value = brand;
-    form.year.value = year;
-    form.price.value = price;
-    form.status.value = status;
-    form.description.value = description;
-  }
-  function editCar(event) {
-    event.preventDefault();
-    alert('Edit functionality is a demo. Implement persistence as needed.');
-    closeModal('editCarModal');
-  }
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        }
+    });
+
+    // Filter Logic
+    const dateRangeFilter = document.getElementById('dateRangeFilter');
+    const salesPersonFilter = document.getElementById('salesPersonFilter');
+    const customDateRangeContainer = document.getElementById('customDateRangeContainer');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+
+    function getSelectedFilters() {
+        const filters = {
+            dateRange: dateRangeFilter ? dateRangeFilter.value : 'monthly',
+            salesPerson: salesPersonFilter ? salesPersonFilter.value : 'all'
+        };
+        if (filters.dateRange === 'custom') {
+            filters.startDate = startDateInput ? startDateInput.value : '';
+            filters.endDate = endDateInput ? endDateInput.value : '';
+        }
+        return filters;
+    }
+
+    function toggleCustomDateInputs() {
+        if (dateRangeFilter && customDateRangeContainer) {
+            if (dateRangeFilter.value === 'custom') {
+                customDateRangeContainer.classList.remove('hidden');
+                customDateRangeContainer.classList.add('flex'); // Use flex to align items
+            } else {
+                customDateRangeContainer.classList.add('hidden');
+                customDateRangeContainer.classList.remove('flex');
+            }
+        }
+    }
+
+    function applyFilters() {
+        const filters = getSelectedFilters();
+        console.log('Selected filters:', filters);
+    }
+
+    if (dateRangeFilter) {
+        dateRangeFilter.addEventListener('change', () => {
+            toggleCustomDateInputs();
+            applyFilters();
+        });
+    }
+    if (salesPersonFilter) {
+        salesPersonFilter.addEventListener('change', applyFilters);
+    }
+    // Add event listeners for date inputs to re-apply filters when they change
+    if (startDateInput) {
+        startDateInput.addEventListener('change', applyFilters);
+    }
+    if (endDateInput) {
+        endDateInput.addEventListener('change', applyFilters);
+    }
+
+    // Initial setup
+    toggleCustomDateInputs(); // Ensure correct initial state of custom date inputs
+
+  });
 </script>
+
 </body>
 </html>

@@ -6,82 +6,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Inter font for shadcn look (optional but recommended) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-<div class="container">
-  <!-- Navbar (now outside .main) -->
-  <div class="navbar">
-    <div class="navbar-left">
-      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle theme">
-        <svg id="themeIcon" style="width:22px;height:22px;fill:var(--theme-toggle-icon-color);" viewBox="0 0 24 24">
-          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/> <!-- Moon icon -->
-        </svg>
-      </button>
-    </div>
-    <div class="navbar-right">
-      <div class="profile-menu" tabindex="0" onclick="toggleProfileDropdown()" onblur="closeProfileDropdown()">
-        <div class="profile-avatar">JD</div>
-        <span class="profile-name">John Doe</span>
-        <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
-        <div class="profile-dropdown" id="profileDropdown">
-          <a href="profile.html">Profile</a>
-          <button class="btn" onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
+<div class="min-h-screen flex">
   <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo-image">
-      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="sidebar-logo-image" id="sidebarLogo">
-    </div>
-    <a href="dashboard_sales.html" class="{{active_dashboard}}">
-      <i class="fa-solid fa-gauge"></i> <span class="link-text">Dashboard</span>
+  <nav id="mainSidebar" class="fixed inset-y-0 left-0 z-30 flex flex-col w-64 h-screen bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 py-8 px-0 gap-2 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto transition-transform duration-200 ease-in-out">
+    <div class="flex justify-center mb-8">
+      <img src="../logo2.png" alt="Simpang Tiga Motor Logo" class="w-40 h-auto" id="sidebarLogo">
+    </div>  
+    <a href="dashboard_sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_dashboard}}">
+      <i class="fa-solid fa-gauge"></i> <span class="">Dashboard</span>
     </a>
-    <div class="sidebar-group">
-      <div class="sidebar-group-title">Transaction</div>
-      <a href="sales.html" class="{{active_sales}}">
-        <i class="fa-solid fa-dollar-sign"></i> <span class="link-text">Sales</span>
+    <a href="cars_catalogue.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_cars_catalogue}}">
+      <i class="fa-solid fa-car"></i> <span class="">Cars Catalogue</span>
+    </a>
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+      <a href="sales.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_sales}}">
+        <i class="fa-solid fa-dollar-sign"></i> <span>Sales</span>
       </a>
-      <a href="engagements.html" class="{{active_engagements}}">
-        <i class="fa-solid fa-handshake"></i> <span class="link-text">Engagements</span>
+      <a href="engagements.html" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition {{active_engagements}}">
+        <i class="fa-solid fa-handshake"></i> <span>Engagements</span>
       </a>
     </div>
   </nav>
-  <!-- End of Sidebar -->
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900/50 z-20 hidden lg:hidden"></div>
+
   <!-- Main Content -->
-  <main class="main">
-    <!-- make breadcrumb -->
-    <div class="breadcrumb">
-      <a href="dashboard_sales.html">Dashboard</a>
-      <span>></span>
-      <a href="sales.html">Sales</a>
+  <div class="flex-1 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <div class="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+      <div class="flex items-center">
+        <button id="mainSidebarToggle" class="lg:hidden p-2 mr-3 rounded text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
+          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+      <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">JD</div>
+        <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">John Doe</span>
+        <svg class="w-5 h-5 text-yellow-400 dark:text-yellow-500" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+        <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+            <a href="profile.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb -->
+    <div class="px-4 lg:px-8 py-2 text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
+      <a href="dashboard_sales.html" class="hover:underline">Dashboard</a>
+      <span>&gt;</span>
+      <a href="sales.html" class="hover:underline">Sales</a>
     </div>
     <!-- Dashboard Cards -->
-    <div class="dashboard-cards">
-      <div class="card">
-        <h3>Total Cars</h3>
-        <div class="value" id="totalCars">12</div>
+    <div class="p-4 lg:p-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow p-6 flex-1 min-w-[180px] flex flex-col gap-2">
+        <h3 class="text-base font-medium text-slate-500 dark:text-slate-400 mb-1">Total Cars</h3>
+        <div class="text-2xl font-bold text-red-600 dark:text-red-500" id="totalCars">12</div>
       </div>
-      <div class="card">
-        <h3>My Target</h3>
-        <div class="value" id="myTarget">10</div>
-        <p>Period: 1 Jan - 31 Dec</p>
+      <div class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow p-6 flex-1 min-w-[180px] flex flex-col gap-2">
+        <h3 class="text-base font-medium text-slate-500 dark:text-slate-400 mb-1">My Target</h3>
+        <div class="text-2xl font-bold text-red-600 dark:text-red-500" id="myTarget">10</div>
+        <p class="text-xs text-slate-400 dark:text-slate-500">Period: 1 Jan - 31 Dec</p>
       </div>
-      <div class="card">
-        <h3>My Achieved</h3>
-        <div class="value" id="myAchieved">3</div>
-        <p>Period: 1 Jan - 31 Dec</p>
+      <div class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow p-6 flex-1 min-w-[180px] flex flex-col gap-2">
+        <h3 class="text-base font-medium text-slate-500 dark:text-slate-400 mb-1">My Achieved</h3>
+        <div class="text-2xl font-bold text-red-600 dark:text-red-500" id="myAchieved">3</div>
+        <p class="text-xs text-slate-400 dark:text-slate-500">Period: 1 Jan - 31 Dec</p>
       </div>
-      <div class="card">
-        <h3>Cars Available</h3>
-        <div class="value" id="carsAvailable">9</div>
+      <div class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow p-6 flex-1 min-w-[180px] flex flex-col gap-2">
+        <h3 class="text-base font-medium text-slate-500 dark:text-slate-400 mb-1">Cars Available</h3>
+        <div class="text-2xl font-bold text-red-600 dark:text-red-500" id="carsAvailable">9</div>
       </div>
     </div>
-  </main>
+    <!-- Modals and scripts remain, but modal classes should be updated to Tailwind equivalents as well -->
+  </div>
 </div>
 
 <!-- Add Car Modal -->
@@ -141,46 +147,88 @@
 </div>
 
 <script>
-  // Sidebar dropdown logic
   document.addEventListener('DOMContentLoaded', function () {
-    var dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Close all other dropdowns
-        dropdownToggles.forEach(function(other) {
-          if (other !== toggle) {
-            other.classList.remove('open');
-            if (other.nextElementSibling && other.nextElementSibling.classList.contains('sidebar-submenu')) {
-              other.nextElementSibling.style.display = 'none';
-            }
-          }
-        });
-        // Toggle this dropdown
-        toggle.classList.toggle('open');
-        var submenu = toggle.nextElementSibling;
-        if (submenu && submenu.classList.contains('sidebar-submenu')) {
-          if (toggle.classList.contains('open')) {
-            submenu.style.display = 'flex';
-          } else {
-            submenu.style.display = 'none';
-          }
-        }
-      });
-    });
+    // Sidebar Toggle
+    const mainSidebar = document.getElementById('mainSidebar');
+    const mainSidebarToggle = document.getElementById('mainSidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-    // function to logout
-    function logout() {
+    if (mainSidebarToggle && mainSidebar && sidebarOverlay) {
+        mainSidebarToggle.addEventListener('click', () => {
+            mainSidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
+        });
+        sidebarOverlay.addEventListener('click', () => {
+            mainSidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+    }
+    
+    // Logout function (placeholder)
+    window.logout = function() {
       console.log('Logout not implemented');
-      localStorage.removeItem('token');
-      window.location.href = '../index.html';
+      localStorage.removeItem('token'); // Example: remove token
+      window.location.href = '../index.html'; // Redirect to login
     }
 
-    // On page load, hide all submenus
-    var submenus = document.querySelectorAll('.sidebar-submenu');
-    submenus.forEach(function(submenu) {
-      submenu.style.display = 'none';
+    // Theme toggling logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const sidebarLogo = document.getElementById('sidebarLogo');
+
+    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
+    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            applyTheme('light');
+          } else {
+            applyTheme('dark');
+          }
+        });
+    }
+
+    // Profile Dropdown Logic
+    const profileMenuButton = document.getElementById('profileMenuButton');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    if (profileMenuButton && profileDropdown) {
+        profileMenuButton.addEventListener('click', (event) => {
+            profileDropdown.classList.toggle('hidden');
+            event.stopPropagation();
+        });
+    }
+    document.addEventListener('click', (event) => {
+        if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+        }
     });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        }
+    });
+
   });
 
   // Modal logic
@@ -237,56 +285,26 @@
     alert('Edit functionality is a demo. Implement persistence as needed.');
     closeModal('editCarModal');
   }
-
-  // Theme toggling logic
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-    const sidebarLogo = document.getElementById('sidebarLogo'); // Get the logo element
-
-    const sunIcon = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>'; // Sun icon
-    const moonIcon = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'; // Moon icon
-
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        themeIcon.innerHTML = sunIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Change to logo1 for dark mode
-        localStorage.setItem('theme', 'dark');
-      } else {
-        body.classList.remove('dark-mode');
-        themeIcon.innerHTML = moonIcon;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Change to logo2 for light mode
-        localStorage.setItem('theme', 'light');
-      }
-    }
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-    applyTheme(savedTheme);
-
-    themeToggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        applyTheme('light');
-      } else {
-        applyTheme('dark');
-      }
-    });
-
-    // function to toggle profile dropdown
-    function toggleProfileDropdown() {
-      document.getElementById('profileDropdown').classList.toggle('active');
-    }
-    function closeProfileDropdown() {
-      document.getElementById('profileDropdown').classList.remove('active');
-    }
 </script>
 
-<nav class="bottom-navbar">
-  <a href="dashboard_sales.html" class="bottom-nav-link active"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-  <a href="sales.html" class="bottom-nav-link"><i class="fa-solid fa-dollar-sign"></i><span>Sales</span></a>
-  <a href="engagements.html" class="bottom-nav-link"><i class="fa-solid fa-handshake"></i><span>Engagements</span></a>
-  <a href="profile.html" class="bottom-nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+<!-- Bottom Navbar for mobile -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-2 py-3 flex justify-around items-center z-20 lg:hidden">
+  <a href="dashboard_sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_dashboard}}">
+    <i class="fa-solid fa-gauge text-lg"></i><span class="text-xs mt-1">Dashboard</span>
+  </a>
+  <a href="sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_sales}}">
+    <i class="fa-solid fa-dollar-sign text-lg"></i><span class="text-xs mt-1">Sales</span>
+  </a>
+  <a href="cars_catalogue.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_cars_catalogue}}">
+    <i class="fa-solid fa-car text-lg"></i><span class="text-xs mt-1">Catalogue</span>
+  </a>
+  <a href="engagements.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_engagements}}">
+    <i class="fa-solid fa-handshake text-lg"></i><span class="text-xs mt-1">Engagements</span>
+  </a>
+  <a href="profile.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-500 {{active_profile}}">
+    <i class="fa-solid fa-user text-lg"></i><span class="text-xs mt-1">Profile</span>
+  </a>
 </nav>
 </body>
 </html>
+

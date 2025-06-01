@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Sales Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Assuming a shared style.css -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-red': '#C40C0C',
+                        'custom-red-dark': '#FF6500',
+                        'custom-yellow': '#FFD00C',
+                        'custom-yellow-dark': '#FFC436',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-200 flex">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-white dark:bg-slate-800 w-64 min-h-screen flex-shrink-0 shadow-lg lg:block hidden p-4 transition-all duration-300">
+        <div class="flex items-center justify-center mb-6">
+            <img src="../logo2.png" alt="Logo" class="h-12" id="sidebarLogo">
+        </div>
+        <nav class="mt-10">
+            <a href="dashboard_sales.html" class="flex items-center py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-custom-red hover:to-custom-yellow hover:text-white">
+                <i class="fas fa-gauge mr-3"></i> Dashboard
+            </a>
+            <a href="cars_catalogue.html" class="flex items-center py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-custom-red hover:to-custom-yellow hover:text-white">
+                <i class="fas fa-car mr-3"></i> Car Catalogue
+            </a>
+            <!-- Transaction -->
+            <div class="mt-4">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
+                <!-- Sales -->
+            <a href="sales.html" class="flex items-center py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-custom-red hover:to-custom-yellow hover:text-white">
+                <i class="fas fa-dollar-sign mr-3"></i> Sales
+            </a>
+            <a href="engagements.html" class="flex items-center py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-custom-red hover:to-custom-yellow hover:text-white">
+                <i class="fas fa-handshake mr-3"></i> Engagements
+            </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Top Navbar -->
+        <header class="bg-white dark:bg-slate-800 shadow-md p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <button id="sidebarToggle" class="lg:hidden text-slate-500 dark:text-slate-400 hover:text-custom-red dark:hover:text-custom-red-dark mr-3">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <h1 class="text-xl font-semibold text-slate-800 dark:text-slate-200">User Profile</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="themeToggleBtn" class="text-slate-500 dark:text-slate-400 hover:text-custom-yellow dark:hover:text-custom-yellow-dark">
+                    <i class="fas fa-sun text-xl" id="themeIcon"></i>
+                </button>
+                <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
+                    <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-100">JD</div>
+                    <span class="font-medium text-slate-700 dark:text-slate-300 hidden sm:inline">John Doe</span>
+                    <svg class="w-5 h-5 text-slate-400 dark:text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
+                    <div id="profileDropdown" class="absolute right-0 mt-2 top-full w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg hidden py-1 z-20">
+                        <a href="profile.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+                        <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-700" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="flex-1 p-4 lg:p-8">
+            <div class="max-w-2xl mx-auto bg-white dark:bg-slate-800 shadow-xl rounded-lg p-6 md:p-8">
+                <h2 class="text-2xl font-semibold text-slate-800 dark:text-slate-200 mb-6">Edit Profile</h2>
+
+                <form id="profileForm">
+                    <!-- Profile Picture Section -->
+                    <div class="mb-6 text-center">
+                        <img id="profilePicturePreview" src="https://via.placeholder.com/150" alt="Profile Picture" class="w-32 h-32 rounded-full mx-auto mb-2 object-cover border-4 border-slate-200 dark:border-slate-700">
+                        <input type="file" id="profilePicture" name="profilePicture" class="hidden" accept="image/*">
+                        <button type="button" onclick="document.getElementById('profilePicture').click()" class="text-sm text-custom-red dark:text-custom-red-dark hover:underline">Change Picture</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" value="John Doe" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" value="john.doe@example.com" required class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="phoneNumber" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" value="+1234567890" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="address" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Address</label>
+                        <textarea id="address" name="address" rows="3" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">123 Main St, Anytown, USA</textarea>
+                    </div>
+
+                    <hr class="my-8 border-slate-200 dark:border-slate-700">
+
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-4">Change Password</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="currentPassword" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label for="newPassword" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        </div>
+                        <div>
+                            <label for="confirmNewPassword" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Confirm New Password</label>
+                            <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="mt-1 block w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-custom-red focus:border-custom-red sm:text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-200">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-end gap-3">
+                        <button type="button" class="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 dark:focus:ring-offset-slate-900">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-custom-red hover:bg-custom-red-dark rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-red dark:focus:ring-offset-slate-900">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Navbar for mobile -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-2 py-3 flex justify-around items-center z-20 lg:hidden">
+      <a href="dashboard_sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-custom-red dark:hover:text-custom-red-dark">
+        <i class="fa-solid fa-gauge text-lg"></i><span class="text-xs mt-1">Dashboard</span>
+      </a>
+      <a href="sales.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-custom-red dark:hover:text-custom-red-dark">
+        <i class="fa-solid fa-dollar-sign text-lg"></i><span class="text-xs mt-1">Sales</span>
+      </a>
+      <a href="cars_catalogue.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-custom-red dark:hover:text-custom-red-dark">
+        <i class="fa-solid fa-car text-lg"></i><span class="text-xs mt-1">Catalogue</span>
+      </a>
+      <a href="engagements.html" class="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-custom-red dark:hover:text-custom-red-dark">
+        <i class="fa-solid fa-handshake text-lg"></i><span class="text-xs mt-1">Engagements</span>
+      </a>
+      <a href="profile.html" class="flex flex-col items-center text-custom-red dark:text-custom-red-dark"> <!-- Active link style -->
+        <i class="fa-solid fa-user text-lg"></i><span class="text-xs mt-1">Profile</span>
+      </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Theme toggle logic (Copied from dashboard_sales.html for consistency)
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const sidebarLogo = document.getElementById('sidebarLogo');
+            const sunIconSVG = '<i class="fas fa-sun text-xl"></i>';
+            const moonIconSVG = '<i class="fas fa-moon text-xl"></i>';
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    if (themeIcon) themeIcon.innerHTML = sunIconSVG; // Sun icon for dark mode
+                    if (sidebarLogo) sidebarLogo.src = '../logo1.png'; // Dark mode logo
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if (themeIcon) themeIcon.innerHTML = moonIconSVG; // Moon icon for light mode
+                    if (sidebarLogo) sidebarLogo.src = '../logo2.png'; // Light mode logo
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    if (document.documentElement.classList.contains('dark')) {
+                        applyTheme('light');
+                    } else {
+                        applyTheme('dark');
+                    }
+                });
+            }
+
+            // Sidebar toggle logic
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            if (sidebar && sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('hidden');
+                });
+            }
+            
+            // Profile Dropdown Logic
+            const profileMenuButton = document.getElementById('profileMenuButton');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (profileMenuButton && profileDropdown) {
+                profileMenuButton.addEventListener('click', (event) => {
+                    profileDropdown.classList.toggle('hidden');
+                    event.stopPropagation();
+                });
+            }
+            document.addEventListener('click', (event) => {
+                if (profileDropdown && !profileDropdown.classList.contains('hidden') && profileMenuButton && !profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+                    profileDropdown.classList.add('hidden');
+                }
+            });
+             document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                        profileDropdown.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Profile Picture Preview
+            const profilePictureInput = document.getElementById('profilePicture');
+            const profilePicturePreview = document.getElementById('profilePicturePreview');
+            if (profilePictureInput && profilePicturePreview) {
+                profilePictureInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            profilePicturePreview.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Profile Form Submission
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(profileForm);
+                    const profileData = Object.fromEntries(formData.entries());
+                    
+                    // Basic password validation
+                    if (profileData.newPassword && profileData.newPassword !== profileData.confirmNewPassword) {
+                        alert("New passwords do not match!");
+                        return;
+                    }
+                    
+                    // Remove password fields if not changing
+                    if (!profileData.currentPassword && !profileData.newPassword && !profileData.confirmNewPassword) {
+                        delete profileData.currentPassword;
+                        delete profileData.newPassword;
+                        delete profileData.confirmNewPassword;
+                    } else if (!profileData.currentPassword && (profileData.newPassword || profileData.confirmNewPassword)) {
+                         alert("Please enter your current password to change it.");
+                         return;
+                    }
+
+
+                    console.log('Profile data submitted:', profileData);
+                    alert('Profile updated successfully! (Check console for data - this is a demo)');
+                    // Here you would typically send data to a server
+                    // e.g., fetch('/api/sales/profile', { method: 'POST', body: JSON.stringify(profileData), headers: {'Content-Type': 'application/json'} })
+                    // .then(response => response.json())
+                    // .then(data => console.log(data))
+                    // .catch(error => console.error('Error:', error));
+                });
+            }
+            
+            // Dummy logout function
+            window.logout = function() {
+                console.log('Logout action triggered');
+                alert('Logout successful (Demo)! You would be redirected to a login page.');
+                // window.location.href = '/login.html'; // Example redirect
+            }
+
+            // Load current user data (dummy)
+            function loadUserProfile() {
+                // In a real application, this data would come from an API
+                const currentUser = {
+                    fullName: "John Doe",
+                    email: "john.doe@example.com",
+                    phoneNumber: "+11234567890",
+                    address: "456 Oak Avenue, Townsville, USA",
+                    profilePictureUrl: "https://randomuser.me/api/portraits/men/75.jpg" // Example image
+                };
+
+                document.getElementById('fullName').value = currentUser.fullName;
+                document.getElementById('email').value = currentUser.email;
+                document.getElementById('phoneNumber').value = currentUser.phoneNumber || '';
+                document.getElementById('address').value = currentUser.address || '';
+                document.getElementById('profilePicturePreview').src = currentUser.profilePictureUrl || 'https://via.placeholder.com/150';
+                
+                // Update top bar and profile dropdown name/initials
+                const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+                document.querySelector('#profileMenuButton .font-bold').textContent = initials;
+                document.querySelector('#profileMenuButton .font-medium').textContent = currentUser.fullName;
+
+            }
+            loadUserProfile();
+
+        });
+    </script>
+</body>
+</html>
