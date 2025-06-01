@@ -110,8 +110,8 @@
             </div>
         </div>
 
-        <!-- Engagements Table -->
-        <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
+        <!-- Engagements Table (Hidden on small screens, visible on lg and up) -->
+        <div class="hidden lg:block bg-white dark:bg-slate-800 shadow-md rounded-lg overflow-x-auto">
             <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
                 <thead class="bg-slate-50 dark:bg-slate-700">
                     <tr>
@@ -124,34 +124,16 @@
                     </tr>
                 </thead>
                 <tbody id="engagementsTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
-                    <!-- Demo Row 1 -->
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Budi Santoso</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024-07-15</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Test Drive</td>
-                        <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Interested in Avanza G. Asking about discounts.</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">John Doe</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
-                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- Demo Row 2 -->
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">Citra Lestari</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">2024-07-14</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">Call</td>
-                        <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Follow up regarding previous inquiry.</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">John Doe</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
-                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- More rows will be added by JavaScript or from a backend -->
+                    <!-- Table rows will be added by JavaScript -->
                 </tbody>
             </table>
         </div>
+
+        <!-- Engagements Card List (Visible on small screens, hidden on lg and up) -->
+        <div id="engagementsCardList" class="block lg:hidden space-y-4">
+            <!-- Card items will be added by JavaScript -->
+        </div>
+
          <!-- Pagination -->
         <div class="mt-6 flex justify-center">
             <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -262,26 +244,105 @@
         });
     }
 
-    // Placeholder for edit/delete actions on table rows
+    // Demo Data
+    const demoEngagements = [
+        {
+            id: '1',
+            customer: 'Budi Santoso',
+            date: '2024-07-15',
+            type: 'Test Drive',
+            notes: 'Interested in Avanza G. Asking about discounts.',
+            salesPerson: 'John Doe'
+        },
+        {
+            id: '2',
+            customer: 'Citra Lestari',
+            date: '2024-07-14',
+            type: 'Call',
+            notes: 'Follow up regarding previous inquiry.',
+            salesPerson: 'John Doe'
+        }
+        // Add more demo data as needed
+    ];
+
     const engagementsTableBody = document.getElementById('engagementsTableBody');
-    if (engagementsTableBody) {
-        engagementsTableBody.addEventListener('click', function(event) {
-            if (event.target.tagName === 'BUTTON') {
-                const action = event.target.textContent.toLowerCase();
-                const row = event.target.closest('tr');
-                const customerName = row.cells[0].textContent;
-                if (action === 'edit') {
-                    alert(`Edit action for ${customerName} (Demo)`);
-                    // window.location.href = `edit_engagement.html?id=SOME_ID`; // Example redirect
-                } else if (action === 'delete') {
-                    if (confirm(`Are you sure you want to delete the engagement for ${customerName}? (Demo)`)) {
-                        alert(`Delete action for ${customerName} (Demo)`);
-                        // row.remove(); // Example: remove row from DOM
-                    }
-                }
-            }
-        });
+    const engagementsCardList = document.getElementById('engagementsCardList');
+
+    function renderTableRow(engagement) {
+        return `
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">${engagement.customer}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${engagement.date}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${engagement.type}</td>
+                <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">${engagement.notes}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${engagement.salesPerson}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                    <button data-id="${engagement.id}" class="edit-btn text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
+                    <button data-id="${engagement.id}" class="delete-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                </td>
+            </tr>
+        `;
     }
+
+    function renderCardItem(engagement) {
+        return `
+            <div class="bg-white dark:bg-slate-800 shadow-md rounded-lg p-4">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-medium text-slate-900 dark:text-slate-100">${engagement.customer}</h3>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">${engagement.date}</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-1"><span class="font-medium">Type:</span> ${engagement.type}</p>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-1"><span class="font-medium">Sales Person:</span> ${engagement.salesPerson}</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">${engagement.notes}</p>
+                <div class="flex justify-end space-x-2">
+                    <button data-id="${engagement.id}" class="edit-btn text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm">Edit</button>
+                    <button data-id="${engagement.id}" class="delete-btn text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm">Delete</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function populateEngagements(data) {
+        if (engagementsTableBody) {
+            engagementsTableBody.innerHTML = data.map(renderTableRow).join('');
+        }
+        if (engagementsCardList) {
+            engagementsCardList.innerHTML = data.map(renderCardItem).join('');
+        }
+    }
+
+    populateEngagements(demoEngagements);
+
+
+    // Placeholder for edit/delete actions
+    function handleEngagementAction(event) {
+        const target = event.target;
+        if (target.classList.contains('edit-btn')) {
+            const engagementId = target.dataset.id;
+            const engagement = demoEngagements.find(e => e.id === engagementId);
+            alert(`Edit action for ${engagement ? engagement.customer : 'Unknown'} (ID: ${engagementId}) (Demo)`);
+            // window.location.href = \`edit_engagement.html?id=\${engagementId}\`; // Example redirect
+        } else if (target.classList.contains('delete-btn')) {
+            const engagementId = target.dataset.id;
+            const engagement = demoEngagements.find(e => e.id === engagementId);
+            const customerName = engagement ? engagement.customer : 'Unknown';
+            if (confirm(`Are you sure you want to delete the engagement for ${customerName}? (Demo)`)) {
+                alert(`Delete action for ${customerName} (ID: ${engagementId}) (Demo)`);
+                // In a real app, you would remove the item from the 'demoEngagements' array
+                // and re-render:
+                // demoEngagements = demoEngagements.filter(e => e.id !== engagementId);
+                // populateEngagements(demoEngagements);
+            }
+        }
+    }
+
+    if (engagementsTableBody) {
+        engagementsTableBody.addEventListener('click', handleEngagementAction);
+    }
+    if (engagementsCardList) {
+        engagementsCardList.addEventListener('click', handleEngagementAction);
+    }
+
   });
 </script>
 
