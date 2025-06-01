@@ -27,8 +27,8 @@
         <span class="profile-name">John Doe</span>
         <svg style="width:18px;height:18px;vertical-align:middle;fill:var(--accent);" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
         <div class="profile-dropdown" id="profileDropdown">
-          <a href="#">Profile</a>
-          <button onclick="logout()">Logout</button>
+          <a href="profile.html">Profile</a>
+          <button class="btn" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
@@ -169,6 +169,13 @@
       });
     });
 
+    // function to logout
+    function logout() {
+      console.log('Logout not implemented');
+      localStorage.removeItem('token');
+      window.location.href = '../index.html';
+    }
+
     // On page load, hide all submenus
     var submenus = document.querySelectorAll('.sidebar-submenu');
     submenus.forEach(function(submenu) {
@@ -265,6 +272,21 @@
         applyTheme('dark');
       }
     });
+
+    // function to toggle profile dropdown
+    function toggleProfileDropdown() {
+      document.getElementById('profileDropdown').classList.toggle('active');
+    }
+    function closeProfileDropdown() {
+      document.getElementById('profileDropdown').classList.remove('active');
+    }
 </script>
+
+<nav class="bottom-navbar">
+  <a href="dashboard_sales.html" class="bottom-nav-link active"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+  <a href="sales.html" class="bottom-nav-link"><i class="fa-solid fa-dollar-sign"></i><span>Sales</span></a>
+  <a href="engagements.html" class="bottom-nav-link"><i class="fa-solid fa-handshake"></i><span>Engagements</span></a>
+  <a href="profile.html" class="bottom-nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+</nav>
 </body>
 </html>
