@@ -5,8 +5,23 @@
   <title>Customers | Car Sales Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    'custom-red': '#C40C0C',
+                    'custom-red-dark': '#FF6500',
+                    'custom-yellow': '#FFD00C',
+                    'custom-yellow-dark': '#FFC436',
+                }
+            }
+        }
+    }
+  </script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-sans">
 <div class="min-h-screen flex">
@@ -39,16 +54,16 @@
     </div>
     <div class="mt-4">
       <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-8 mb-2">Transaction</div>
-      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-400 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
-        <i class="fa-solid fa-file-lines"></i> <span>Reports</span>
+      <a href="#" id="reportsDropdownToggle" class="flex items-center gap-3 px-8 py-3 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition sidebar-dropdown-toggle {{active_reports}}">
+        <i class="fa-solid fa-file-lines w-5 text-center"></i> <span>Reports</span>
         <i class="fa-solid fa-chevron-down ml-auto transition-transform duration-200"></i>
       </a>
       <div id="reportsDropdown" class="flex-col hidden ml-8 mt-1">
-        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_sales}}">
-          <i class="fa-solid fa-chart-line"></i> <span>Report Sales</span>
+        <a href="reports_sales.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-700/30 dark:hover:text-red-300 transition {{active_reports_sales}}">
+          <i class="fa-solid fa-chart-line w-5 text-center"></i> <span>Report Sales</span>
         </a>
-        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-yellow-100 dark:hover:bg-yellow-700/20 hover:text-yellow-700 dark:hover:text-yellow-400 transition {{active_reports_engagement}}">
-          <i class="fa-solid fa-handshake-angle"></i> <span>Report Engagement</span>
+        <a href="reports_engagement.html" class="flex items-center gap-3 px-4 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-700/30 dark:hover:text-red-300 transition {{active_reports_engagement}}">
+          <i class="fa-solid fa-handshake-angle w-5 text-center"></i> <span>Report Engagement</span>
         </a>
       </div>
     </div>
@@ -65,9 +80,7 @@
           <i class="fas fa-bars text-xl"></i>
         </button>
         <button id="themeToggleBtn" class="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle theme">
-          <svg id="themeIcon" class="w-6 h-6 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24">
-            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
-          </svg>
+          <i id="themeIcon"></i>
         </button>
       </div>
       <div id="profileMenuButton" class="relative flex items-center gap-3 cursor-pointer">
@@ -203,6 +216,41 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    const sunIconSVG = '<i class="fas fa-sun text-xl"></i>';
+    const moonIconSVG = '<i class="fas fa-moon text-xl"></i>';
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
+        localStorage.setItem('theme', 'dark');
+      } else { 
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
+        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+      }
+
+    window.logout = function() {
+      localStorage.removeItem('token'); 
+      window.location.href = '../index.html'; 
+    }
+
     // Sidebar Toggle & Dropdown (Reports)
     const mainSidebar = document.getElementById('mainSidebar');
     const mainSidebarToggle = document.getElementById('mainSidebarToggle');
@@ -221,57 +269,31 @@
         });
     }
     if (reportsDropdownToggle && reportsDropdown) {
-        // Check if the current page is a reports page to open by default
+        // Keep reports dropdown open if on a reports page
         if (window.location.pathname.includes('reports_sales.html') || window.location.pathname.includes('reports_engagement.html')) {
             reportsDropdown.classList.remove('hidden');
-            reportsDropdown.classList.add('flex');
-            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.add('rotate-180');
+            reportsDropdown.classList.add('flex'); // Use flex for vertical layout
+            const caret = reportsDropdownToggle.querySelector('i.fa-chevron-down');
+            if (caret) caret.classList.add('rotate-180');
+            // Make sure the parent "Reports" link itself also gets active styling
+            reportsDropdownToggle.classList.add(...activeLinkClasses); 
+            // MODIFIED: Ensure red hover classes are removed when active
+            hoverLinkClassesRemove.forEach(cls => reportsDropdownToggle.classList.remove(cls));
         }
         reportsDropdownToggle.addEventListener('click', (e) => {
             e.preventDefault();
             reportsDropdown.classList.toggle('hidden');
-            reportsDropdown.classList.toggle('flex');
-            reportsDropdownToggle.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');
+            reportsDropdown.classList.toggle('flex'); 
+            const caret = reportsDropdownToggle.querySelector('i.fa-chevron-down');
+            if (caret) caret.classList.toggle('rotate-180');
         });
     }
     
+    // Global logout function
     window.logout = function() {
       console.log('Logout clicked');
       localStorage.removeItem('token'); 
       window.location.href = '../index.html'; 
-    }
-
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    const sidebarLogo = document.getElementById('sidebarLogo');
-    const sunIconSVG = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zm0-7v4h-1V2h1zm0 18v4h-1v-4h1zm-9-9H1v1h2v-1zm18 0h-2v1h2v-1zM4.22 4.22l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zm12.73 12.73l2.83 2.83-0.71 0.71-2.83-2.83 0.71-0.71zM4.22 19.78l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71zm12.73-12.73l2.83-2.83 0.71 0.71-2.83 2.83-0.71-0.71z"/>';
-    const moonIconSVG = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
-
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        if (themeIcon) themeIcon.innerHTML = sunIconSVG;
-        if (sidebarLogo) sidebarLogo.src = '../logo1.png';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        if (themeIcon) themeIcon.innerHTML = moonIconSVG;
-        if (sidebarLogo) sidebarLogo.src = '../logo2.png';
-        localStorage.setItem('theme', 'light');
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    applyTheme(savedTheme);
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-          if (document.documentElement.classList.contains('dark')) {
-            applyTheme('light');
-          } else {
-            applyTheme('dark');
-          }
-        });
     }
 
     const profileMenuButton = document.getElementById('profileMenuButton');
@@ -392,13 +414,60 @@
 
     // Add active class to sidebar link for current page
     const currentPath = window.location.pathname.split("/").pop();
-    if (currentPath === "customers.html") {
-        document.querySelector('a[href="customers.html"]').classList.add('bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white');
-        document.querySelector('a[href="customers.html"]').classList.remove('hover:bg-red-500', 'dark:hover:bg-red-600'); // Avoid double hover effect
+    const activeLinkClasses = ['bg-red-500', 'text-white', 'dark:bg-red-600', 'dark:text-white'];
+    const hoverLinkClassesRemove = ['hover:bg-red-500', 'dark:hover:bg-red-600', 'hover:text-white', 'dark:hover:text-white']; 
+    
+    document.querySelectorAll('#mainSidebar a').forEach(link => {
+        // Reset hover for all, except for items within an active dropdown parent initially
+        if (!link.closest('#reportsDropdown.flex')) { 
+            hoverLinkClassesRemove.forEach(cls => link.classList.remove(cls));
+        }
+        if(!link.parentElement.id?.includes('Dropdown')) {
+            activeLinkClasses.forEach(cls => link.classList.remove(cls));
+        } else if (link.id === 'reportsDropdownToggle' && !window.location.pathname.includes('reports_')) {
+            // Specifically remove active from reports toggle if not on a reports page
+            activeLinkClasses.forEach(cls => link.classList.remove(cls));
+        }
+    });
+    
+    if (currentPath === "customers.html") { // Adjusted for current file
+        const link = document.querySelector('a[href="customers.html"]'); // Adjusted
+        if(link) {
+            activeLinkClasses.forEach(cls => link.classList.add(cls));
+            hoverLinkClassesRemove.forEach(cls => link.classList.remove(cls)); 
+        }
     } else if (currentPath.startsWith("reports")) {
-         document.querySelector('#reportsDropdownToggle').classList.add('bg-yellow-400', 'text-white', 'dark:bg-yellow-500', 'dark:text-white');
-         document.querySelector('#reportsDropdownToggle').classList.remove('hover:bg-yellow-400', 'dark:hover:bg-yellow-500');
+         const toggle = document.querySelector('#reportsDropdownToggle');
+         if(toggle) {
+            activeLinkClasses.forEach(cls => toggle.classList.add(cls));
+            hoverLinkClassesRemove.forEach(cls => toggle.classList.remove(cls)); 
+
+            const activeReportLink = document.querySelector(`#reportsDropdown a[href="${currentPath}"]`);
+            if (activeReportLink) {
+                activeReportLink.classList.add('bg-red-200', 'dark:bg-red-700/50', 'text-red-700', 'dark:text-red-300');
+                activeReportLink.classList.remove('hover:bg-red-100', 'hover:text-red-700', 'dark:hover:bg-red-700/30', 'dark:hover:text-red-300');
+            }
+         }
     }
+
+    // Re-apply general hover styles AFTER specific active styles are set
+    document.querySelectorAll('#mainSidebar a').forEach(link => {
+        const isLinkActive = activeLinkClasses.some(cls => link.classList.contains(cls));
+        const isReportsToggleActive = link.id === 'reportsDropdownToggle' && activeLinkClasses.some(cls => link.classList.contains(cls));
+
+        if (!isLinkActive && !isReportsToggleActive) {
+            if (!link.closest('#reportsDropdown')) { 
+                 link.classList.add('hover:bg-red-500', 'dark:hover:bg-red-600', 'hover:text-white', 'dark:hover:text-white');
+            }
+        }
+    });
+
+     document.querySelectorAll('#reportsDropdown a').forEach(link => {
+        const isActiveReportSubLink = link.classList.contains('bg-red-200'); 
+        if (!isActiveReportSubLink) {
+            link.classList.add('hover:bg-red-100', 'dark:hover:bg-red-700/30', 'hover:text-red-700', 'dark:hover:text-red-300');
+        }
+    });
 
   });
 </script>
